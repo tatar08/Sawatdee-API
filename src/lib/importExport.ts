@@ -201,7 +201,7 @@ const zEnvironment = z.object({
   variables: z.array(zKeyValue),
 });
 
-const zSettings = z.object({
+const zSettings: z.ZodType<Settings> = z.object({
   activeEnvironmentId: z.string().nullable(),
   reduceTransparency: z.boolean(),
   requestTimeoutMs: z.number(),
