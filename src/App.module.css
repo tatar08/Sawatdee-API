@@ -95,4 +95,18 @@
     flex-direction: column;
     overflow-y: auto;
   }
+
+  .sidebarWrap {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: calc(var(--pg-space) * 2);
+  }
+
+  .sidebarWrapClosed {
+    width: 100%;
+    height: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 }
