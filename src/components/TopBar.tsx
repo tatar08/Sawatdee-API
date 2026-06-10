@@ -27,8 +27,10 @@ export function TopBar() {
         <Heart size={18} className={styles.logoIcon} aria-hidden fill="currentColor" />
         <span className={styles.wordmark}>Postgirl</span>
         <span className={styles.tagline}>
-          100% browser · no backend · no data stored ·{" "}
+          100% browser · no backend · no data stored · built by{" "}
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer">Claude Fable 5</a>
+          , improved by{" "}
+          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer">Sonnet</a>
           {" "}· hosted free on{" "}
           <a href="https://azure.microsoft.com/en-us/products/app-service/static" target="_blank" rel="noopener noreferrer">Azure SWA</a>
         </span>
