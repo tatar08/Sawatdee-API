@@ -50,6 +50,35 @@
   min-height: 0;
 }
 
+.footer {
+  padding: var(--pg-space);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.footerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--pg-font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pg-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--pg-radius-sm);
+  padding: 6px;
+  cursor: pointer;
+  transition: all var(--pg-dur) var(--pg-ease);
+}
+
+.footerBtn:hover {
+  background: var(--pg-pink-50);
+  color: var(--pg-pink-600);
+}
+
 @media (max-width: 760px) {
   .sidebar {
     width: 100%;

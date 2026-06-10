@@ -9,6 +9,7 @@ import type {
 import { db, DEFAULT_SETTINGS, pushHistory, loadSettings, saveSettings } from "../lib/db";
 import { buildVars } from "../lib/variables";
 import { prepareRequest, sendRequest, type SendResult } from "../lib/send";
+import type { ImportReport } from "../lib/importExport";
 
 export interface TabState {
   request: ApiRequest; // working copy; tab id === request id
@@ -61,6 +62,8 @@ interface Store {
   sidebarOpen: boolean;
   settingsOpen: boolean;
   setSettingsOpen: (open: boolean) => void;
+  saveModalOpen: boolean;
+  setSaveModalOpen: (open: boolean) => void;
 
   init: () => Promise<void>;
 
@@ -93,6 +96,8 @@ interface Store {
   updateSettings: (patch: Partial<Settings>) => void;
   toggleSidebar: () => void;
   clearHistory: () => Promise<void>;
+  /** Merge an import into the workspace — rename-on-conflict, never clobber (SPEC §7.5). */
+  applyImport: (report: ImportReport) => Promise<void>;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -108,6 +113,8 @@ export const useStore = create<Store>((set, get) => ({
   sidebarOpen: true,
   settingsOpen: false,
   setSettingsOpen: (open) => set({ settingsOpen: open }),
+  saveModalOpen: false,
+  setSaveModalOpen: (open) => set({ saveModalOpen: open }),
 
   init: async () => {
     const [collections, requests, environments, history, settings] = await Promise.all([
@@ -366,6 +373,63 @@ export const useStore = create<Store>((set, get) => ({
   clearHistory: async () => {
     await db.history.clear();
     set({ history: [] });
+  },
+
+  applyImport: async (report) => {
+    const s = get();
+    const collections = report.collections.map((c) => ({ ...c }));
+    const requests = report.requests.map((r) => ({ ...r }));
+    const environments = report.environments.map((e) => ({ ...e }));
+
+    // ID collisions → fresh ids (keeping internal references intact)
+    const existingColIds = new Set(s.collections.map((c) => c.id));
+    for (const col of collections) {
+      if (existingColIds.has(col.id)) {
+        const newId = crypto.randomUUID();
+        for (const r of requests) {
+          if (r.collectionId === col.id) r.collectionId = newId;
+        }
+        col.id = newId;
+      }
+    }
+    const existingReqIds = new Set(s.requests.map((r) => r.id));
+    for (const r of requests) {
+      if (existingReqIds.has(r.id)) {
+        const newId = crypto.randomUUID();
+        for (const col of collections) {
+          col.requestIds = col.requestIds.map((id) => (id === r.id ? newId : id));
+        }
+        r.id = newId;
+      }
+    }
+    const existingEnvIds = new Set(s.environments.map((e) => e.id));
+    for (const env of environments) {
+      if (existingEnvIds.has(env.id)) env.id = crypto.randomUUID();
+    }
+
+    // Name collisions → rename
+    const colNames = new Set(s.collections.map((c) => c.name));
+    for (const col of collections) {
+      while (colNames.has(col.name)) col.name = `${col.name} (imported)`;
+      colNames.add(col.name);
+    }
+    const envNames = new Set(s.environments.map((e) => e.name));
+    for (const env of environments) {
+      while (envNames.has(env.name)) env.name = `${env.name} (imported)`;
+      envNames.add(env.name);
+    }
+
+    await db.transaction("rw", db.collections, db.requests, db.environments, async () => {
+      await db.collections.bulkAdd(collections);
+      await db.requests.bulkAdd(requests);
+      await db.environments.bulkAdd(environments);
+    });
+    set((st) => ({
+      collections: [...collections, ...st.collections],
+      requests: [...st.requests, ...requests],
+      environments: [...st.environments, ...environments],
+    }));
+    if (report.settings) get().updateSettings(report.settings);
   },
 }));
 

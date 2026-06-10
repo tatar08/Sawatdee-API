@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { FolderClosed, History } from "lucide-react";
+import { ArrowDownUp, FolderClosed, History } from "lucide-react";
 import { GlassPanel } from "../common/GlassPanel";
 import { CollectionTree } from "./CollectionTree";
 import { HistoryList } from "./HistoryList";
+import { ImportExportModal } from "../ImportExportModal";
 import styles from "./Sidebar.module.css";
 
 type Section = "collections" | "history";
 
 export function Sidebar() {
   const [section, setSection] = useState<Section>("collections");
+  const [importExportOpen, setImportExportOpen] = useState(false);
 
   return (
     <GlassPanel className={styles.sidebar}>
@@ -33,6 +35,15 @@ export function Sidebar() {
       <div className={styles.content}>
         {section === "collections" ? <CollectionTree /> : <HistoryList />}
       </div>
+      <div className={styles.footer}>
+        <button className={styles.footerBtn} onClick={() => setImportExportOpen(true)}>
+          <ArrowDownUp size={13} /> Import / Export
+        </button>
+      </div>
+      <ImportExportModal
+        open={importExportOpen}
+        onClose={() => setImportExportOpen(false)}
+      />
     </GlassPanel>
   );
 }

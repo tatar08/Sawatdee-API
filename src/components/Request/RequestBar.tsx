@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Save, SendHorizonal } from "lucide-react";
 import { GlassPanel } from "../common/GlassPanel";
 import { Button } from "../common/Button";
@@ -9,7 +9,8 @@ import { resolve, findUnresolved, buildVars } from "../../lib/variables";
 import styles from "./RequestBar.module.css";
 
 export function RequestBar() {
-  const [saveOpen, setSaveOpen] = useState(false);
+  const saveOpen = useStore((s) => s.saveModalOpen);
+  const setSaveOpen = useStore((s) => s.setSaveModalOpen);
   const tab = useStore(selectActiveTab);
   const updateActiveRequest = useStore((s) => s.updateActiveRequest);
   const send = useStore((s) => s.send);

@@ -7,10 +7,13 @@ import { RequestBar } from "./components/Request/RequestBar";
 import { RequestTabs } from "./components/Request/RequestTabs";
 import { ResponsePanel } from "./components/Response/ResponsePanel";
 import { ToastHost } from "./components/common/Toast";
+import { SettingsModal } from "./components/SettingsModal";
+import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 import styles from "./App.module.css";
 
 export default function App() {
   const init = useStore((s) => s.init);
+  useKeyboardShortcuts();
   const sidebarOpen = useStore((s) => s.sidebarOpen);
   const reduceTransparency = useStore((s) => s.settings.reduceTransparency);
 
@@ -37,6 +40,7 @@ export default function App() {
           <ResponsePanel />
         </div>
       </div>
+      <SettingsModal />
       <ToastHost />
     </div>
   );
