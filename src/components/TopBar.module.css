@@ -35,6 +35,12 @@
   margin-left: 4px;
 }
 
+@media (max-width: 860px) {
+  .tagline {
+    display: none;
+  }
+}
+
 .tagline a {
   color: var(--pg-pink-500);
   text-decoration: none;
