@@ -1,0 +1,49 @@
+:root {
+  /* Palette — white / pink */
+  --pg-bg-base:        #fdf7fa;            /* near-white, faint pink */
+  --pg-bg-gradient:    linear-gradient(135deg, #fff5f9 0%, #fde8f1 50%, #f8eefc 100%);
+  --pg-pink-50:        #fff0f6;
+  --pg-pink-100:       #ffd6e7;
+  --pg-pink-300:       #ff9ec4;
+  --pg-pink-500:       #ff5fa2;            /* primary accent */
+  --pg-pink-600:       #f43f8e;            /* accent hover/active */
+  --pg-pink-700:       #d62e76;
+
+  --pg-text-strong:    #2b1b25;
+  --pg-text:           #5a4a54;
+  --pg-text-muted:     #9b8a94;
+
+  /* Glass surfaces */
+  --pg-glass-bg:       rgba(255, 255, 255, 0.55);
+  --pg-glass-bg-strong:rgba(255, 255, 255, 0.72);
+  --pg-glass-border:   rgba(255, 255, 255, 0.65);
+  --pg-glass-blur:     18px;
+  --pg-glass-shadow:   0 8px 32px rgba(214, 46, 118, 0.12),
+                       0 2px 8px  rgba(43, 27, 37, 0.06);
+
+  /* Status colors */
+  --pg-ok:    #2bbf8a;   /* 2xx */
+  --pg-info:  #4aa6e0;   /* 3xx */
+  --pg-warn:  #e8a13a;   /* 4xx */
+  --pg-err:   #e0537a;   /* 5xx / network */
+
+  /* Method colors */
+  --pg-method-get:    #2bbf8a;
+  --pg-method-post:   #e8a13a;
+  --pg-method-put:    #4aa6e0;
+  --pg-method-patch:  #9b6ee0;
+  --pg-method-delete: #e0537a;
+
+  /* Radius / spacing / motion */
+  --pg-radius-sm: 10px;
+  --pg-radius:    16px;
+  --pg-radius-lg: 24px;
+  --pg-space:     8px;          /* 8pt grid: use multiples */
+  --pg-ease:      cubic-bezier(0.4, 0.0, 0.2, 1);
+  --pg-dur:       180ms;
+
+  /* Type */
+  --pg-font-ui:   -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                  "Inter", system-ui, sans-serif;
+  --pg-font-mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+}

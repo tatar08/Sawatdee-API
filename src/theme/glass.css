@@ -1,0 +1,14 @@
+*,*::before,*::after{box-sizing:border-box}
+
+body{margin:0;font-family:var(--pg-font-ui);color:var(--pg-text);background:var(--pg-bg-base) var(--pg-bg-gradient) fixed;min-height:100vh}
+
+.glass {
+  background: var(--pg-glass-bg);
+  backdrop-filter: blur(var(--pg-glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--pg-glass-blur)) saturate(160%);
+  border: 1px solid var(--pg-glass-border);
+  border-radius: var(--pg-radius);
+  box-shadow: var(--pg-glass-shadow);
+}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
