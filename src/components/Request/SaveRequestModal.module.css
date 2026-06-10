@@ -1,0 +1,37 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--pg-space) * 1.5);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--pg-space);
+}
+
+.label {
+  width: 110px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pg-text-muted);
+}
+
+.input {
+  flex: 1;
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  color: var(--pg-text-strong);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid transparent;
+  border-radius: var(--pg-radius-sm);
+  padding: 7px 10px;
+  min-width: 0;
+}
+
+.input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--pg-pink-300);
+}

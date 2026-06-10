@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+
+.row {
+  display: contents;
+}
+
+.row > * {
+  padding: 6px calc(var(--pg-space) * 1.5);
+  font-family: var(--pg-font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.even > * {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.key {
+  font-weight: 600;
+  color: var(--pg-text);
+  word-break: break-word;
+}
+
+.value {
+  color: var(--pg-text-strong);
+  word-break: break-all;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  color: var(--pg-text-muted);
+}

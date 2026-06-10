@@ -1,0 +1,109 @@
+.card {
+  background: var(--pg-glass-bg-strong);
+  border: 1px solid var(--pg-glass-border);
+  border-top: 2px solid var(--pg-err);
+  border-radius: var(--pg-radius);
+  box-shadow: var(--pg-glass-shadow);
+  padding: calc(var(--pg-space) * 2.5) calc(var(--pg-space) * 3);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--pg-space) * 1.5);
+  max-width: 560px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--pg-space);
+}
+
+.title {
+  font-family: var(--pg-font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pg-text-strong);
+}
+
+.iconErr {
+  color: var(--pg-err);
+  flex-shrink: 0;
+}
+
+.iconWarn {
+  color: var(--pg-warn);
+  flex-shrink: 0;
+}
+
+.iconMuted {
+  color: var(--pg-ok);
+  flex-shrink: 0;
+}
+
+.body {
+  margin: 0;
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  color: var(--pg-text);
+  line-height: 1.55;
+}
+
+.hint {
+  margin: 0;
+  font-family: var(--pg-font-ui);
+  font-size: 12.5px;
+  color: var(--pg-text-muted);
+  line-height: 1.5;
+}
+
+.originRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pg-space);
+  flex-wrap: wrap;
+}
+
+.originLabel {
+  font-family: var(--pg-font-ui);
+  font-size: 12px;
+  color: var(--pg-text-muted);
+  font-weight: 600;
+}
+
+.originChip {
+  font-family: var(--pg-font-mono);
+  font-size: 12px;
+  color: var(--pg-text-strong);
+  background: color-mix(in srgb, var(--pg-err) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pg-err) 20%, transparent);
+  border-radius: var(--pg-radius-sm);
+  padding: 2px 8px;
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--pg-font-ui);
+  font-size: 12.5px;
+  color: var(--pg-text);
+}
+
+.footer {
+  margin: calc(var(--pg-space) * 0.5) 0 0;
+  font-family: var(--pg-font-ui);
+  font-size: 11.5px;
+  color: var(--pg-text-muted);
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  padding-top: calc(var(--pg-space) * 1.5);
+}

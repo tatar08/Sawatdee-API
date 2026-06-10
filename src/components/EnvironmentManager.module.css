@@ -1,0 +1,85 @@
+.layout {
+  display: flex;
+  gap: calc(var(--pg-space) * 2);
+  min-height: 280px;
+}
+
+.list {
+  width: 170px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  padding-right: var(--pg-space);
+}
+
+.item {
+  text-align: left;
+  font-family: var(--pg-font-ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pg-text);
+  background: transparent;
+  border: none;
+  border-radius: var(--pg-radius-sm);
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--pg-dur) var(--pg-ease);
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.itemActive {
+  background: var(--pg-pink-50);
+  color: var(--pg-pink-600);
+}
+
+.editor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pg-space);
+}
+
+.nameRow {
+  display: flex;
+  gap: var(--pg-space);
+  align-items: center;
+}
+
+.nameInput {
+  flex: 1;
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pg-text-strong);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid transparent;
+  border-radius: var(--pg-radius-sm);
+  padding: 7px 10px;
+  min-width: 0;
+}
+
+.nameInput:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--pg-pink-300);
+}
+
+.vars {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0 calc(var(--pg-space) * -1);
+}
+
+.empty {
+  font-size: 12.5px;
+  color: var(--pg-text-muted);
+}

@@ -1,54 +1,123 @@
+import { useState } from "react";
 import { Loader2, Zap } from "lucide-react";
 import { GlassPanel } from "../common/GlassPanel";
 import { EmptyState } from "../common/EmptyState";
+import { CorsExplainer } from "../common/CorsExplainer";
 import { useStore, selectActiveTab } from "../../store/useStore";
-import { formatBytes, formatDuration } from "../../lib/format";
+import { StatusBar } from "./StatusBar";
+import { BodyViewer } from "./BodyViewer";
+import { HeadersViewer } from "./HeadersViewer";
 import styles from "./ResponsePanel.module.css";
 
-function statusClass(status: number): string {
-  if (status >= 500) return styles.err;
-  if (status >= 400) return styles.warn;
-  if (status >= 300) return styles.info;
-  return styles.ok;
-}
+type ResponseTab = "body" | "headers" | "cookies";
 
 export function ResponsePanel() {
   const tab = useStore(selectActiveTab);
-  if (!tab) return null;
-  const { result, sending } = tab;
+  const [activeTab, setActiveTab] = useState<ResponseTab>("body");
 
-  return (
-    <GlassPanel className={styles.panel}>
-      {sending ? (
+  if (!tab) return null;
+
+  const { result, sending, request } = tab;
+
+  if (sending) {
+    return (
+      <GlassPanel className={styles.panel}>
         <div className={styles.center}>
           <Loader2 size={22} className={styles.spinner} />
           <span className={styles.sendingLabel}>Sending…</span>
         </div>
-      ) : !result ? (
+      </GlassPanel>
+    );
+  }
+
+  if (!result) {
+    return (
+      <GlassPanel className={styles.panel}>
         <EmptyState
           icon={<Zap size={28} />}
           title="Send a request"
           hint="The response will appear here"
         />
-      ) : result.ok ? (
-        <>
-          <div className={styles.statusRow}>
-            <span className={`${styles.pill} ${statusClass(result.status)}`}>
-              {result.status} {result.statusText}
-            </span>
-            <span className={styles.meta}>{formatDuration(result.durationMs)}</span>
-            <span className={styles.meta}>{formatBytes(result.sizeBytes)}</span>
-          </div>
-          <pre className={styles.body}>{result.bodyText}</pre>
-        </>
-      ) : (
-        <div className={styles.failure}>
-          <span className={`${styles.pill} ${styles.err}`}>
-            {result.kind === "timeout" ? "Timed out" : "Network / CORS error"}
-          </span>
-          <p className={styles.failureMsg}>{result.message}</p>
+      </GlassPanel>
+    );
+  }
+
+  if (!result.ok) {
+    return (
+      <GlassPanel className={styles.panel}>
+        <div className={styles.failureWrap}>
+          <CorsExplainer failure={result} url={request.url} />
         </div>
-      )}
+      </GlassPanel>
+    );
+  }
+
+  // Success: find set-cookie headers for cookies tab
+  const cookieHeaders = Object.entries(result.headers)
+    .filter(([k]) => k.toLowerCase() === "set-cookie")
+    .map(([, v]) => v);
+
+  return (
+    <GlassPanel className={styles.panel}>
+      <StatusBar result={result} requestName={request.name} />
+
+      {/* Response tab row */}
+      <div className={styles.tabRow}>
+        <button
+          className={`${styles.tabBtn} ${activeTab === "body" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("body")}
+        >
+          Body
+        </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === "headers" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("headers")}
+        >
+          Headers
+          <span className={styles.count}>
+            {Object.keys(result.headers).length}
+          </span>
+        </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === "cookies" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("cookies")}
+        >
+          Cookies
+          {cookieHeaders.length > 0 && (
+            <span className={styles.count}>{cookieHeaders.length}</span>
+          )}
+        </button>
+      </div>
+
+      {/* Content area */}
+      <div className={styles.contentArea}>
+        {activeTab === "body" && <BodyViewer result={result} />}
+
+        {activeTab === "headers" && (
+          <HeadersViewer headers={result.headers} />
+        )}
+
+        {activeTab === "cookies" && (
+          <div className={styles.cookiesWrap}>
+            {cookieHeaders.length > 0 ? (
+              <ul className={styles.cookieList}>
+                {cookieHeaders.map((v, i) => (
+                  <li key={i} className={styles.cookieItem}>
+                    <code className={styles.cookieValue}>{v}</code>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className={styles.cookieEmpty}>
+                <p className={styles.cookieNote}>
+                  Browsers hide most cookie data from JavaScript — this is a
+                  browser restriction, not a Postgirl bug.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </GlassPanel>
   );
 }

@@ -1,13 +1,15 @@
-import { useMemo } from "react";
-import { SendHorizonal } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Save, SendHorizonal } from "lucide-react";
 import { GlassPanel } from "../common/GlassPanel";
 import { Button } from "../common/Button";
 import { MethodSelect } from "./MethodSelect";
+import { SaveRequestModal } from "./SaveRequestModal";
 import { useStore, selectActiveTab } from "../../store/useStore";
 import { resolve, findUnresolved, buildVars } from "../../lib/variables";
 import styles from "./RequestBar.module.css";
 
 export function RequestBar() {
+  const [saveOpen, setSaveOpen] = useState(false);
   const tab = useStore(selectActiveTab);
   const updateActiveRequest = useStore((s) => s.updateActiveRequest);
   const send = useStore((s) => s.send);
@@ -59,6 +61,14 @@ export function RequestBar() {
           aria-label="Request URL"
         />
         <Button
+          variant="ghost"
+          onClick={() => setSaveOpen(true)}
+          title="Save request (Ctrl+S)"
+          aria-label="Save request"
+        >
+          <Save size={15} />
+        </Button>
+        <Button
           variant="primary"
           onClick={() => void send()}
           disabled={tab.sending || !url.trim()}
@@ -68,6 +78,7 @@ export function RequestBar() {
           {tab.sending ? "Sending…" : "Send"}
         </Button>
       </GlassPanel>
+      <SaveRequestModal open={saveOpen} onClose={() => setSaveOpen(false)} />
       {(resolved !== url || unresolved.length > 0) && url.trim() && (
         <div className={styles.preview}>
           {unresolved.length > 0 ? (

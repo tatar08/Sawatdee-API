@@ -1,0 +1,224 @@
+.root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Truncated large-body card */
+.truncatedCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--pg-space) * 1.5);
+  padding: calc(var(--pg-space) * 3);
+}
+
+.truncatedMsg {
+  margin: 0;
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pg-text);
+  text-align: center;
+}
+
+/* Toolbar: pills + search */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--pg-space) * 2);
+  padding: 0 calc(var(--pg-space) * 1.5);
+  height: 38px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  flex-wrap: wrap;
+}
+
+.pills {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.pill {
+  font-family: var(--pg-font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border: none;
+  border-radius: var(--pg-radius-sm);
+  cursor: pointer;
+  background: transparent;
+  color: var(--pg-text-muted);
+  transition: background var(--pg-dur) var(--pg-ease),
+              color var(--pg-dur) var(--pg-ease);
+}
+
+.pill:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--pg-text);
+}
+
+.pillActive {
+  background: rgba(255, 255, 255, 0.65);
+  color: var(--pg-pink-600);
+}
+
+/* Search */
+.searchWrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--pg-radius-sm);
+  padding: 3px 8px;
+  flex: 1;
+  max-width: 280px;
+  transition: border-color var(--pg-dur) var(--pg-ease);
+}
+
+.searchWrap:focus-within {
+  border-color: var(--pg-pink-300);
+}
+
+.searchIcon {
+  color: var(--pg-text-muted);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  border: none;
+  background: transparent;
+  font-family: var(--pg-font-ui);
+  font-size: 12px;
+  color: var(--pg-text-strong);
+  outline: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.searchInput::placeholder {
+  color: var(--pg-text-muted);
+}
+
+.matchCount {
+  font-family: var(--pg-font-mono);
+  font-size: 10.5px;
+  color: var(--pg-text-muted);
+  white-space: nowrap;
+}
+
+.clearBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--pg-text-muted);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border-radius: 2px;
+  transition: color var(--pg-dur) var(--pg-ease);
+}
+
+.clearBtn:hover {
+  color: var(--pg-text);
+}
+
+/* Content area */
+.content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 0;
+}
+
+/* Raw pre */
+.raw {
+  flex: 1;
+  margin: 0;
+  padding: calc(var(--pg-space) * 1.5);
+  overflow: auto;
+  font-family: var(--pg-font-mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--pg-text-strong);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Match highlight */
+.mark {
+  background: color-mix(in srgb, var(--pg-warn) 30%, transparent);
+  color: inherit;
+  border-radius: 2px;
+}
+
+/* Pretty mode match banner */
+.prettyMatchBanner {
+  position: absolute;
+  bottom: calc(var(--pg-space));
+  right: calc(var(--pg-space) * 1.5);
+  background: var(--pg-glass-bg-strong);
+  border: 1px solid var(--pg-glass-border);
+  border-radius: var(--pg-radius-sm);
+  padding: 3px 10px;
+  font-family: var(--pg-font-mono);
+  font-size: 11px;
+  color: var(--pg-text-muted);
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+
+/* Image preview */
+.imgWrap {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--pg-space) * 2);
+}
+
+.img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--pg-radius-sm);
+}
+
+/* HTML iframe */
+.iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #fff;
+  min-height: 0;
+}
+
+/* No preview */
+.noPreview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pg-space);
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  color: var(--pg-text-muted);
+}
+
+.ct {
+  font-family: var(--pg-font-mono);
+  font-size: 11.5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--pg-radius-sm);
+  padding: 2px 8px;
+}
