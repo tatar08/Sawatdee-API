@@ -32,7 +32,9 @@ const reduceTransparency = useStore((s) => s.settings.reduceTransparency);
     <div className={styles.app}>
       <TopBar />
       <div className={styles.main}>
-        {sidebarOpen && <Sidebar />}
+        <div className={sidebarOpen ? styles.sidebarWrap : styles.sidebarWrapClosed}>
+          <Sidebar />
+        </div>
         <div className={styles.workspace}>
           <TabStrip />
           <RequestBar />

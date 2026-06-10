@@ -9,8 +9,31 @@
 .main {
   display: flex;
   flex: 1;
-  gap: calc(var(--pg-space) * 2);
   min-height: 0;
+}
+
+.sidebarWrap {
+  width: 264px;
+  flex-shrink: 0;
+  overflow: hidden;
+  opacity: 1;
+  margin-right: calc(var(--pg-space) * 2);
+  transition:
+    width 220ms var(--pg-ease),
+    opacity 220ms var(--pg-ease),
+    margin-right 220ms var(--pg-ease);
+}
+
+.sidebarWrapClosed {
+  width: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-right: 0;
+  transition:
+    width 220ms var(--pg-ease),
+    opacity 220ms var(--pg-ease),
+    margin-right 220ms var(--pg-ease);
 }
 
 .workspace {
