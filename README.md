@@ -1,73 +1,33 @@
-# React + TypeScript + Vite
+# Postgirl 💌
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight, beautiful, **frontend-only** API client — a parody/homage to Postman.
+Runs entirely in the browser: no backend, no accounts, no telemetry. Collections,
+environments, history and settings live in your browser (IndexedDB).
 
-Currently, two official plugins are available:
+Full product/engineering spec: [SPEC.md](./SPEC.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Highlights
 
-## React Compiler
+- Build & send HTTP requests (GET/POST/PUT/PATCH/DELETE/HEAD/OPTIONS) straight from the browser via `fetch()`
+- Collections, tabs, autosaved edits, replayable history
+- Environments with `{{variable}}` resolution + live resolved-URL preview
+- Bearer / Basic / API-key auth, JSON/raw/form bodies (CodeMirror editor)
+- **Postman-compatible import/export** — Collection v2.1 and Environment JSON round-trip losslessly, plus a native backup bundle
+- Friendly CORS explainer: a browser page cannot bypass CORS — failures are explained, not hidden
+- White-and-pink "liquid glass" design, reduce-transparency toggle, reduced-motion support
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Develop
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # Vite dev server
+npm test           # Vitest unit tests (lib/)
+npm run build      # type-check + production build (dist/)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deploy (Azure Static Web Apps)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+`staticwebapp.config.json` provides the SPA fallback. The GitHub Actions workflow
+(`.github/workflows/azure-static-web-apps.yml`) builds and deploys on push — set the
+`AZURE_STATIC_WEB_APPS_API_TOKEN` repository secret from your SWA resource. App
+location `/`, output `dist`, no API.
