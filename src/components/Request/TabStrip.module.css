@@ -1,0 +1,88 @@
+.strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px 5px 10px;
+  border-radius: var(--pg-radius-sm);
+  cursor: pointer;
+  max-width: 220px;
+  flex-shrink: 0;
+  opacity: 0.75;
+  transition: opacity var(--pg-dur) var(--pg-ease);
+}
+
+.tab:hover {
+  opacity: 1;
+}
+
+.tab.active {
+  opacity: 1;
+  background: var(--pg-glass-bg-strong);
+  border-color: var(--pg-pink-100);
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pg-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pg-pink-500);
+  flex-shrink: 0;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--pg-text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--pg-dur) var(--pg-ease);
+}
+
+.close:hover {
+  background: var(--pg-pink-100);
+  color: var(--pg-pink-700);
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: var(--pg-radius-sm);
+  background: transparent;
+  color: var(--pg-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--pg-dur) var(--pg-ease);
+}
+
+.add:hover {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--pg-pink-600);
+}

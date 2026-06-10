@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--pg-font-mono);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: var(--pg-radius-sm);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.sm {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.md {
+  font-size: 11px;
+  padding: 3px 8px;
+}

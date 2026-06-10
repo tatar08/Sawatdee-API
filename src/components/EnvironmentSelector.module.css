@@ -1,0 +1,20 @@
+.select {
+  appearance: none;
+  font-family: var(--pg-font-ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pg-text);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--pg-glass-border);
+  border-radius: var(--pg-radius-sm);
+  padding: 5px 24px 5px 10px;
+  cursor: pointer;
+  transition: background var(--pg-dur) var(--pg-ease);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239b8a94' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.select:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}

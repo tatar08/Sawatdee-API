@@ -1,0 +1,64 @@
+.host {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--pg-glass-bg-strong);
+  backdrop-filter: blur(var(--pg-glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--pg-glass-blur)) saturate(160%);
+  border: 1px solid var(--pg-glass-border);
+  border-radius: var(--pg-radius);
+  box-shadow: var(--pg-glass-shadow);
+  cursor: pointer;
+  pointer-events: all;
+  animation: toastRise var(--pg-dur) var(--pg-ease) both;
+  max-width: 320px;
+}
+
+@keyframes toastRise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info .dot {
+  background: var(--pg-info);
+}
+
+.success .dot {
+  background: var(--pg-ok);
+}
+
+.error .dot {
+  background: var(--pg-err);
+}
+
+.message {
+  font-family: var(--pg-font-ui);
+  font-size: 13px;
+  color: var(--pg-text-strong);
+  line-height: 1.4;
+}

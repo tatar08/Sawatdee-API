@@ -11,4 +11,16 @@ body{margin:0;font-family:var(--pg-font-ui);color:var(--pg-text);background:var(
   box-shadow: var(--pg-glass-shadow);
 }
 
+/* Settings → "reduce transparency": swap glass for solid surfaces (SPEC §5.4) */
+html[data-reduce-transparency] {
+  --pg-glass-bg: #ffffff;
+  --pg-glass-bg-strong: #ffffff;
+  --pg-glass-blur: 0px;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--pg-pink-300);
+}
+
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
