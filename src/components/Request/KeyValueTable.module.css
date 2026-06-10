@@ -1,0 +1,87 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--pg-space);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 18px minmax(80px, 2fr) minmax(80px, 3fr) 24px;
+  align-items: center;
+  gap: 6px;
+}
+
+.check {
+  accent-color: var(--pg-pink-500);
+  cursor: pointer;
+  margin: 0;
+}
+
+.input {
+  font-family: var(--pg-font-mono);
+  font-size: 12px;
+  color: var(--pg-text-strong);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid transparent;
+  border-radius: var(--pg-radius-sm);
+  padding: 6px 9px;
+  min-width: 0;
+  transition:
+    background var(--pg-dur) var(--pg-ease),
+    border-color var(--pg-dur) var(--pg-ease);
+}
+
+.input::placeholder {
+  color: var(--pg-text-muted);
+  opacity: 0.6;
+}
+
+.input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--pg-pink-300);
+}
+
+.inputWarn {
+  border-color: var(--pg-warn);
+}
+
+.warnText {
+  grid-column: 2 / -1;
+  font-size: 11px;
+  color: var(--pg-warn);
+  padding: 2px 0 2px 26px;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: var(--pg-radius-sm);
+  background: transparent;
+  color: var(--pg-text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--pg-dur) var(--pg-ease);
+}
+
+.delete:hover {
+  background: color-mix(in srgb, var(--pg-err) 12%, transparent);
+  color: var(--pg-err);
+}
+
+.deleteSpacer {
+  width: 22px;
+}
+
+.phantom {
+  opacity: 0.55;
+}
+
+.phantom:focus-within {
+  opacity: 1;
+}
