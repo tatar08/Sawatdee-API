@@ -23,21 +23,46 @@
 }
 
 .footer {
-  text-align: center;
-  font-size: 11px;
-  color: var(--pg-text-muted);
-  padding: 2px 0 4px;
-  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
+  padding: 2px 4px;
 }
 
-.footer a {
+.footerText {
+  flex: 1;
+  font-size: 10px;
+  color: var(--pg-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footerText a {
   color: var(--pg-pink-500);
   text-decoration: none;
 }
 
-.footer a:hover {
+.footerText a:hover {
   text-decoration: underline;
+}
+
+.footerClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 9px;
+  color: var(--pg-text-muted);
+  padding: 0 2px;
+  line-height: 1;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.footerClose:hover {
+  opacity: 1;
+  color: var(--pg-pink-500);
 }
 
 @media (max-width: 760px) {
