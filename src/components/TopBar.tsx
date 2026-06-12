@@ -7,6 +7,7 @@ import { EnvironmentManager } from "./EnvironmentManager";
 import { UserManualModal } from "./UserManualModal";
 import { useStore } from "../store/useStore";
 import { useTranslation } from "../lib/i18n";
+import { APP_VERSION } from "../lib/types";
 import styles from "./TopBar.module.css";
 
 export function TopBar() {
@@ -36,6 +37,7 @@ export function TopBar() {
       <div className={styles.logo}>
         <Heart size={18} className={styles.logoIcon} aria-hidden fill="currentColor" />
         <span className={styles.wordmark}>Sawatdee API</span>
+        <span className={styles.versionBadge}>v{APP_VERSION}</span>
         <span className={styles.tagline}>
           {t("logoTagline")}
         </span>

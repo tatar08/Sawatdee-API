@@ -35,6 +35,26 @@
   margin-left: 4px;
 }
 
+.versionBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  background: rgba(236, 72, 153, 0.1);
+  color: var(--pg-pink-600);
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  margin-left: 2px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+:global([data-theme="dark"]) .versionBadge {
+  background: rgba(236, 72, 153, 0.2);
+  color: #f472b6;
+}
+
+
 @media (max-width: 860px) {
   .tagline {
     display: none;

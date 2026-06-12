@@ -100,4 +100,7 @@ export interface Settings {
   useProxy?: boolean;
 }
 
+export const APP_VERSION = "1.1.0";
+
+
 
