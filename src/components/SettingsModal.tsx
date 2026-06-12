@@ -135,6 +135,21 @@ export function SettingsModal() {
           <input
             type="checkbox"
             className={styles.check}
+            checked={settings.useProxy ?? false}
+            onChange={(e) => updateSettings({ useProxy: e.target.checked })}
+          />
+          <span>
+            <span className={styles.label}>{t("useProxy")}</span>
+            <span className={styles.hint}>
+              {t("useProxyHint")}
+            </span>
+          </span>
+        </label>
+
+        <label className={styles.rowCheck}>
+          <input
+            type="checkbox"
+            className={styles.check}
             checked={settings.reduceTransparency}
             onChange={(e) => updateSettings({ reduceTransparency: e.target.checked })}
           />

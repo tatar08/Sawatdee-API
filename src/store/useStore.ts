@@ -8,7 +8,7 @@ import type {
 } from "../lib/types";
 import { db, DEFAULT_SETTINGS, pushHistory, loadSettings, saveSettings } from "../lib/db";
 import { buildVars } from "../lib/variables";
-import { prepareRequest, sendRequest, type SendResult } from "../lib/send";
+import { prepareRequest, sendRequest, getFetchFn, type SendResult } from "../lib/send";
 import type { ImportReport } from "../lib/importExport";
 
 export interface TabState {
@@ -213,6 +213,7 @@ export const useStore = create<Store>((set, get) => ({
     const result = await sendRequest(prepared, {
       timeoutMs: s.settings.requestTimeoutMs,
       maxBodyBytes: s.settings.maxResponsePreviewBytes,
+      fetchFn: getFetchFn(s.settings.useProxy),
     });
     mark({ sending: false, result });
 

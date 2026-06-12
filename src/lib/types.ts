@@ -97,5 +97,7 @@ export interface Settings {
   themePattern?: ThemePattern;
   themeMode?: ThemeMode;
   language?: AppLanguage;
+  useProxy?: boolean;
 }
+
 

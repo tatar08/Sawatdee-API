@@ -6,7 +6,7 @@ import { MethodBadge } from "./common/MethodBadge";
 import { useStore } from "../store/useStore";
 import { parseCSV, parseJSONData } from "../lib/runner";
 import { buildVars } from "../lib/variables";
-import { prepareRequest, sendRequest, type SendResult } from "../lib/send";
+import { prepareRequest, sendRequest, getFetchFn, type SendResult } from "../lib/send";
 import { useTranslation } from "../lib/i18n";
 import { downloadJson, safeFilename } from "../lib/download";
 import type { Collection, ApiRequest } from "../lib/types";
@@ -142,6 +142,7 @@ export function CollectionRunnerModal({
         const result = await sendRequest(prepared, {
           timeoutMs: settings.requestTimeoutMs,
           maxBodyBytes: settings.maxResponsePreviewBytes,
+          fetchFn: getFetchFn(settings.useProxy),
         });
 
         setResults((prev) => [

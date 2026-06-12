@@ -35,7 +35,9 @@ export const DEFAULT_SETTINGS: Settings = {
   themePattern: "none",
   themeMode: "light",
   language: "en",
+  useProxy: false,
 };
+
 
 export const HISTORY_CAP = 100;
 

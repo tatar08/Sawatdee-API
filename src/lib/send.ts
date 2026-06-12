@@ -224,3 +224,57 @@ export async function sendRequest(
     clearTimeout(timer);
   }
 }
+
+/**
+ * Returns a proxy fetch function if useProxy setting is active, otherwise returns undefined.
+ * Proxies request details through Vercel serverless function /api/proxy.
+ */
+export function getFetchFn(useProxy?: boolean): typeof fetch | undefined {
+  if (!useProxy) return undefined;
+
+  return async function proxyFetch(input: RequestInfo | URL, options?: RequestInit): Promise<Response> {
+    const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+    // If request is already pointing to proxy endpoint or relative path, execute directly
+    if (url.startsWith("/") || url.startsWith(window.location.origin + "/api/proxy")) {
+      return fetch(input, options);
+    }
+
+    const targetHeaders = options?.headers || {};
+    const headersToSend: Record<string, string> = {};
+
+
+    if (targetHeaders instanceof Headers) {
+      targetHeaders.forEach((v, k) => {
+        headersToSend[k] = v;
+      });
+    } else if (Array.isArray(targetHeaders)) {
+      targetHeaders.forEach(([k, v]) => {
+        headersToSend[k] = v;
+      });
+    } else {
+      Object.entries(targetHeaders).forEach(([k, v]) => {
+        headersToSend[k] = String(v);
+      });
+    }
+
+    const proxyHeaders: Record<string, string> = {
+      "x-target-url": url,
+      "x-target-method": options?.method || "GET",
+      "x-target-headers": JSON.stringify(headersToSend),
+    };
+
+    const contentType = headersToSend["Content-Type"] || headersToSend["content-type"];
+    if (contentType) {
+      proxyHeaders["Content-Type"] = contentType;
+    }
+
+    return fetch("/api/proxy", {
+      method: "POST",
+      headers: proxyHeaders,
+      body: options?.body,
+      signal: options?.signal,
+    });
+  };
+}
+
