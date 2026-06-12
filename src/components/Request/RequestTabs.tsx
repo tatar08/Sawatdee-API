@@ -5,11 +5,13 @@ import { HeadersEditor } from "./HeadersEditor";
 import { BodyEditor } from "./BodyEditor";
 import { AuthEditor } from "./AuthEditor";
 import { useStore, selectActiveTab } from "../../store/useStore";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./RequestTabs.module.css";
 
 type EditorTab = "params" | "headers" | "body" | "auth";
 
 export function RequestTabs() {
+  const t = useTranslation();
   const [active, setActive] = useState<EditorTab>("params");
   const tab = useStore(selectActiveTab);
   if (!tab) return null;
@@ -23,25 +25,25 @@ export function RequestTabs() {
   };
 
   const tabs: { id: EditorTab; label: string }[] = [
-    { id: "params", label: "Params" },
-    { id: "headers", label: "Headers" },
-    { id: "body", label: "Body" },
-    { id: "auth", label: "Auth" },
+    { id: "params", label: t("params") },
+    { id: "headers", label: t("headers") },
+    { id: "body", label: t("body") },
+    { id: "auth", label: t("auth") },
   ];
 
   return (
     <GlassPanel className={styles.panel}>
       <div className={styles.tabRow} role="tablist" aria-label="Request sections">
-        {tabs.map((t) => (
+        {tabs.map((tItem) => (
           <button
-            key={t.id}
+            key={tItem.id}
             role="tab"
-            aria-selected={active === t.id}
-            className={`${styles.tabBtn} ${active === t.id ? styles.active : ""}`}
-            onClick={() => setActive(t.id)}
+            aria-selected={active === tItem.id}
+            className={`${styles.tabBtn} ${active === tItem.id ? styles.active : ""}`}
+            onClick={() => setActive(tItem.id)}
           >
-            {t.label}
-            {counts[t.id] > 0 && <span className={styles.count}>{counts[t.id]}</span>}
+            {tItem.label}
+            {counts[tItem.id] > 0 && <span className={styles.count}>{counts[tItem.id]}</span>}
           </button>
         ))}
       </div>

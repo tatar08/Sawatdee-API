@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sawatdee API - Cyber Siam Theme</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron & Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#020617',
+                            glass: 'rgba(15, 23, 42, 0.45)',
+                            primary: '#00FFCC',
+                            secondary: '#FF007F',
+                            accent: '#7928CA',
+                            neonGreen: '#39FF14'
+                        }
+                    },
+                    fontFamily: {
+                        cyber: ['"Orbitron"', 'sans-serif'],
+                        thai: ['"Noto Sans Thai"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: #020617;
+            background-image: radial-gradient(circle at 50% 50%, #0c1530 0%, #020617 100%);
+        }
+        /* Glassmorphism style with glowing neon borders */
+        .neon-card-cyan {
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.1), inset 0 0 15px rgba(0, 255, 204, 0.05);
+            backdrop-filter: blur(12px);
+        }
+        .neon-card-magenta {
+            border: 1px solid rgba(255, 0, 127, 0.25);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.1), inset 0 0 15px rgba(255, 0, 127, 0.05);
+            backdrop-filter: blur(12px);
+        }
+        /* Neon text animations */
+        .neon-text-glow {
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Glowing Top Header -->
+    <header class="bg-cyber-bg/80 border-b border-cyber-primary/20 px-6 py-4 flex items-center justify-between z-10 sticky top-0 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <!-- Glowing Hologram SVG Temple Tower logo -->
+            <div class="w-11 h-11 rounded-lg flex items-center justify-center border-2 border-cyber-primary shadow-[0_0_15px_rgba(0,255,204,0.3)] animate-pulse">
+                <svg class="w-8 h-8 text-cyber-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M12 2L4 22h16L12 2zM12 2l4 10H8l4-10zM12 12l2 4h-4l2-4z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-black tracking-widest text-cyber-primary font-cyber neon-text-glow">SAWATDEE // CYBER SIAM</h1>
+                <p class="text-[9px] text-cyber-secondary font-cyber uppercase tracking-widest">Neural Link API Terminal Protocol</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex items-center gap-3 font-cyber text-xs border border-cyber-primary/30 px-3 py-1 rounded bg-black/40">
+                <span class="text-slate-400">CORE TEMPERATURE:</span>
+                <span class="text-cyber-neonGreen font-bold animate-pulse">38.4°C</span>
+            </div>
+            <span class="text-[10px] font-cyber border border-cyber-secondary/40 text-cyber-secondary px-3 py-1 rounded bg-cyber-secondary/5">SECURE NETWORK PORTAL</span>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="flex-1 p-6 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Left Side Controller Menu Panel -->
+        <aside class="w-full lg:w-72 flex flex-col gap-6">
+            <div class="neon-card-cyan rounded-2xl p-4 bg-cyber-glass">
+                <h3 class="text-xs font-cyber font-bold text-cyber-primary tracking-widest uppercase border-b border-cyber-primary/10 pb-2 mb-3">CYBER DIRECTORY</h3>
+                <div class="space-y-1">
+                    <button class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg bg-cyber-primary/10 border-l-2 border-cyber-primary text-cyber-primary text-xs font-bold font-cyber tracking-wider">
+                        <i class="fa-solid fa-bolt"></i> AUTOMATED TEST SUITE
+                    </button>
+                    <button class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white text-xs font-cyber transition-all">
+                        <i class="fa-solid fa-server"></i> REST CHANNELS
+                    </button>
+                    <button class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white text-xs font-cyber transition-all">
+                        <i class="fa-solid fa-satellite-dish"></i> GRAPHQL TELEMETRY
+                    </button>
+                </div>
+            </div>
+
+            <!-- Endpoint diagnostic selector cards -->
+            <div class="neon-card-magenta rounded-2xl p-4 bg-cyber-glass flex-1 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xs font-cyber font-bold text-cyber-secondary tracking-widest uppercase border-b border-cyber-secondary/10 pb-2 mb-3">ACTIVE LINK CHANNELS</h3>
+                    <div class="space-y-2">
+                        <div class="p-2.5 bg-black/40 rounded-lg border border-cyber-secondary/20 flex justify-between items-center text-xs">
+                            <span class="font-bold text-cyber-primary">GET /prod/items</span>
+                            <span class="text-[10px] text-cyber-neonGreen font-cyber">99.1%</span>
+                        </div>
+                        <div class="p-2.5 bg-black/40 rounded-lg border border-cyber-secondary/10 flex justify-between items-center text-xs opacity-60">
+                            <span class="font-bold text-cyber-secondary">POST /prod/register</span>
+                            <span class="text-[10px] text-yellow-400 font-cyber">DOWN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-cyber-secondary/10">
+                    <button onclick="runDiagnostics()" class="w-full bg-gradient-to-r from-cyber-secondary to-cyber-accent text-white font-cyber font-bold text-xs py-3 rounded-xl shadow-[0_0_15px_rgba(255,0,127,0.3)] hover:brightness-110 active:scale-95 transition-all">
+                        RUN DIAGNOSTICS
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Side Primary Interactive Dashboard -->
+        <main class="flex-1 flex flex-col gap-6">
+            
+            <!-- API Endpoint Input Bar with holographic glowing accents -->
+            <section class="neon-card-cyan rounded-2xl p-5 bg-cyber-glass">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Methods selection custom button group -->
+                    <div class="flex bg-black/60 p-1 border border-cyber-primary/20 rounded-xl">
+                        <button onclick="setMethod('GET')" id="m-get" class="px-4 py-2 text-xs font-bold font-cyber bg-cyber-primary text-black rounded-lg transition-all">GET</button>
+                        <button onclick="setMethod('POST')" id="m-post" class="px-4 py-2 text-xs font-bold font-cyber text-slate-400 rounded-lg transition-all">POST</button>
+                    </div>
+
+                    <!-- Cyber secure target bar -->
+                    <div class="flex-1 flex items-center bg-black/60 border border-cyber-primary/20 rounded-xl px-3 focus-within:border-cyber-primary focus-within:shadow-[0_0_10px_rgba(0,255,204,0.2)] transition-all">
+                        <i class="fa-solid fa-lock text-cyber-primary/60 mr-2.5 text-xs"></i>
+                        <input id="target-endpoint" type="text" value="siam-cybergrid.io/v1/telemetry/health" class="bg-transparent font-cyber text-sm text-cyber-primary focus:outline-none w-full py-3 px-1 placeholder-cyber-primary/30">
+                    </div>
+
+                    <!-- Connect action button -->
+                    <button onclick="fireCyberSignal()" class="bg-gradient-to-r from-cyber-primary to-cyber-accent text-black font-cyber font-extrabold px-8 py-3 rounded-xl shadow-[0_0_20px_rgba(0,255,204,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
+                        <span>CONNECT</span> <i class="fa-solid fa-wave-square"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Holographic Sandbox Console Workspace -->
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 flex-1">
+                <!-- Data Feed Output panel -->
+                <section class="xl:col-span-7 bg-cyber-glass rounded-2xl p-5 border border-cyber-primary/20 flex flex-col min-h-[300px]">
+                    <div class="flex items-center justify-between border-b border-cyber-primary/10 pb-3 mb-4">
+                        <div class="flex items-center gap-2.5 font-cyber text-xs tracking-wider">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-primary animate-ping"></span>
+                            <span>INCOMING NEURAL FEEDBACK</span>
+                        </div>
+                        <span id="response-status-badge" class="text-[10px] font-cyber text-cyber-neonGreen border border-cyber-neonGreen/30 bg-cyber-neonGreen/5 px-2.5 py-0.5 rounded">STATUS: ESTABLISHED</span>
+                    </div>
+
+                    <!-- Telemetry output terminal view -->
+                    <div class="flex-1 bg-black/80 rounded-xl p-4 font-cyber text-xs text-cyber-primary overflow-auto max-h-80 border border-cyber-primary/10">
+                        <pre id="cyber-console-output" class="leading-relaxed text-cyber-neonGreen font-mono">
+>>> CODENAME: SAWATDEE_API_V3
+>>> SECURE HANDSHAKE STATUS: OK
+>>> DECRYPTING STREAMING CYBER PACKETS...
+{
+  "system_integrity": "100%",
+  "node_origin": "CyberSiam-Bangkok-09",
+  "active_link_signals": {
+    "neon_broadcaster": "ONLINE",
+    "gateway_delay_avg": "21.05ns",
+    "packet_hash": "SHA-512_SECURE_ENCRYPTION_LINK"
+  }
+}</pre>
+                    </div>
+                </section>
+
+                <!-- Simulated diagnostics terminal runner log -->
+                <section class="xl:col-span-5 bg-cyber-glass rounded-2xl p-5 border border-cyber-primary/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-cyber-primary/10 pb-3 mb-4">
+                            <span class="text-xs font-cyber font-bold text-cyber-primary tracking-widest uppercase">DIAGNOSTIC TELEMETRY LOGS</span>
+                        </div>
+                        
+                        <!-- Test sequences lists -->
+                        <div class="space-y-3 font-cyber text-xs">
+                            <div class="flex items-center justify-between p-2.5 bg-black/40 border border-cyber-primary/10 rounded-lg">
+                                <span class="text-slate-300">Ping Siam Node Gateways</span>
+                                <span id="diag-t1" class="text-cyber-neonGreen font-bold font-mono">SUCCESS (4ms)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-black/40 border border-cyber-primary/10 rounded-lg">
+                                <span class="text-slate-300">Verify SSL Cyber-Shield</span>
+                                <span id="diag-t2" class="text-cyber-neonGreen font-bold font-mono">SUCCESS (12ms)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-black/40 border border-cyber-primary/10 rounded-lg">
+                                <span class="text-slate-300">Buffer Allocation Security Check</span>
+                                <span id="diag-t3" class="text-cyber-neonGreen font-bold font-mono">SUCCESS (1ms)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid overlay decorations visualizer -->
+                    <div class="mt-6 border-t border-cyber-primary/10 pt-4">
+                        <div class="flex justify-between items-center text-xs font-cyber mb-2 text-slate-400">
+                            <span>GRID BANDWIDTH ALLOCATION</span>
+                            <span>78% ACTIVE</span>
+                        </div>
+                        <div class="flex gap-1 h-8 items-end">
+                            <div class="flex-1 bg-cyber-primary/30 h-4 rounded-sm"></div>
+                            <div class="flex-1 bg-cyber-primary/50 h-5 rounded-sm"></div>
+                            <div class="flex-1 bg-cyber-primary h-7 rounded-sm animate-pulse"></div>
+                            <div class="flex-1 bg-cyber-secondary h-6 rounded-sm"></div>
+                            <div class="flex-1 bg-cyber-secondary/50 h-3 rounded-sm"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Interactive Glowing Notification alert -->
+    <div id="cyber-toast" class="fixed bottom-6 right-6 bg-black border-2 border-cyber-primary text-cyber-primary font-cyber text-xs font-bold px-6 py-4 rounded-xl shadow-[0_0_25px_rgba(0,255,204,0.3)] transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-3">
+        <i class="fa-solid fa-network-wired text-lg animate-pulse"></i>
+        <span id="toast-cyber-msg">CYBER SIGNS SENT SUCCESSFULLY.</span>
+    </div>
+
+    <!-- Script Interactions for Cyber Siam -->
+    <script>
+        let currentMethod = 'GET';
+
+        function setMethod(method) {
+            currentMethod = method;
+            const btnGet = document.getElementById('m-get');
+            const btnPost = document.getElementById('m-post');
+            
+            if(method === 'GET') {
+                btnGet.className = "px-4 py-2 text-xs font-bold font-cyber bg-cyber-primary text-black rounded-lg transition-all";
+                btnPost.className = "px-4 py-2 text-xs font-bold font-cyber text-slate-400 rounded-lg transition-all";
+            } else {
+                btnPost.className = "px-4 py-2 text-xs font-bold font-cyber bg-cyber-secondary text-white rounded-lg transition-all";
+                btnGet.className = "px-4 py-2 text-xs font-bold font-cyber text-slate-400 rounded-lg transition-all";
+            }
+        }
+
+        function fireCyberSignal() {
+            const endpoint = document.getElementById('target-endpoint').value;
+            const consoleOutput = document.getElementById('cyber-console-output');
+            const statusBadge = document.getElementById('response-status-badge');
+
+            showCyberToast("DISPATCHING COGNITIVE CONNECTIVITY SIGNALS...");
+            statusBadge.innerText = "STATUS: SYNCHRONIZING";
+            statusBadge.className = "text-[10px] font-cyber text-yellow-400 border border-yellow-400/30 bg-yellow-400/5 px-2.5 py-0.5 rounded";
+
+            consoleOutput.innerText = ">>> SYNCHRONIZING SIGNALS...\n>>> ATTEMPTING HANDSHAKE PORTAL ACCESS OVER SYSTEM GRID...";
+
+            setTimeout(() => {
+                statusBadge.innerText = "STATUS: ONLINE_SECURE";
+                statusBadge.className = "text-[10px] font-cyber text-cyber-neonGreen border border-cyber-neonGreen/30 bg-cyber-neonGreen/5 px-2.5 py-0.5 rounded";
+
+                consoleOutput.innerText = `>>> CONNECTION SUCCESSFULLY ESTABLISHED WITH: ${endpoint}
+>>> METHOD DETECTED: ${currentMethod}
+>>> ENCRYPTION ALGORITHM: SHA-512 SECURE DECRYPTION
+{
+  "integrity_ping_delay": "12ns",
+  "secure_handshake": true,
+  "payload": {
+    "network_status": "ACTIVE_SECURE",
+    "method_fired": "${currentMethod}",
+    "timestamp": "${new Date().toISOString()}"
+  }
+}`;
+                showCyberToast("CYBER DECRYPTION STREAM PACKET SYNCED.");
+            }, 850);
+        }
+
+        function runDiagnostics() {
+            const t1 = document.getElementById('diag-t1');
+            const t2 = document.getElementById('diag-t2');
+            const t3 = document.getElementById('diag-t3');
+
+            t1.innerText = "TESTING...";
+            t1.className = "text-yellow-400 font-bold";
+            t2.innerText = "TESTING...";
+            t2.className = "text-yellow-400 font-bold";
+            t3.innerText = "TESTING...";
+            t3.className = "text-yellow-400 font-bold";
+
+            setTimeout(() => {
+                t1.innerText = "PASSED (2ms)";
+                t1.className = "text-cyber-neonGreen font-bold";
+                t2.innerText = "PASSED (8ms)";
+                t2.className = "text-cyber-neonGreen font-bold";
+                t3.innerText = "PASSED (0.4ms)";
+                t3.className = "text-cyber-neonGreen font-bold";
+                showCyberToast("ALL DIAGNOSTIC SYSTEMS FUNCTIONAL.");
+            }, 1000);
+        }
+
+        function showCyberToast(msg) {
+            const toast = document.getElementById('cyber-toast');
+            document.getElementById('toast-cyber-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

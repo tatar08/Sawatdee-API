@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sawatdee API — User Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #fdf7fa;
+      --bg-gradient: linear-gradient(135deg, #fff5f9 0%, #fde8f1 50%, #f8eefc 100%);
+      --pink-50: #fff0f6;
+      --pink-100: #ffd6e7;
+      --pink-300: #ff9ec4;
+      --pink-500: #ff5fa2;
+      --pink-600: #f43f8e;
+      --text-strong: #2b1b25;
+      --text-normal: #5a4a54;
+      --text-muted: #9b8a94;
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.75);
+      --glass-shadow: 0 8px 32px rgba(214, 46, 118, 0.08), 0 2px 8px rgba(43, 27, 37, 0.04);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --code-bg: #f5edf1;
+      --border-color: rgba(214, 46, 118, 0.15);
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #150e12;
+      --bg-gradient: linear-gradient(135deg, #180c12 0%, #241119 50%, #170d1e 100%);
+      --pink-50: #29121d;
+      --pink-100: #4a1c30;
+      --pink-300: #852d50;
+      --pink-500: #ff5fa2;
+      --pink-600: #f43f8e;
+      --text-strong: #f6edf2;
+      --text-normal: #cfc1ca;
+      --text-muted: #95818d;
+      --glass-bg: rgba(21, 14, 18, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+      --code-bg: #27141f;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--bg-base);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-normal);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+
+    /* Sidebar Table of Contents */
+    aside {
+      position: sticky;
+      top: 30px;
+      height: fit-content;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    aside h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    aside ul {
+      list-style: none;
+    }
+
+    aside li {
+      margin-bottom: 12px;
+    }
+
+    aside a {
+      color: var(--text-normal);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    aside a:hover {
+      color: var(--pink-500);
+    }
+
+    /* Main Content Area */
+    main {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: var(--radius);
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--text-strong);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    h2:first-of-type {
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: var(--text-strong);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    /* Code & Formatting */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--pink-600);
+    }
+
+    pre {
+      background: #181216;
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: #cfc1ca;
+      font-size: 0.85rem;
+    }
+
+    /* Alerts */
+    .alert {
+      border-left: 4px solid var(--pink-500);
+      background: var(--pink-50);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 24px;
+    }
+
+    .alert p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-strong);
+      background: rgba(214, 46, 118, 0.05);
+    }
+
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--text-strong);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        position: relative;
+        top: 0;
+        width: 100%;
+      }
+      main {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" id="theme-btn">
+    🌓 Toggle Theme
+  </button>
+
+  <header>
+    <h1>Sawatdee API</h1>
+    <p>User Manual & Operations Guide</p>
+  </header>
+
+  <div class="container">
+    <aside>
+      <h3>Manual Sections</h3>
+      <ul>
+        <li><a href="#1-introduction--core-concept">1. Introduction</a></li>
+        <li><a href="#2-cors-the-sandbox-constraint">2. CORS Sandbox Constraint</a></li>
+        <li><a href="#3-setup--running-locally">3. Setup &amp; Running</a></li>
+        <li><a href="#4-user-interface-overview">4. User Interface</a></li>
+        <li><a href="#5-creating-and-customizing-requests">5. Requests Customization</a></li>
+        <li><a href="#6-response-viewer--troubleshooting">6. Response Viewer</a></li>
+        <li><a href="#7-environments--variables">7. Environments &amp; Variables</a></li>
+        <li><a href="#8-import--export-migration">8. Import &amp; Export</a></li>
+        <li><a href="#9-advanced-collection-runner-with-csvjson-data">9. Collection Runner</a></li>
+        <li><a href="#10-aesthetics-themes--mascots">10. Themes &amp; Mascots</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <section id="1-introduction--core-concept">
+        <h2>1. Introduction &amp; Core Concept</h2>
+        <p>Sawatdee API is a premium API client designed as a browser-first, privacy-respecting homage to Postman. Unlike other tools that route requests through proxy servers or store your workspace in the cloud, <strong>Sawatdee API runs completely in your browser</strong>.</p>
+        
+        <h3>Key Characteristics:</h3>
+        <ul>
+          <li><strong>Zero Backend</strong>: Fires requests directly from your browser's context via <code>fetch()</code>.</li>
+          <li><strong>Private and Offline-First</strong>: Workspace collections, environments, history, and settings are saved locally in the browser using <strong>IndexedDB</strong> (via Dexie). Your API keys, tokens, and payloads are never sent to third-party servers.</li>
+          <li><strong>Apple-Style Aesthetics</strong>: Built with a "liquid-glass" glassmorphism theme, soft pastel accents, and customizable mascot themes.</li>
+        </ul>
+      </section>
+
+      <section id="2-cors-the-sandbox-constraint">
+        <h2>2. CORS: The Sandbox Constraint</h2>
+        <p>Because Sawatdee API runs strictly inside the browser sandbox, <strong>it is subject to browser Cross-Origin Resource Sharing (CORS) security policies</strong>. This is a browser security constraint, not a bug in Sawatdee API.</p>
+        
+        <h3>CORS Cheat Sheet:</h3>
+        <ul>
+          <li><strong>CORS-enabled APIs</strong>: Work perfectly out of the box. The target server sends <code>Access-Control-Allow-Origin: *</code>, permitting the browser to read the response.</li>
+          <li><strong>Non-CORS APIs (Blocked)</strong>: If the server doesn't send CORS headers, the browser blocks the response. Sawatdee API displays a dedicated <strong>CORS Explainer</strong> to diagnose the problem.</li>
+          <li><strong>Mixed Content Warn</strong>: The browser blocks HTTP calls from an HTTPS site. Sawatdee API detects this and warns you inline.</li>
+          <li><strong>Forbidden Headers</strong>: The browser blocks programmatic control over certain headers (e.g. <code>Host</code>, <code>Origin</code>, <code>User-Agent</code>, <code>Cookie</code>, <code>Content-Length</code>) for safety. Sawatdee API will warn you inline if you attempt to override them.</li>
+        </ul>
+      </section>
+
+      <section id="3-setup--running-locally">
+        <h2>3. Setup &amp; Running Locally</h2>
+        <p>To run Sawatdee API in your development environment or host it on your local server:</p>
+        
+        <h3>Prerequisites:</h3>
+        <p>Ensure you have <strong>Node.js</strong> and either <strong>npm</strong> or <strong>pnpm</strong> installed.</p>
+        
+        <h3>Installation &amp; Start:</h3>
+        <pre><code># Install dependencies
+pnpm install
+
+# Run local development server
+pnpm dev
+
+# Build for production
+pnpm build</code></pre>
+        <p>The production build outputs static files to the <code>dist/</code> folder, ready to be served by any static hosting service.</p>
+      </section>
+
+      <section id="4-user-interface-overview">
+        <h2>4. User Interface Overview</h2>
+        <p>Sawatdee API uses a classic three-pane desktop layout designed for efficiency:</p>
+        <pre><code>+------------------------------------------------------------------------------------------------+
+|  Sawatdee API  [Logo Tagline]                             [Active Environment ▾]   [🌓] [⚙ Settings] |
++------------------+-----------------------------------------------------------------------------+
+|  COLLECTIONS     |  GET ▾  | https://api.example.com/v1/users/{{userId}}                 | [Save] [Send ▶] |
+|  [+ New Col]     +-----------------------------------------------------------------------------+
+|  + Users API     |  Params | Headers (1) | Body | Auth                                         |
+|    - Get User    |  +-----------------------------------------------------------------------+  |
+|    - Edit User   |  | Enabled | Key         | Value                           | Action  |  |
+|    - Delete User |  | [x]     | userId      | 420                             | [Trash] |  |
+|                  |  | [ ]     | [New key..] | [New value..]                   |         |  |
+|  HISTORY         |  +-----------------------------------------------------------------------+  |
+|  - GET /users    +-----------------------------------------------------------------------------+
+|  - POST /auth    |  Status: 200 OK  •  Time: 120 ms  •  Size: 420 Bytes          [Copy] [Download] |
+|                  +-----------------------------------------------------------------------------+
+|                  |  Body (Pretty) | Headers | Cookies                                          |
+|                  |  +-----------------------------------------------------------------------+  |
+|                  |  | {                                                                     |  |
+|                  |  |   "id": 420,                                                          |  |
+|                  |  |   "username": "shiba_inu"                                             |  |
+|                  |  | }                                                                     |  |
+|                  |  +-----------------------------------------------------------------------+  |
++------------------+-----------------------------------------------------------------------------+</code></pre>
+      </section>
+
+      <section id="5-creating-and-customizing-requests">
+        <h2>5. Creating and Customizing Requests</h2>
+        <h3>5.1 HTTP Methods</h3>
+        <p>Supports <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code>, and <code>OPTIONS</code>.</p>
+        
+        <h3>5.2 Variable Interpolation</h3>
+        <p>Use variables anywhere inside URLs, header values, or parameters using double curly braces: <code>{{variableName}}</code>. They resolve dynamically from the active environment or collection-level variables.</p>
+        
+        <h3>5.3 Authorization Modes</h3>
+        <ul>
+          <li><strong>Bearer Token</strong>: Resolves to <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+          <li><strong>Basic Auth</strong>: Resolves to <code>Authorization: Basic &lt;base64(user:pass)&gt;</code>.</li>
+          <li><strong>API Key</strong>: custom key/value pair injected in Headers or Query params.</li>
+        </ul>
+        <div class="alert">
+          <p><strong>Note:</strong> Sawatdee API displays a read-only live preview showing the exact auth headers that will be sent.</p>
+        </div>
+
+        <h3>5.4 Request Payload (Body)</h3>
+        <p>Configure the payload under the <strong>Body</strong> tab, supporting JSON, Raw text (with HTML, XML, or text highlight), Form data, and URL-encoded tables.</p>
+      </section>
+
+      <section id="6-response-viewer--troubleshooting">
+        <h2>6. Response Viewer &amp; Troubleshooting</h2>
+        <p>Once a response returns, the Response Panel offers rich tools to inspect it:</p>
+        <ul>
+          <li><strong>Pretty</strong>: Formatted JSON/XML syntax-highlighted response using CodeMirror.</li>
+          <li><strong>Raw</strong>: Plain response text.</li>
+          <li><strong>Preview</strong>: Renders images directly, and HTML inside a sandboxed <code>&lt;iframe&gt;</code> to prevent scripting attacks.</li>
+          <li><strong>Search</strong>: Search terms in the body with match counters and markings.</li>
+        </ul>
+      </section>
+
+      <section id="7-environments--variables">
+        <h2>7. Environments &amp; Variables</h2>
+        <p>Manage environments (such as Dev vs Production) by defining variable contexts:</p>
+        <ol>
+          <li>Click the active environment selector in the Top Bar (or Settings modal).</li>
+          <li>Create environments and define key-value variables.</li>
+          <li>Select the environment to dynamically substitute placeholders like <code>{{host}}</code> in request fields.</li>
+        </ol>
+      </section>
+
+      <section id="8-import--export-migration">
+        <h2>8. Import &amp; Export (Migration)</h2>
+        <p>Migrate your data in and out of Sawatdee API seamlessly:</p>
+        <ul>
+          <li><strong>Imports</strong>: Autodetects Postman Collections v2.1, Postman Environments, or Sawatdee API Native Backups.</li>
+          <li><strong>Conflict Resolution</strong>: Existing items are never overwritten; duplicate names are imported with an <code>(imported)</code> suffix.</li>
+          <li><strong>Exports</strong>: Export collections as Postman v2.1 or Native Sawatdee API JSON backups.</li>
+        </ul>
+      </section>
+
+      <section id="9-advanced-collection-runner-with-csvjson-data">
+        <h2>9. Advanced: Collection Runner with CSV/JSON Data</h2>
+        <p>The Collection Runner lets you run through an entire collection of API requests sequentially. You can customize the run loop by defining key run parameters:</p>
+        <ul>
+          <li><strong>Iterations &amp; Delay</strong>: Specify how many times to repeat the execution loop, and define a delay duration in milliseconds (ms) between individual requests.</li>
+          <li><strong>Active Environment</strong>: Select or change the active environment context directly inside the runner modal using the dropdown.</li>
+          <li><strong>Request Checklist</strong>: Toggle checkboxes next to each request in the setup panel to include or exclude them from the run. You can also use the "Select All" and "Deselect All" buttons.</li>
+        </ul>
+        <p><strong>Running with Data Files:</strong></p>
+        <ol>
+          <li>Select <strong>Run Collection</strong> from a collection menu.</li>
+          <li>Upload a CSV (with header columns) or JSON array of objects under <strong>Data File</strong>.</li>
+          <li>Reference column names like <code>{{userId}}</code> in the requests.</li>
+          <li>Set the Delay, adjust Iterations, or select the Environment and Requests to run.</li>
+          <li>Click <strong>Run Collection</strong>. Sawatdee API will loop through the requests for each row in the file.</li>
+        </ol>
+        <p><strong>Exporting Results:</strong></p>
+        <p>Once the run is complete, click <strong>Export Results</strong> to download a comprehensive JSON report containing collection details, the environment used, execution statistics, and detailed response logs for each request.</p>
+      </section>
+
+      <section id="10-aesthetics-themes--mascots">
+        <h2>10. Aesthetics, Themes, &amp; Mascots</h2>
+        <p>Swap wallpapers to match your style. Sawatdee API contains 6 customized Japan-inspired mascot styles: <strong>Classic Pink</strong>, <strong>Shiba Inu</strong>, <strong>Maneki-Neko</strong>, <strong>Moonlit Usagi</strong>, <strong>Matcha Panda</strong>, and <strong>Thai Chang</strong>.</p>
+        <ul>
+          <li><strong>Dark Mode</strong>: Transition glass colors to dark overlays for late-night workflows.</li>
+          <li><strong>Reduce Transparency</strong>: Swaps frosted glass for solid surfaces, improving contrast and legibility.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // System Theme Matcher & Toggle
+    const themeBtn = document.getElementById('theme-btn');
+    
+    // Check url search params for theme, otherwise system theme
+    const params = new URLSearchParams(window.location.search);
+    let theme = params.get('theme') || localStorage.getItem('pg-theme') || 'light';
+    
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    themeBtn.addEventListener('click', () => {
+      theme = theme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pg-theme', theme);
+    });
+
+    // Listen to message from parent to sync dark theme
+    window.addEventListener('message', (event) => {
+      if (event.data && typeof event.data === 'object') {
+        if (event.data.type === 'sync-theme' && event.data.theme) {
+          theme = event.data.theme;
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

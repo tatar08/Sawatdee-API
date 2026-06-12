@@ -7,11 +7,13 @@ import { useStore, selectActiveTab } from "../../store/useStore";
 import { StatusBar } from "./StatusBar";
 import { BodyViewer } from "./BodyViewer";
 import { HeadersViewer } from "./HeadersViewer";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./ResponsePanel.module.css";
 
 type ResponseTab = "body" | "headers" | "cookies";
 
 export function ResponsePanel() {
+  const t = useTranslation();
   const tab = useStore(selectActiveTab);
   const [activeTab, setActiveTab] = useState<ResponseTab>("body");
 
@@ -24,7 +26,7 @@ export function ResponsePanel() {
       <GlassPanel className={styles.panel}>
         <div className={styles.center}>
           <Loader2 size={22} className={styles.spinner} />
-          <span className={styles.sendingLabel}>Sending…</span>
+          <span className={styles.sendingLabel}>{t("sending")}</span>
         </div>
       </GlassPanel>
     );
@@ -35,8 +37,8 @@ export function ResponsePanel() {
       <GlassPanel className={styles.panel}>
         <EmptyState
           icon={<Zap size={28} />}
-          title="Send a request"
-          hint="The response will appear here"
+          title={t("emptyResponseTitle")}
+          hint={t("emptyResponseHint")}
         />
       </GlassPanel>
     );
@@ -67,13 +69,13 @@ export function ResponsePanel() {
           className={`${styles.tabBtn} ${activeTab === "body" ? styles.tabActive : ""}`}
           onClick={() => setActiveTab("body")}
         >
-          Body
+          {t("responseBody")}
         </button>
         <button
           className={`${styles.tabBtn} ${activeTab === "headers" ? styles.tabActive : ""}`}
           onClick={() => setActiveTab("headers")}
         >
-          Headers
+          {t("responseHeaders")}
           <span className={styles.count}>
             {Object.keys(result.headers).length}
           </span>
@@ -82,7 +84,7 @@ export function ResponsePanel() {
           className={`${styles.tabBtn} ${activeTab === "cookies" ? styles.tabActive : ""}`}
           onClick={() => setActiveTab("cookies")}
         >
-          Cookies
+          {t("responseCookies")}
           {cookieHeaders.length > 0 && (
             <span className={styles.count}>{cookieHeaders.length}</span>
           )}
@@ -110,8 +112,7 @@ export function ResponsePanel() {
             ) : (
               <div className={styles.cookieEmpty}>
                 <p className={styles.cookieNote}>
-                  Browsers hide most cookie data from JavaScript — this is a
-                  browser restriction, not a Postgirl bug.
+                  {t("responseCookiesEmpty")}
                 </p>
               </div>
             )}

@@ -1,16 +1,26 @@
 import { useState } from "react";
-import { Heart, Layers, PanelLeft, Settings } from "lucide-react";
+import { Heart, Layers, PanelLeft, Settings, Sun, Moon, BookOpen } from "lucide-react";
 import { GlassPanel } from "./common/GlassPanel";
 import { Button } from "./common/Button";
 import { EnvironmentSelector } from "./EnvironmentSelector";
 import { EnvironmentManager } from "./EnvironmentManager";
+import { UserManualModal } from "./UserManualModal";
 import { useStore } from "../store/useStore";
+import { useTranslation } from "../lib/i18n";
 import styles from "./TopBar.module.css";
 
 export function TopBar() {
   const toggleSidebar = useStore((s) => s.toggleSidebar);
   const setSettingsOpen = useStore((s) => s.setSettingsOpen);
+  const themeMode = useStore((s) => s.settings.themeMode ?? "light");
+  const updateSettings = useStore((s) => s.updateSettings);
   const [envManagerOpen, setEnvManagerOpen] = useState(false);
+  const [manualOpen, setManualOpen] = useState(false);
+  const t = useTranslation();
+
+  const toggleTheme = () => {
+    updateSettings({ themeMode: themeMode === "light" ? "dark" : "light" });
+  };
 
   return (
     <GlassPanel className={styles.bar}>
@@ -25,14 +35,9 @@ export function TopBar() {
       </Button>
       <div className={styles.logo}>
         <Heart size={18} className={styles.logoIcon} aria-hidden fill="currentColor" />
-        <span className={styles.wordmark}>Postgirl</span>
+        <span className={styles.wordmark}>Sawatdee API</span>
         <span className={styles.tagline}>
-          100% browser · no backend · no data stored · built by{" "}
-          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer">Claude Fable 5</a>
-          , improved by{" "}
-          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer">Sonnet</a>
-          {" "}· hosted free on{" "}
-          <a href="https://azure.microsoft.com/en-us/products/app-service/static" target="_blank" rel="noopener noreferrer">Azure SWA</a>
+          {t("logoTagline")}
         </span>
       </div>
       <div className={styles.spacer} />
@@ -47,6 +52,27 @@ export function TopBar() {
         <Layers size={16} />
       </Button>
       <EnvironmentManager open={envManagerOpen} onClose={() => setEnvManagerOpen(false)} />
+      
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setManualOpen(true)}
+        aria-label={t("userManual")}
+        title={t("userManual")}
+      >
+        <BookOpen size={16} />
+      </Button>
+      <UserManualModal open={manualOpen} onClose={() => setManualOpen(false)} />
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={toggleTheme}
+        aria-label={themeMode === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        title={themeMode === "light" ? "Dark Mode" : "Light Mode"}
+      >
+        {themeMode === "light" ? <Moon size={16} /> : <Sun size={16} />}
+      </Button>
       <Button
         variant="ghost"
         size="sm"

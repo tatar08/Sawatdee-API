@@ -3,6 +3,7 @@ import { Copy, Check, Download } from "lucide-react";
 import type { SendSuccess } from "../../lib/send";
 import { formatBytes, formatDuration } from "../../lib/format";
 import { Button } from "../common/Button";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./StatusBar.module.css";
 
 interface StatusBarProps {
@@ -37,6 +38,7 @@ function extFromContentType(contentType: string): string {
 }
 
 export function StatusBar({ result, requestName }: StatusBarProps) {
+  const t = useTranslation();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
@@ -74,7 +76,7 @@ export function StatusBar({ result, requestName }: StatusBarProps) {
           size="sm"
           variant="ghost"
           onClick={handleCopy}
-          title="Copy response body"
+          title={t("statusCopyTitle")}
           className={styles.actionBtn}
         >
           {copied ? (
@@ -82,18 +84,18 @@ export function StatusBar({ result, requestName }: StatusBarProps) {
           ) : (
             <Copy size={14} />
           )}
-          {copied ? "Copied" : "Copy"}
+          {copied ? t("statusCopiedBtn") : t("statusCopyBtn")}
         </Button>
 
         <Button
           size="sm"
           variant="ghost"
           onClick={handleDownload}
-          title="Download response"
+          title={t("statusDownloadTitle")}
           className={styles.actionBtn}
         >
           <Download size={14} />
-          Download
+          {t("statusDownloadBtn")}
         </Button>
       </div>
     </div>

@@ -3,21 +3,13 @@ import type { BodyMode, RequestBody } from "../../lib/types";
 import { KeyValueTable } from "./KeyValueTable";
 import { EmptyState } from "../common/EmptyState";
 import { useStore, selectActiveTab } from "../../store/useStore";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./BodyEditor.module.css";
 
 const CodeEditor = lazy(() => import("./CodeEditor"));
 
-const MODES: { value: BodyMode; label: string }[] = [
-  { value: "none", label: "None" },
-  { value: "json", label: "JSON" },
-  { value: "raw", label: "Raw" },
-  { value: "form-data", label: "Form data" },
-  { value: "x-www-form-urlencoded", label: "URL encoded" },
-];
-
-const RAW_LANGS = ["text", "json", "xml", "html"] as const;
-
 export function BodyEditor() {
+  const t = useTranslation();
   const tab = useStore(selectActiveTab);
   const updateActiveRequest = useStore((s) => s.updateActiveRequest);
   if (!tab) return null;
@@ -26,10 +18,20 @@ export function BodyEditor() {
   const setBody = (patch: Partial<RequestBody>) =>
     updateActiveRequest({ body: { ...body, ...patch } });
 
+  const modes = [
+    { value: "none" as BodyMode, label: t("bodyModesNone") },
+    { value: "json" as BodyMode, label: t("bodyModesJson") },
+    { value: "raw" as BodyMode, label: t("bodyModesRaw") },
+    { value: "form-data" as BodyMode, label: t("bodyModesFormData") },
+    { value: "x-www-form-urlencoded" as BodyMode, label: t("bodyModesUrlEncoded") },
+  ];
+
+  const RAW_LANGS = ["text", "json", "xml", "html"] as const;
+
   return (
     <div className={styles.wrap}>
       <div className={styles.modeRow} role="radiogroup" aria-label="Body mode">
-        {MODES.map((m) => (
+        {modes.map((m) => (
           <button
             key={m.value}
             role="radio"
@@ -60,10 +62,10 @@ export function BodyEditor() {
 
       <div className={styles.editor}>
         {body.mode === "none" && (
-          <EmptyState title="No body" hint="This request has no payload" />
+          <EmptyState title={t("bodyNoPayloadTitle")} hint={t("bodyNoPayloadHint")} />
         )}
         {(body.mode === "json" || body.mode === "raw") && (
-          <Suspense fallback={<div className={styles.loading}>Loading editor…</div>}>
+          <Suspense fallback={<div className={styles.loading}>{t("bodyLoadingEditor")}</div>}>
             <CodeEditor
               value={body.raw ?? ""}
               onChange={(raw) => setBody({ raw })}
@@ -75,8 +77,8 @@ export function BodyEditor() {
           <KeyValueTable
             rows={body.formData ?? []}
             onChange={(formData) => setBody({ formData })}
-            keyPlaceholder="field"
-            valuePlaceholder="value — {{variables}} supported"
+            keyPlaceholder={t("bodyFieldPlaceholder")}
+            valuePlaceholder={t("bodyValuePlaceholder")}
           />
         )}
       </div>

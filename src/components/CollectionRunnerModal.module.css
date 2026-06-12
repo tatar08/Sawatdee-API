@@ -1,0 +1,339 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--pg-space) * 2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pg-space);
+}
+
+.title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--pg-text-strong);
+  margin: 0;
+}
+
+.reqList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: var(--pg-radius-sm);
+  padding: var(--pg-space);
+}
+
+.reqItem {
+  display: flex;
+  align-items: center;
+  gap: var(--pg-space);
+  padding: 4px var(--pg-space);
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+}
+
+.reqIndex {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  width: 16px;
+}
+
+.reqName {
+  flex: 1;
+  font-weight: 600;
+  color: var(--pg-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--pg-space) * 3);
+  border: 2px dashed var(--pg-pink-100);
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--pg-radius);
+  cursor: pointer;
+  transition: all var(--pg-dur) var(--pg-ease);
+  text-align: center;
+}
+
+.dropzone:hover {
+  border-color: var(--pg-pink-500);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dropzoneIcon {
+  color: var(--pg-pink-500);
+  margin-bottom: var(--pg-space);
+}
+
+.dropzoneText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pg-text);
+}
+
+.dropzoneHint {
+  font-size: 10.5px;
+  color: var(--pg-text-muted);
+  margin-top: 4px;
+}
+
+.fileSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--pg-space) * 1.5) calc(var(--pg-space) * 2);
+  background: var(--pg-pink-50);
+  border: 1px solid var(--pg-pink-100);
+  border-radius: var(--pg-radius);
+  font-size: 12px;
+}
+
+.fileName {
+  font-weight: 600;
+  color: var(--pg-pink-700);
+}
+
+.fileMeta {
+  color: var(--pg-text-muted);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--pg-space);
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: var(--pg-radius-sm);
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statVal {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--pg-text-strong);
+}
+
+.statVal.pass {
+  color: var(--pg-ok);
+}
+
+.statVal.fail {
+  color: var(--pg-err);
+}
+
+.progressContainer {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--pg-pink-500);
+  transition: width 0.2s var(--pg-ease);
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pg-space);
+}
+
+.resultsScroll {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--pg-radius-sm);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+
+.resultsTable th {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.resultsTable td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  vertical-align: middle;
+}
+
+.resultsTable tr:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.statusBadge.ok {
+  background: rgba(43, 191, 138, 0.1);
+  color: var(--pg-ok);
+}
+
+.statusBadge.error {
+  background: rgba(224, 83, 122, 0.1);
+  color: var(--pg-err);
+}
+
+.timeCol {
+  font-family: var(--pg-font-mono);
+  color: var(--pg-text-muted);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--pg-space);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  padding-top: calc(var(--pg-space) * 2);
+  margin-top: var(--pg-space);
+}
+
+.iterationGroup {
+  background: var(--pg-pink-50);
+  font-weight: 700;
+  color: var(--pg-pink-700);
+}
+
+.runnerParamsRow {
+  display: flex;
+  gap: calc(var(--pg-space) * 2);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: var(--pg-radius-sm);
+  padding: calc(var(--pg-space) * 1.5);
+}
+
+.paramField {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.paramLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pg-text-muted);
+  text-transform: uppercase;
+}
+
+.paramInput {
+  background: var(--pg-glass-bg);
+  border: 1px solid var(--pg-glass-border);
+  border-radius: var(--pg-radius-sm);
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--pg-text-strong);
+  font-family: var(--pg-font-mono);
+  outline: none;
+  transition: all var(--pg-dur) var(--pg-ease);
+}
+
+.paramInput:focus {
+  border-color: var(--pg-pink-300);
+  background: var(--pg-glass-bg-strong);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bulkActions {
+  display: flex;
+  gap: var(--pg-space);
+}
+
+.bulkBtn {
+  background: none;
+  border: none;
+  font-size: 11.5px;
+  color: var(--pg-pink-500);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all var(--pg-dur) var(--pg-ease);
+}
+
+.bulkBtn:hover {
+  background: rgba(224, 83, 122, 0.08);
+}
+
+.reqItemLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--pg-space);
+  padding: 4px var(--pg-space);
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--pg-dur) var(--pg-ease);
+}
+
+.reqItemLabel:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.checkbox {
+  cursor: pointer;
+  accent-color: var(--pg-pink-500);
+  margin: 0;
+  width: 14px;
+  height: 14px;
+}
+

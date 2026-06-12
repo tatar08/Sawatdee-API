@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sawatdee API — คู่มือการใช้งาน</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #fdf7fa;
+      --bg-gradient: linear-gradient(135deg, #fff5f9 0%, #fde8f1 50%, #f8eefc 100%);
+      --pink-50: #fff0f6;
+      --pink-100: #ffd6e7;
+      --pink-300: #ff9ec4;
+      --pink-500: #ff5fa2;
+      --pink-600: #f43f8e;
+      --text-strong: #2b1b25;
+      --text-normal: #5a4a54;
+      --text-muted: #9b8a94;
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.75);
+      --glass-shadow: 0 8px 32px rgba(214, 46, 118, 0.08), 0 2px 8px rgba(43, 27, 37, 0.04);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --font-ui: 'Sarabun', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --code-bg: #f5edf1;
+      --border-color: rgba(214, 46, 118, 0.15);
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #150e12;
+      --bg-gradient: linear-gradient(135deg, #180c12 0%, #241119 50%, #170d1e 100%);
+      --pink-50: #29121d;
+      --pink-100: #4a1c30;
+      --pink-300: #852d50;
+      --pink-500: #ff5fa2;
+      --pink-600: #f43f8e;
+      --text-strong: #f6edf2;
+      --text-normal: #cfc1ca;
+      --text-muted: #95818d;
+      --glass-bg: rgba(21, 14, 18, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+      --code-bg: #27141f;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--bg-base);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-normal);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-family: 'Outfit', var(--font-ui);
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+
+    /* Sidebar Table of Contents */
+    aside {
+      position: sticky;
+      top: 30px;
+      height: fit-content;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    aside h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    aside ul {
+      list-style: none;
+    }
+
+    aside li {
+      margin-bottom: 12px;
+    }
+
+    aside a {
+      color: var(--text-normal);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    aside a:hover {
+      color: var(--pink-500);
+    }
+
+    /* Main Content Area */
+    main {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: var(--radius);
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      color: var(--text-strong);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    h2:first-of-type {
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      color: var(--text-strong);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    /* Code & Formatting */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--pink-600);
+    }
+
+    pre {
+      background: #181216;
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: #cfc1ca;
+      font-size: 0.85rem;
+    }
+
+    /* Alerts */
+    .alert {
+      border-left: 4px solid var(--pink-500);
+      background: var(--pink-50);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 24px;
+    }
+
+    .alert p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-strong);
+      background: rgba(214, 46, 118, 0.05);
+    }
+
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--text-strong);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        position: relative;
+        top: 0;
+        width: 100%;
+      }
+      main {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" id="theme-btn">
+    🌓 สลับโหมดการแสดงผล
+  </button>
+
+  <header>
+    <h1>Sawatdee API</h1>
+    <p>คู่มือการใช้งานและการจัดการระบบ</p>
+  </header>
+
+  <div class="container">
+    <aside>
+      <h3>สารบัญ</h3>
+      <ul>
+        <li><a href="#1-บทนำและแนวคิดหลัก">1. บทนำและแนวคิดหลัก</a></li>
+        <li><a href="#2-cors-ข้อจำกัดความปลอดภัยบนเบราว์เซอร์">2. ข้อจำกัด CORS</a></li>
+        <li><a href="#3-การตั้งค่าและการรันระบบในเครื่อง-local-dev">3. การตั้งค่าและการติดตั้ง</a></li>
+        <li><a href="#4-ภาพรวมของอินเตอร์เฟสผู้ใช้-ui-overview">4. ภาพรวมอินเตอร์เฟส</a></li>
+        <li><a href="#5-การสร้างและปรับแต่งคำขอ-request-construction">5. การปรับแต่งคำขอ</a></li>
+        <li><a href="#6-การวิเคราะห์ผลลัพธ์ตอบกลับและการแก้ไขปัญหา-response-panel">6. การวิเคราะห์ผลลัพธ์</a></li>
+        <li><a href="#7-ระบบสภาพแวดล้อมและตัวแปร-environments--variables">7. สภาพแวดล้อมและตัวแปร</a></li>
+        <li><a href="#8-การนำเข้าและการส่งออกข้อมูล-migration">8. การนำเข้าและส่งออก</a></li>
+        <li><a href="#9-ฟังก์ชันขั้นสูง-การรันคอลเลกชันด้วยไฟล์ข้อมูล-collection-runner">9. Collection Runner</a></li>
+        <li><a href="#10-ธีม-ภาพพื้นหลัง-และสัตว์นำโชค-aesthetics--themes">10. ธีมและสัตว์นำโชค</a></li>
+      </ul>
+    </aside>
+
+    <main>
+      <section id="1-บทนำและแนวคิดหลัก">
+        <h2>1. บทนำและแนวคิดหลัก</h2>
+        <p>Sawatdee API ได้รับการออกแบบให้เป็นทางเลือกแทน Postman ที่ทำงานบนเบราว์เซอร์ของคุณโดยสมบูรณ์ โดยให้ความสำคัญกับความเป็นส่วนตัวของผู้ใช้งาน แตกต่างจากเครื่องมืออื่นที่ต้องส่งคำขอผ่านพร็อกซีเซิร์ฟเวอร์หรือบันทึกข้อมูลการทำงานของคุณไว้บนคลาวด์ <strong>Sawatdee API จะทำงานภายในเว็บเบราว์เซอร์ของคุณแบบ 100%</strong></p>
+        
+        <h3>คุณสมบัติเด่น:</h3>
+        <ul>
+          <li><strong>ไม่มีระบบหลังบ้าน (Zero Backend)</strong>: ส่งคำขอตรงจากเบราว์เซอร์ของคุณไปยัง API ปลายทางผ่านฟังก์ชัน <code>fetch()</code> โดยไม่มีใครมาคั่นกลาง</li>
+          <li><strong>ปลอดภัยและออฟไลน์ (Offline-First)</strong>: คอลเลกชัน, ประวัติการส่งคำขอ, สภาพแวดล้อม และการตั้งค่าทั้งหมดจะถูกบันทึกไว้ในเบราว์เซอร์ของคุณโดยใช้ <strong>IndexedDB</strong> (ผ่าน Dexie) โทเค็นและคีย์ความลับของคุณจะไม่รั่วไหลออกไปภายนอก</li>
+          <li><strong>ดีไซน์สวยงามสไตล์ Apple</strong>: ออกแบบด้วยเอฟเฟกต์กระจกฝ้า (Glassmorphic "Liquid Glass") โทนสีพาสเทลอ่อนโยน และภาพสัตว์นำโชคญี่ปุ่นที่เปลี่ยนได้ตามใจชอบ</li>
+        </ul>
+      </section>
+
+      <section id="2-cors-ข้อจำกัดความปลอดภัยบนเบราว์เซอร์">
+        <h2>2. CORS: ข้อจำกัดความปลอดภัยบนเบราว์เซอร์</h2>
+        <p>เนื่องจาก Sawatdee API ทำงานบนเว็บเบราว์เซอร์ของคุณโดยตรง <strong>ระบบจึงต้องอยู่ภายใต้มาตรการความปลอดภัย Cross-Origin Resource Sharing (CORS) ของเบราว์เซอร์</strong> ซึ่งเป็นมาตรการความปลอดภัยระดับสากล ไม่ใช่ข้อผิดพลาดของ Sawatdee API</p>
+        
+        <h3>สรุปความเข้าใจเรื่อง CORS:</h3>
+        <ul>
+          <li><strong>API ที่รองรับ CORS</strong>: จะทำงานได้อย่างสมบูรณ์หากเซิร์ฟเวอร์ปลายทางส่งเฮดเดอร์ <code>Access-Control-Allow-Origin: *</code> เพื่ออนุญาตให้เบราว์เซอร์อ่านค่าได้</li>
+          <li><strong>API ที่บล็อก CORS</strong>: หากเซิร์ฟเวอร์ไม่ส่งเฮดเดอร์ CORS กลับมา เบราว์เซอร์จะบล็อกผลลัพธ์ทันที Sawatdee API จะแสดง <strong>แผงอธิบาย CORS (CORS Explainer)</strong> เพื่อช่วยวินิจฉัยปัญหา</li>
+          <li><strong>บล็อกเนื้อหาผสม (Mixed Content)</strong>: เบราว์เซอร์จะบล็อกการเรียกใช้ API ที่เป็น HTTP (ไม่ปลอดภัย) จากหน้าเว็บที่เป็น HTTPS (ปลอดภัย) Sawatdee API จะตรวจพบและแสดงคำเตือนทันที</li>
+          <li><strong>เฮดเดอร์ต้องห้าม (Forbidden Headers)</strong>: เบราว์เซอร์จะบล็อกการแก้ไขเฮดเดอร์บางตัวเพื่อความปลอดภัย (เช่น <code>Host</code>, <code>Origin</code>, <code>User-Agent</code>, <code>Cookie</code>) Sawatdee API จะแสดงคำเตือนหากคุณพยายามแก้ไขคีย์เหล่านี้</li>
+        </ul>
+      </section>
+
+      <section id="3-การตั้งค่าและการรันระบบในเครื่อง-local-dev">
+        <h2>3. การตั้งค่าและการรันระบบในเครื่อง (Local Dev)</h2>
+        <p>หากต้องการรัน Sawatdee API ในเครื่องคอมพิวเตอร์ของคุณหรือนำไปโฮสต์เอง:</p>
+        
+        <h3>สิ่งที่ต้องเตรียม:</h3>
+        <p>ตรวจสอบว่าเครื่องคอมพิวเตอร์ของคุณติดตั้ง <strong>Node.js</strong> และ <strong>npm</strong> หรือ <strong>pnpm</strong> เรียบร้อยแล้ว</p>
+        
+        <h3>คำสั่งที่ใช้งาน:</h3>
+        <pre><code># ติดตั้งไลบรารีที่จำเป็น
+pnpm install
+
+# เริ่มทำงานในโหมดพัฒนา (Local Server)
+pnpm dev
+
+# รวมโค้ดสำหรับการนำไปใช้งานจริง (Build production)
+pnpm build</code></pre>
+        <p>ผลลัพธ์สำหรับการโฮสต์จริงจะอยู่ในโฟลเดอร์ <code>dist/</code> ซึ่งประกอบไปด้วยไฟล์ HTML, CSS, JS สแตติกทั้งหมด</p>
+      </section>
+
+      <section id="4-ภาพรวมของอินเตอร์เฟสผู้ใช้-ui-overview">
+        <h2>4. ภาพรวมของอินเตอร์เฟสผู้ใช้ (UI Overview)</h2>
+        <p>Sawatdee API ใช้เลย์เอาต์ 3 คอลัมน์ที่ใช้งานง่ายและยืดหยุ่น:</p>
+        <pre><code>+------------------------------------------------------------------------------------------------+
+|  Sawatdee API  [Logo Tagline]                             [เลือกสภาพแวดล้อม ▾]    [🌓] [⚙ ตั้งค่า]   |
++------------------+-----------------------------------------------------------------------------+
+|  คอลเลกชัน        |  GET ▾  | https://api.example.com/v1/users/{{userId}}                 | [บันทึก] [ส่ง ▶] |
+|  [+ คอลเลกชันใหม่]  +-----------------------------------------------------------------------------+
+|  + Users API     |  พารามิเตอร์ | เฮดเดอร์ (1) | บอดี้ | ยืนยันตัวตน                                    |
+|    - Get User    |  +-----------------------------------------------------------------------+  |
+|    - Edit User   |  | เปิดใช้งาน | คีย์ (Key)   | ค่า (Value)                     | ลบแถว   |  |
+|    - Delete User |  | [x]      | userId      | 420                             | [ถังขยะ] |  |
+|                  |  | [ ]      | [คีย์ใหม่..]  | [ค่าใหม่..]                      |         |  |
+|  ประวัติการใช้งาน   |  +-----------------------------------------------------------------------+  |
+|  - GET /users    +-----------------------------------------------------------------------------+
+|  - POST /auth    |  สถานะ: 200 OK  •  เวลา: 120 ms  •  ขนาด: 420 Bytes         [คัดลอก] [ดาวน์โหลด] |
+|                  +-----------------------------------------------------------------------------+
+|                  |  บอดี้ (สวยงาม) | เฮดเดอร์ | คุกกี้                                              |
+|                  |  +-----------------------------------------------------------------------+  |
+|                  |  | {                                                                     |  |
+|                  |  |   "id": 420,                                                          |  |
+|                  |  |   "username": "shiba_inu"                                             |  |
+|                  |  | }                                                                     |  |
+|                  |  +-----------------------------------------------------------------------+  |
++------------------+-----------------------------------------------------------------------------+</code></pre>
+      </section>
+
+      <section id="5-การสร้างและปรับแต่งคำขอ-request-construction">
+        <h2>5. การสร้างและปรับแต่งคำขอ (Request Construction)</h2>
+        <h3>5.1 HTTP Methods</h3>
+        <p>รองรับการส่งคำขอมาตรฐาน: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, <code>HEAD</code>, <code>OPTIONS</code></p>
+        
+        <h3>5.2 การแทนที่ตัวแปร</h3>
+        <p>คุณสามารถแทรกคีย์ตัวแปรที่ต้องการแทนค่าลงใน URL หรือช่องกรอกข้อมูลอื่นๆ ในรูปแบบปีกกาซ้อนสองชั้น เช่น <code>{{host}}</code> หรือ <code>{{userId}}</code></p>
+        
+        <h3>5.3 ประเภทการยืนยันตัวตน (Authorization)</h3>
+        <ul>
+          <li><strong>Bearer Token</strong>: เพิ่มส่วนหัว <code>Authorization: Bearer &lt;token&gt;</code> โดยอัตโนมัติ</li>
+          <li><strong>Basic Auth</strong>: กรอก Username และ Password ซึ่งระบบจะทำการแปลงด้วยรูปแบบ Base64</li>
+          <li><strong>API Key</strong>: ส่งพารามิเตอร์หรือข้อมูลส่วนหัว API Key ที่คุณสร้างขึ้น</li>
+        </ul>
+        <div class="alert">
+          <p><strong>หมายเหตุ:</strong> ระบบจะคอยอัปเดต Live Preview ของข้อมูลยืนยันตัวตนให้คุณตรวจสอบก่อนกดปุ่มส่งคำขอเสมอ</p>
+        </div>
+
+        <h3>5.4 บอดี้ของคำขอ (Body)</h3>
+        <p>กำหนดข้อมูลที่จะส่งไปได้ที่แถบ Body โดยเลือกโหมด JSON, Raw text, Form data หรือ URL-encoded</p>
+      </section>
+
+      <section id="6-การวิเคราะห์ผลลัพธ์ตอบกลับและการแก้ไขปัญหา-response-panel">
+        <h2>6. การวิเคราะห์ผลลัพธ์ตอบกลับและการแก้ไขปัญหา (Response Panel)</h2>
+        <p>หลังส่งคำขอ แผงผลลัพธ์จะแสดงผลข้อมูลรายละเอียดทั้งหมด:</p>
+        <ul>
+          <li><strong>Pretty</strong>: แสดงข้อความตอบกลับในรูปแบบสวยงามจัดหมวดหมู่ โครงสร้างข้อมูลอ่านง่าย</li>
+          <li><strong>Raw</strong>: แสดงรายละเอียดข้อความทั้งหมดไม่มีการตัดทอน</li>
+          <li><strong>Preview</strong>: แสดงผลลัพธ์รูปภาพโดยตรง หรือโหลดหน้าเว็บจำลองผ่าน <code>iframe</code> ปลอดภัย</li>
+          <li><strong>ค้นหาคำ</strong>: พิมพ์คีย์เวิร์ดในแถบค้นหาเพื่อค้นหาข้อมูลและแสดงจำนวนคำพร้อมไฮไลต์สี</li>
+        </ul>
+      </section>
+
+      <section id="7-ระบบสภาพแวดล้อมและตัวแปร-environments--variables">
+        <h2>7. ระบบสภาพแวดล้อมและตัวแปร (Environments &amp; Variables)</h2>
+        <p>สลับการส่งข้อมูลไปยั่งเซิร์ฟเวอร์ที่ต้องการได้รวดเร็วผ่านระบบสภาพแวดล้อม (Environments):</p>
+        <ol>
+          <li>คลิกเลือกเมนูสภาพแวดล้อมที่แถบด้านบน (หรือเปิดหน้าต่างตั้งค่า)</li>
+          <li>สร้างสภาพแวดล้อมใหม่ เช่น "Dev" หรือ "Staging" พร้อมระบุข้อมูลตัวแปร</li>
+          <li>เลือกสภาพแวดล้อมที่ใช้งาน placeholders เช่น <code>{{userId}}</code> ในช่องกรอกข้อมูลจะได้รับการแทนค่าอัตโนมัติ</li>
+        </ol>
+      </section>
+
+      <section id="8-การนำเข้าและการส่งออกข้อมูล-migration">
+        <h2>8. การนำเข้าและการส่งออกข้อมูล (Migration)</h2>
+        <p>ย้ายคอลเลกชันและข้อมูลเพื่อนำไปทดสอบบนระบบอื่นได้อย่างยืดหยุ่น:</p>
+        <ul>
+          <li><strong>การนำเข้าข้อมูล</strong>: รองรับไฟล์ Postman Collections v2.1, Postman Environments หรือไฟล์ Native ของ Sawatdee API ระบบจะตรวจจับประเถทของข้อมูลโดยอัตโนมัติ</li>
+          <li><strong>แก้ปัญหาชื่อซ้ำ</strong>: ระบบจะเติมคำต่อท้ายว่า <code>(imported)</code> เพื่อไม่ให้ไฟล์เดิมถูกเขียนทับ</li>
+          <li><strong>การส่งออกข้อมูล</strong>: ส่งออกแยกเป็นคอลเลกชันเดี่ยว หรือแบ็กอัปข้อมูล Sawatdee API ทั้งหมด</li>
+        </ul>
+      </section>
+
+      <section id="9-ฟังก์ชันขั้นสูง-การรันคอลเลกชันด้วยไฟล์ข้อมูล-collection-runner">
+        <h2>9. ฟังก์ชันขั้นสูง: การรันคอลเลกชันด้วยไฟล์ข้อมูล (Collection Runner)</h2>
+        <p>Collection Runner ช่วยคุณทดสอบส่งคำขอ API แบบวนลูปตามรายการข้อมูลจากไฟล์ CSV หรือ JSON โดยสามารถตั้งค่าพารามิเตอร์การทำงานเพิ่มเติมได้ดังนี้:</p>
+        <ul>
+          <li><strong>จำนวนรอบการรัน (Iterations) และดีเลย์ (Delay)</strong>: กำหนดจำนวนรอบที่ต้องการรันคำขอวนซ้ำ และกำหนดเวลาดีเลย์ในการรอระหว่างส่งคำขอ (หน่วยเป็นมิลลิวินาที)</li>
+          <li><strong>สภาพแวดล้อมที่ใช้งาน (Active Environment)</strong>: เลือกหรือสลับ Environment ได้โดยตรงในมอดัลการรันผ่าน Dropdown</li>
+          <li><strong>การเลือกคำขอ (Request Checklist)</strong>: ติ๊กเลือกหรือยกเลิกรายการที่จะส่งคำขอรันได้ตามต้องการ หรือกด "เลือกทั้งหมด" และ "ยกเลิกการเลือกทั้งหมด"</li>
+        </ul>
+        <p><strong>ขั้นตอนการใช้งานร่วมกับไฟล์ข้อมูล:</strong></p>
+        <ol>
+          <li>คลิกเมนูคอลเลกชันด้านซ้าย แล้วเลือก <strong>Run Collection</strong></li>
+          <li>อัปโหลดไฟล์ข้อมูลจำลอง CSV หรือ JSON ใต้ช่อง <strong>Data File</strong></li>
+          <li>ใช้ชื่อหัวคอลัมน์เขียนเป็นตัวแปร เช่น <code>{{username}}</code> ในข้อมูลคำขอของคุณ</li>
+          <li>ปรับตั้งค่าดีเลย์, รอบการรัน, เลือก Environment และเลือกเฉพาะคำขอที่ต้องการทดสอบ</li>
+          <li>กดเริ่มรัน ระบบจะทำคำขอวนลูปและแสดงความคืบหน้าให้ทราบแบบเรียลไทม์</li>
+        </ol>
+        <p><strong>การส่งออกรายงานผลลัพธ์ (Export Results):</strong></p>
+        <p>หลังการรันเสร็จสิ้น คุณสามารถคลิกปุ่ม <strong>ส่งออกผลลัพธ์ (Export Results)</strong> เพื่อดาวน์โหลดข้อมูลสรุปผลการรันเป็นไฟล์ JSON เก็บไว้บันทึกเป็นรายงานของแต่ละรอบได้อย่างละเอียด</p>
+      </section>
+
+      <section id="10-ธีม-ภาพพื้นหลัง-และสัตว์นำโชค-aesthetics--themes">
+        <h2>10. ธีม, ภาพพื้นหลัง, และสัตว์นำโชค (Aesthetics &amp; Themes)</h2>
+        <p>Sawatdee API มีธีมและภาพวาดสไตล์พาสเทลน่ารักหลากหลาย เช่น <strong>ชมพูคลาสสิก</strong>, <strong>ชิบะอินุ</strong>, <strong>แมวกวักนำโชค</strong>, <strong>กระต่ายชมจันทร์</strong>, <strong>แพนด้าชาเขียว</strong> และ <strong>ช้างไทย</strong></p>
+        <ul>
+          <li><strong>โหมดมืด (Dark Mode)</strong>: ปรับระดับความจางของพื้นหลังและเปลี่ยนธีมเป็นสีโทนมืด เพื่อถนอมสายตาของคุณ</li>
+          <li><strong>ลดความโปร่งใส</strong>: ปรับเลเยอร์กระจกฝ้าเป็นสีทึบ เพื่อปรับปรุงคอนทราสต์และความชัดเจนในการมองเห็น</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // System Theme Matcher & Toggle
+    const themeBtn = document.getElementById('theme-btn');
+    
+    // Check url search params for theme, otherwise system theme
+    const params = new URLSearchParams(window.location.search);
+    let theme = params.get('theme') || localStorage.getItem('pg-theme') || 'light';
+    
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    themeBtn.addEventListener('click', () => {
+      theme = theme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pg-theme', theme);
+    });
+
+    // Listen to message from parent to sync dark theme
+    window.addEventListener('message', (event) => {
+      if (event.data && typeof event.data === 'object') {
+        if (event.data.type === 'sync-theme' && event.data.theme) {
+          theme = event.data.theme;
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import { GlassPanel } from "../common/GlassPanel";
 import { CollectionTree } from "./CollectionTree";
 import { HistoryList } from "./HistoryList";
 import { ImportExportModal } from "../ImportExportModal";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./Sidebar.module.css";
 
 type Section = "collections" | "history";
@@ -11,6 +12,7 @@ type Section = "collections" | "history";
 export function Sidebar() {
   const [section, setSection] = useState<Section>("collections");
   const [importExportOpen, setImportExportOpen] = useState(false);
+  const t = useTranslation();
 
   return (
     <GlassPanel className={styles.sidebar}>
@@ -21,7 +23,7 @@ export function Sidebar() {
           className={`${styles.tab} ${section === "collections" ? styles.active : ""}`}
           onClick={() => setSection("collections")}
         >
-          <FolderClosed size={14} /> Collections
+          <FolderClosed size={14} /> {t("collections")}
         </button>
         <button
           role="tab"
@@ -29,7 +31,7 @@ export function Sidebar() {
           className={`${styles.tab} ${section === "history" ? styles.active : ""}`}
           onClick={() => setSection("history")}
         >
-          <History size={14} /> History
+          <History size={14} /> {t("history")}
         </button>
       </div>
       <div className={styles.content}>
@@ -37,7 +39,7 @@ export function Sidebar() {
       </div>
       <div className={styles.footer}>
         <button className={styles.footerBtn} onClick={() => setImportExportOpen(true)}>
-          <ArrowDownUp size={13} /> Import / Export
+          <ArrowDownUp size={13} /> {t("importExport")}
         </button>
       </div>
       <ImportExportModal

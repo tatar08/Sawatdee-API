@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sawatdee API - Ayutthaya Theme</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ayutthaya: {
+                            clay: '#E07A5F',
+                            sand: '#F4F1DE',
+                            indigo: '#3D405B',
+                            green: '#81B29A',
+                            yellow: '#F2CC8F',
+                            bg: '#FAF9F6'
+                        }
+                    },
+                    fontFamily: {
+                        thai: ['"Noto Sans Thai"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: #FAF9F6;
+        }
+        /* Grid background pattern mimicking blueprints */
+        .blueprint-grid {
+            background-size: 20px 20px;
+            background-image: linear-gradient(to right, rgba(61, 64, 91, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(61, 64, 91, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Header bar -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-ayutthaya-clay text-white rounded-xl flex items-center justify-center font-serif text-lg font-bold shadow-md shadow-ayutthaya-clay/20">
+                A
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-ayutthaya-indigo">Sawatdee API <span class="font-normal text-slate-400">| Ayutthaya</span></h1>
+                <p class="text-[10px] tracking-wider text-slate-400 uppercase">Modern Minimal & Intuitive Visual Builder</p>
+            </div>
+        </div>
+
+        <!-- Minimal Search -->
+        <div class="hidden sm:flex items-center bg-slate-100/80 rounded-lg px-3 py-1.5 w-80">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xs"></i>
+            <input type="text" placeholder="พิมพ์ชื่อโปรเจกต์ หรือ คีย์เวิร์ด..." class="bg-transparent text-xs text-slate-700 focus:outline-none w-full">
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button class="bg-ayutthaya-indigo text-white text-xs px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-plus"></i> โครงงานใหม่
+            </button>
+            <div class="w-8 h-8 rounded-full border border-slate-200 overflow-hidden bg-slate-100">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ayutthaya" alt="User Profile" class="w-full h-full">
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body Area -->
+    <div class="flex-1 flex">
+        <!-- Slim Clean Left Sidebar -->
+        <aside class="w-60 bg-white border-r border-slate-200 p-4 flex flex-col justify-between">
+            <div class="space-y-6">
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-2">เมนูทำนบการเชื่อมโยง</span>
+                    <nav class="mt-2 space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-ayutthaya-sand text-ayutthaya-indigo font-semibold text-xs transition-all">
+                            <i class="fa-solid fa-cubes text-ayutthaya-clay"></i> หน้าหลักผังต่อขยาย
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-medium text-xs transition-all">
+                            <i class="fa-solid fa-folder"></i> แฟ้มเก็บคอลเลกชัน
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-medium text-xs transition-all">
+                            <i class="fa-solid fa-chart-pie"></i> มาตรวัดประมวลผล
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Ayutthaya Project Cards list inside sidebar -->
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-2">คอลเลกชันอโยธยา</span>
+                    <div class="mt-2 space-y-2">
+                        <div class="p-2.5 rounded-lg border border-slate-100 hover:border-ayutthaya-clay/30 bg-slate-50/50 cursor-pointer transition-all">
+                            <h4 class="text-xs font-semibold text-slate-700">วัดใหญ่ชัยมงคล API</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">แก้ไขล่าสุดเมื่อ 2 ชั่วโมก่อน</p>
+                        </div>
+                        <div class="p-2.5 rounded-lg border border-slate-100 hover:border-ayutthaya-clay/30 bg-slate-50/50 cursor-pointer transition-all">
+                            <h4 class="text-xs font-semibold text-slate-700">คลังพัศดุดิบเรือสินค้า</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">แก้ไขล่าสุดเมื่อวานนี้</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Node Controls Box -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
+                <i class="fa-solid fa-circle-nodes text-2xl text-ayutthaya-clay mb-2"></i>
+                <h5 class="text-xs font-bold text-slate-700">เครื่องสร้างผังโครงสร้าง</h5>
+                <p class="text-[10px] text-slate-400 mt-1">ลากวางบล็อก API เพื่อสร้างโปรแกรมเชื่อมความต้องการ</p>
+            </div>
+        </aside>
+
+        <!-- Dynamic Main Workspace Grid Canvas -->
+        <main class="flex-1 flex flex-col">
+            <!-- Workspace Tab control -->
+            <div class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold bg-ayutthaya-clay/10 text-ayutthaya-clay px-2 py-1 rounded">Visual Mode</span>
+                    <h2 class="text-sm font-bold text-ayutthaya-indigo">ผังออกแบบ API จำลอง (Visual API Flow Builder)</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="addNode()" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-square-plus text-ayutthaya-clay"></i> เพิ่มคำสั่งต่อเชื่อม
+                    </button>
+                    <button onclick="clearCanvas()" class="text-xs text-rose-500 hover:text-rose-600 font-medium px-2 py-1.5">
+                        <i class="fa-solid fa-trash mr-1"></i> ล้างผังทั้งหมด
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas Grid with Mockup drag nodes -->
+            <div id="canvas-grid" class="flex-1 blueprint-grid relative p-6 overflow-auto min-h-[450px]">
+                
+                <!-- SVG Connections overlay -->
+                <svg id="svg-connections" class="absolute inset-0 w-full h-full pointer-events-none z-0">
+                    <!-- Standard Flow Lines will dynamically draw or simulate -->
+                    <path d="M 280,180 L 380,180" stroke="#E07A5F" stroke-width="2" stroke-dasharray="4" fill="none" />
+                    <path d="M 580,180 Q 640,180 640,240 T 700,320" stroke="#81B29A" stroke-width="2" fill="none" />
+                </svg>
+
+                <!-- Interactive Visual Node: Request Block -->
+                <div class="absolute top-20 left-16 w-60 bg-white border border-slate-200 hover:border-ayutthaya-clay rounded-xl shadow-lg p-4 z-10 transition-all group">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-bold bg-emerald-500 text-white px-1.5 py-0.5 rounded">GET</span>
+                            <span class="text-xs font-bold text-slate-700">ดึงข้อมูลเมืองเก่า</span>
+                        </div>
+                        <i class="fa-solid fa-ellipsis-vertical text-slate-300 group-hover:text-slate-500 cursor-pointer"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-[10px] text-slate-500 bg-slate-50 p-2 rounded break-all font-mono">
+                            https://ayutthaya-db.net/temples
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] text-slate-400">
+                            <span>ประเภท: JSON</span>
+                            <span class="text-emerald-500 font-bold"><i class="fa-solid fa-circle text-[6px] mr-1"></i>พร้อม</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Visual Node: Mapping Logic Block -->
+                <div class="absolute top-20 left-[340px] w-64 bg-white border border-slate-200 hover:border-ayutthaya-indigo rounded-xl shadow-lg p-4 z-10 transition-all group">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-bold bg-ayutthaya-yellow text-slate-800 px-1.5 py-0.5 rounded">MAPPER</span>
+                            <span class="text-xs font-bold text-slate-700">จัดการเรียงตามยุคกาล</span>
+                        </div>
+                        <i class="fa-solid fa-gears text-slate-400"></i>
+                    </div>
+                    <div class="space-y-1.5 text-[10px] text-slate-600">
+                        <div class="flex items-center justify-between">
+                            <span>เรียงลำดับ (Sort By)</span>
+                            <span class="font-bold text-slate-800 font-mono">era_century</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>กรองผู้ครอง (Filter)</span>
+                            <span class="font-bold text-slate-800 font-mono">king_dynasty</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Visual Node: Output Visualization block -->
+                <div class="absolute top-44 left-[680px] w-64 bg-white border border-slate-200 hover:border-ayutthaya-green rounded-xl shadow-lg p-4 z-10 transition-all group">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-bold bg-ayutthaya-green text-white px-1.5 py-0.5 rounded">OUTPUT</span>
+                            <span class="text-xs font-bold text-slate-700">ส่วนนำเสนอผลลัพธ์</span>
+                        </div>
+                        <i class="fa-solid fa-chart-simple text-ayutthaya-green"></i>
+                    </div>
+                    <!-- Sample visualization miniature -->
+                    <div class="p-2 bg-slate-50 rounded-lg">
+                        <div class="flex items-end justify-between h-14 pt-2">
+                            <div class="w-4 bg-ayutthaya-clay/40 h-8 rounded-sm"></div>
+                            <div class="w-4 bg-ayutthaya-clay/60 h-10 rounded-sm"></div>
+                            <div class="w-4 bg-ayutthaya-clay h-14 rounded-sm"></div>
+                            <div class="w-4 bg-ayutthaya-clay/80 h-12 rounded-sm"></div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-2">
+                        <button onclick="runVisualPipeline()" class="text-[10px] bg-ayutthaya-indigo text-white px-3 py-1 rounded w-full hover:bg-opacity-95 transition-all">
+                            เริ่มประมวลผลกระบวนการ (Run)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic container for added nodes -->
+                <div id="dynamic-nodes-area"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mini Alert Toast -->
+    <div id="ayutthaya-toast" class="fixed bottom-6 right-6 bg-ayutthaya-indigo text-white text-xs font-bold px-5 py-3 rounded-xl shadow-xl transition-all duration-300 transform translate-y-20 opacity-0 z-50">
+        <i class="fa-solid fa-circle-info text-ayutthaya-yellow mr-2"></i>
+        <span id="toast-text">เชื่อมต่อชุดข้อมูลประวัติศาสตร์สำเร็จแล้ว</span>
+    </div>
+
+    <!-- Script Interactions for Ayutthaya Flow UI -->
+    <script>
+        let nodeCount = 0;
+
+        function addNode() {
+            nodeCount++;
+            const container = document.getElementById('dynamic-nodes-area');
+            const nodeDiv = document.createElement('div');
+            
+            // Random placements to fit minimal aesthetic
+            const randomTop = Math.floor(Math.random() * 120) + 260;
+            const randomLeft = Math.floor(Math.random() * 200) + 120;
+
+            nodeDiv.className = `absolute w-60 bg-white border-2 border-dashed border-slate-300 hover:border-ayutthaya-clay rounded-xl shadow-md p-4 z-10 transition-all`;
+            nodeDiv.style.top = `${randomTop}px`;
+            nodeDiv.style.left = `${randomLeft}px`;
+            nodeDiv.id = `dyn-node-${nodeCount}`;
+            
+            nodeDiv.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-2">
+                    <span class="text-[9px] font-bold bg-slate-400 text-white px-1.5 py-0.5 rounded">CUSTOM</span>
+                    <span class="text-xs font-bold text-slate-700">กล่องคำขอใหม่ #${nodeCount}</span>
+                </div>
+                <input type="text" placeholder="https://api.domain.com" class="w-full text-[10px] bg-slate-50 border border-slate-200 rounded px-2 py-1 focus:outline-none focus:border-ayutthaya-clay">
+                <div class="flex justify-between items-center mt-2">
+                    <button onclick="deleteNode('dyn-node-${nodeCount}')" class="text-[9px] text-rose-500 hover:underline">ลบออก</button>
+                    <span class="text-[9px] text-slate-400">ระบุลิ้งค์ API</span>
+                </div>
+            `;
+            
+            container.appendChild(nodeDiv);
+            showAyutthayaToast(`เพิ่ม Node กล่องคำขอที่ #${nodeCount} บนแบบร่างแล้ว`);
+        }
+
+        function deleteNode(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                el.remove();
+                showAyutthayaToast("ลบโครงสร้างจำลองออกแล้ว");
+            }
+        }
+
+        function clearCanvas() {
+            document.getElementById('dynamic-nodes-area').innerHTML = '';
+            showAyutthayaToast("ล้างส่วนจำลองข้อมูลทั้งหมดสำเร็จ");
+        }
+
+        function runVisualPipeline() {
+            showAyutthayaToast("กำลังรวบรวมท่อส่งชุดข้อมูลย่อย... ประมวลผลสำเร็จใน 14ms!");
+        }
+
+        function showAyutthayaToast(msg) {
+            const toast = document.getElementById('ayutthaya-toast');
+            document.getElementById('toast-text').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

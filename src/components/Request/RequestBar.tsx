@@ -6,9 +6,11 @@ import { MethodSelect } from "./MethodSelect";
 import { SaveRequestModal } from "./SaveRequestModal";
 import { useStore, selectActiveTab } from "../../store/useStore";
 import { resolve, findUnresolved, buildVars } from "../../lib/variables";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./RequestBar.module.css";
 
 export function RequestBar() {
+  const t = useTranslation();
   const saveOpen = useStore((s) => s.saveModalOpen);
   const setSaveOpen = useStore((s) => s.setSaveModalOpen);
   const tab = useStore(selectActiveTab);
@@ -28,9 +30,9 @@ export function RequestBar() {
   if (!tab) {
     return (
       <GlassPanel className={styles.bar}>
-        <span className={styles.noTab}>No request open</span>
+        <span className={styles.noTab}>{t("noRequestOpen")}</span>
         <Button variant="primary" size="sm" onClick={newTab}>
-          New request
+          {t("newRequestBtn")}
         </Button>
       </GlassPanel>
     );
@@ -51,7 +53,7 @@ export function RequestBar() {
           id="pg-url-input"
           className={styles.url}
           type="text"
-          placeholder="https://api.example.com/users  —  {{variables}} supported"
+          placeholder={t("urlPlaceholderText")}
           value={url}
           onChange={(e) => updateActiveRequest({ url: e.target.value })}
           onKeyDown={(e) => {
@@ -64,8 +66,8 @@ export function RequestBar() {
         <Button
           variant="ghost"
           onClick={() => setSaveOpen(true)}
-          title="Save request (Ctrl+S)"
-          aria-label="Save request"
+          title={t("saveRequestTitle")}
+          aria-label={t("saveRequestAria")}
         >
           <Save size={15} />
         </Button>
@@ -73,10 +75,10 @@ export function RequestBar() {
           variant="primary"
           onClick={() => void send()}
           disabled={tab.sending || !url.trim()}
-          title="Send (Ctrl+Enter)"
+          title={t("sendTitle")}
         >
           <SendHorizonal size={15} />
-          {tab.sending ? "Sending…" : "Send"}
+          {tab.sending ? t("sending") : t("send")}
         </Button>
       </GlassPanel>
       <SaveRequestModal open={saveOpen} onClose={() => setSaveOpen(false)} />
@@ -84,10 +86,10 @@ export function RequestBar() {
         <div className={styles.preview}>
           {unresolved.length > 0 ? (
             <span className={styles.unresolved}>
-              Unresolved: {unresolved.map((v) => `{{${v}}}`).join(", ")}
+              {t("unresolvedVars", { vars: unresolved.map((v) => `{{${v}}}`).join(", ") })}
             </span>
           ) : (
-            <span className={styles.resolved} title="Resolved URL">
+            <span className={styles.resolved} title={t("resolvedUrlTitle")}>
               → {resolved}
             </span>
           )}

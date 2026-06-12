@@ -1,9 +1,11 @@
 import { Plus, X } from "lucide-react";
 import { MethodBadge } from "../common/MethodBadge";
 import { useStore } from "../../store/useStore";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./TabStrip.module.css";
 
 export function TabStrip() {
+  const t = useTranslation();
   const tabs = useStore((s) => s.tabs);
   const activeTabId = useStore((s) => s.activeTabId);
   const setActiveTab = useStore((s) => s.setActiveTab);
@@ -12,8 +14,8 @@ export function TabStrip() {
 
   return (
     <div className={styles.strip} role="tablist" aria-label="Open requests">
-      {tabs.map((t) => {
-        const id = t.request.id;
+      {tabs.map((tabItem) => {
+        const id = tabItem.request.id;
         const active = id === activeTabId;
         return (
           <div
@@ -27,12 +29,12 @@ export function TabStrip() {
               if (e.key === "Enter" || e.key === " ") setActiveTab(id);
             }}
           >
-            <MethodBadge method={t.request.method} size="sm" />
-            <span className={styles.name}>{t.request.name}</span>
-            {t.draft && <span className={styles.dot} title="Unsaved" />}
+            <MethodBadge method={tabItem.request.method} size="sm" />
+            <span className={styles.name}>{tabItem.request.name}</span>
+            {tabItem.draft && <span className={styles.dot} title={t("tabUnsaved")} />}
             <button
               className={styles.close}
-              aria-label={`Close ${t.request.name}`}
+              aria-label={t("tabCloseRequest", { name: tabItem.request.name })}
               onClick={(e) => {
                 e.stopPropagation();
                 closeTab(id);
@@ -43,7 +45,12 @@ export function TabStrip() {
           </div>
         );
       })}
-      <button className={styles.add} onClick={newTab} aria-label="New request tab" title="New request (Ctrl+T)">
+      <button
+        className={styles.add}
+        onClick={newTab}
+        aria-label={t("tabNewRequest")}
+        title={t("tabNewRequestTitle")}
+      >
         <Plus size={14} />
       </button>
     </div>

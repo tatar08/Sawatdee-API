@@ -1,4 +1,4 @@
-# Postgirl — Product & Engineering Specification
+# Sawatdee API — Product & Engineering Specification
 
 > A lightweight, beautiful, **frontend-only** API client. A parody/homage to Postman.
 > Runs entirely in the browser. No backend. Hosted on Azure Static Web Apps.
@@ -7,11 +7,12 @@
 
 ## 1. Vision
 
-Postgirl is a single-page web application that lets a user build, send, and organize HTTP requests — the core loop of Postman — without any server component. Everything (collections, environments, history, settings) lives in the user's browser. Every API call is fired **directly from the user's browser** via `fetch()`; our hosting never proxies or sees the traffic.
+Sawatdee API is a single-page web application that lets a user build, send, and organize HTTP requests — the core loop of Postman — without any server component. Everything (collections, environments, history, settings) lives in the user's browser. Every API call is fired **directly from the user's browser** via `fetch()`; our hosting never proxies or sees the traffic.
 
 Design north star: **lightweight, fast, and beautiful** — a white-and-pink palette with Apple-style "liquid glass" (glassmorphism) surfaces.
 
 ### Non-goals (v1)
+
 - No user accounts, no cloud sync, no sharing links.
 - No backend, no serverless functions (may revisit a CORS proxy later — see §9).
 - No team/collaboration features.
@@ -22,14 +23,17 @@ Design north star: **lightweight, fast, and beautiful** — a white-and-pink pal
 ## 2. Constraints & Hard Truths
 
 ### 2.1 CORS is the defining constraint
-The app runs in a browser sandbox. Unlike Postman desktop (Electron, native HTTP), Postgirl **cannot bypass CORS**. Requests to APIs that don't return permissive `Access-Control-Allow-Origin` headers will fail.
+
+The app runs in a browser sandbox. Unlike Postman desktop (Electron, native HTTP), Sawatdee API **cannot bypass CORS**. Requests to APIs that don't return permissive `Access-Control-Allow-Origin` headers will fail.
 
 **Engineering implications:**
-- Distinguish a *CORS/network failure* from a *real HTTP error response* in the UI. A failed `fetch()` that throws `TypeError` is almost always CORS or network — show a dedicated, friendly explainer, not a generic "request failed".
-- Provide an info panel / first-run note: "Postgirl runs in your browser. Some APIs block cross-origin browser requests (CORS). This is a browser security feature, not a bug."
+
+- Distinguish a _CORS/network failure_ from a _real HTTP error response_ in the UI. A failed `fetch()` that throws `TypeError` is almost always CORS or network — show a dedicated, friendly explainer, not a generic "request failed".
+- Provide an info panel / first-run note: "Sawatdee API runs in your browser. Some APIs block cross-origin browser requests (CORS). This is a browser security feature, not a bug."
 - Forbidden headers (`Host`, `Origin`, `User-Agent`, `Cookie`, `Content-Length`, etc.) cannot be set programmatically — the browser strips them. Detect attempts to set these and warn inline.
 
 ### 2.2 Other browser limits
+
 - No raw TCP, no non-HTTP protocols. HTTP(S) only in v1 (WebSocket optional later).
 - Response to opaque/`no-cors` requests is unreadable — never silently fall back to `no-cors` mode (it returns an unusable opaque response).
 - Large response bodies must be handled without freezing the UI (stream / size-guard, see §7.4).
@@ -38,19 +42,19 @@ The app runs in a browser sandbox. Unlike Postman desktop (Electron, native HTTP
 
 ## 3. Tech Stack
 
-| Concern | Choice | Rationale |
-|---|---|---|
-| Build tool | **Vite** | Fast dev, tiny config, first-class SWA fit |
-| Framework | **React 18 + TypeScript** | Component model, type safety, hiring pool |
-| Routing | **React Router** (hash or browser) | SWA supports SPA fallback |
-| State | **Zustand** | Minimal, no boilerplate, fits "lightweight" |
-| Storage | **IndexedDB via Dexie** | Structured, large quota, async; localStorage too small for history/bodies |
-| Styling | **CSS Modules + CSS custom properties** (or Tailwind — see note) | Design tokens drive the glass theme |
-| Icons | **Lucide** (`lucide-react`) | Clean, light, consistent stroke icons |
-| Code editor | **CodeMirror 6** | Lightweight, themeable, JSON/body editing + syntax highlight |
-| Syntax highlight (response) | CodeMirror read-only or **Shiki** | Pretty response rendering |
-| ID generation | `crypto.randomUUID()` | Native, no dep |
-| Schema validation (import) | **Zod** | Validate imported collections / persisted data |
+| Concern                     | Choice                                                           | Rationale                                                                 |
+| --------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Build tool                  | **Vite**                                                         | Fast dev, tiny config, first-class SWA fit                                |
+| Framework                   | **React 18 + TypeScript**                                        | Component model, type safety, hiring pool                                 |
+| Routing                     | **React Router** (hash or browser)                               | SWA supports SPA fallback                                                 |
+| State                       | **Zustand**                                                      | Minimal, no boilerplate, fits "lightweight"                               |
+| Storage                     | **IndexedDB via Dexie**                                          | Structured, large quota, async; localStorage too small for history/bodies |
+| Styling                     | **CSS Modules + CSS custom properties** (or Tailwind — see note) | Design tokens drive the glass theme                                       |
+| Icons                       | **Lucide** (`lucide-react`)                                      | Clean, light, consistent stroke icons                                     |
+| Code editor                 | **CodeMirror 6**                                                 | Lightweight, themeable, JSON/body editing + syntax highlight              |
+| Syntax highlight (response) | CodeMirror read-only or **Shiki**                                | Pretty response rendering                                                 |
+| ID generation               | `crypto.randomUUID()`                                            | Native, no dep                                                            |
+| Schema validation (import)  | **Zod**                                                          | Validate imported collections / persisted data                            |
 
 > **Styling note:** Default to **CSS custom properties + CSS Modules** so the liquid-glass tokens (§5) are first-class and the bundle stays tiny. Tailwind is acceptable if the engineer prefers, but the design tokens in §5 must be preserved as CSS variables regardless.
 
@@ -64,7 +68,7 @@ Three-pane desktop layout, collapsible to responsive single-column on narrow vie
 
 ```
 ┌───────────────────────────────────────────────────────────────────────┐
-│  TopBar:  [Postgirl logo]   [Environment selector ▾]   [⚙ settings]    │
+│  TopBar:  [Sawatdee API logo]   [Environment selector ▾]   [⚙ settings]    │
 ├──────────────┬────────────────────────────────────────────────────────┤
 │              │  RequestBar: [METHOD ▾] [URL.................] [Send ▶]  │
 │  Sidebar     ├────────────────────────────────────────────────────────┤
@@ -88,6 +92,7 @@ Open requests are managed as **tabs** (multiple requests open at once). Unsaved 
 ## 5. Design System — "Liquid Glass, White & Pink"
 
 ### 5.1 Aesthetic
+
 - Soft white background with a faint pink gradient wash.
 - Floating **frosted-glass panels**: translucent, blurred backdrop, hairline border, soft shadow, generous corner radius.
 - Pink as the accent/action color (Send button, active states, focus rings).
@@ -98,52 +103,59 @@ Open requests are managed as **tabs** (multiple requests open at once). Unsaved 
 ```css
 :root {
   /* Palette — white / pink */
-  --pg-bg-base:        #fdf7fa;            /* near-white, faint pink */
-  --pg-bg-gradient:    linear-gradient(135deg, #fff5f9 0%, #fde8f1 50%, #f8eefc 100%);
-  --pg-pink-50:        #fff0f6;
-  --pg-pink-100:       #ffd6e7;
-  --pg-pink-300:       #ff9ec4;
-  --pg-pink-500:       #ff5fa2;            /* primary accent */
-  --pg-pink-600:       #f43f8e;            /* accent hover/active */
-  --pg-pink-700:       #d62e76;
+  --pg-bg-base: #fdf7fa; /* near-white, faint pink */
+  --pg-bg-gradient: linear-gradient(
+    135deg,
+    #fff5f9 0%,
+    #fde8f1 50%,
+    #f8eefc 100%
+  );
+  --pg-pink-50: #fff0f6;
+  --pg-pink-100: #ffd6e7;
+  --pg-pink-300: #ff9ec4;
+  --pg-pink-500: #ff5fa2; /* primary accent */
+  --pg-pink-600: #f43f8e; /* accent hover/active */
+  --pg-pink-700: #d62e76;
 
-  --pg-text-strong:    #2b1b25;
-  --pg-text:           #5a4a54;
-  --pg-text-muted:     #9b8a94;
+  --pg-text-strong: #2b1b25;
+  --pg-text: #5a4a54;
+  --pg-text-muted: #9b8a94;
 
   /* Glass surfaces */
-  --pg-glass-bg:       rgba(255, 255, 255, 0.55);
-  --pg-glass-bg-strong:rgba(255, 255, 255, 0.72);
-  --pg-glass-border:   rgba(255, 255, 255, 0.65);
-  --pg-glass-blur:     18px;
-  --pg-glass-shadow:   0 8px 32px rgba(214, 46, 118, 0.12),
-                       0 2px 8px  rgba(43, 27, 37, 0.06);
+  --pg-glass-bg: rgba(255, 255, 255, 0.55);
+  --pg-glass-bg-strong: rgba(255, 255, 255, 0.72);
+  --pg-glass-border: rgba(255, 255, 255, 0.65);
+  --pg-glass-blur: 18px;
+  --pg-glass-shadow:
+    0 8px 32px rgba(214, 46, 118, 0.12), 0 2px 8px rgba(43, 27, 37, 0.06);
 
   /* Status colors */
-  --pg-ok:    #2bbf8a;   /* 2xx */
-  --pg-info:  #4aa6e0;   /* 3xx */
-  --pg-warn:  #e8a13a;   /* 4xx */
-  --pg-err:   #e0537a;   /* 5xx / network */
+  --pg-ok: #2bbf8a; /* 2xx */
+  --pg-info: #4aa6e0; /* 3xx */
+  --pg-warn: #e8a13a; /* 4xx */
+  --pg-err: #e0537a; /* 5xx / network */
 
   /* Method colors */
-  --pg-method-get:    #2bbf8a;
-  --pg-method-post:   #e8a13a;
-  --pg-method-put:    #4aa6e0;
-  --pg-method-patch:  #9b6ee0;
+  --pg-method-get: #2bbf8a;
+  --pg-method-post: #e8a13a;
+  --pg-method-put: #4aa6e0;
+  --pg-method-patch: #9b6ee0;
   --pg-method-delete: #e0537a;
 
   /* Radius / spacing / motion */
   --pg-radius-sm: 10px;
-  --pg-radius:    16px;
+  --pg-radius: 16px;
   --pg-radius-lg: 24px;
-  --pg-space:     8px;          /* 8pt grid: use multiples */
-  --pg-ease:      cubic-bezier(0.4, 0.0, 0.2, 1);
-  --pg-dur:       180ms;
+  --pg-space: 8px; /* 8pt grid: use multiples */
+  --pg-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --pg-dur: 180ms;
 
   /* Type */
-  --pg-font-ui:   -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                  "Inter", system-ui, sans-serif;
-  --pg-font-mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --pg-font-ui:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui,
+    sans-serif;
+  --pg-font-mono:
+    "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 ```
 
@@ -161,6 +173,7 @@ Open requests are managed as **tabs** (multiple requests open at once). Unsaved 
 ```
 
 ### 5.4 Design rules
+
 - **Corner radius:** panels `--pg-radius-lg`, controls `--pg-radius`, chips `--pg-radius-sm`.
 - **Focus ring:** 2px `--pg-pink-300` glow, never default browser outline (but keep `:focus-visible` accessible).
 - **Motion:** all hover/active transitions use `--pg-dur` + `--pg-ease`. Panels fade+rise on mount (8px translateY). Respect `prefers-reduced-motion`.
@@ -176,7 +189,14 @@ Open requests are managed as **tabs** (multiple requests open at once). Unsaved 
 All persisted in IndexedDB (Dexie). TypeScript shapes:
 
 ```ts
-type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
+type HttpMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "PATCH"
+  | "DELETE"
+  | "HEAD"
+  | "OPTIONS";
 
 interface KeyValue {
   id: string;
@@ -190,9 +210,9 @@ type BodyMode = "none" | "json" | "raw" | "form-data" | "x-www-form-urlencoded";
 
 interface RequestBody {
   mode: BodyMode;
-  raw?: string;                 // json / raw text
+  raw?: string; // json / raw text
   rawLang?: "json" | "text" | "xml" | "html";
-  formData?: KeyValue[];        // form-data / urlencoded
+  formData?: KeyValue[]; // form-data / urlencoded
 }
 
 type AuthType = "none" | "bearer" | "basic" | "api-key";
@@ -211,8 +231,8 @@ interface ApiRequest {
   id: string;
   name: string;
   method: HttpMethod;
-  url: string;                  // may contain {{variables}}
-  params: KeyValue[];           // query params
+  url: string; // may contain {{variables}}
+  params: KeyValue[]; // query params
   headers: KeyValue[];
   body: RequestBody;
   auth: Auth;
@@ -220,15 +240,15 @@ interface ApiRequest {
   createdAt: number;
   updatedAt: number;
   // Lossless round-trip stash for Postman fields we don't model/execute (§7.5):
-  postmanEvents?: unknown;   // prerequest/test scripts — preserved, not run
-  postmanAuthRaw?: unknown;  // unsupported auth blocks (oauth2, awsv4, …)
+  postmanEvents?: unknown; // prerequest/test scripts — preserved, not run
+  postmanAuthRaw?: unknown; // unsupported auth blocks (oauth2, awsv4, …)
 }
 
 interface Collection {
   id: string;
   name: string;
   description?: string;
-  requestIds: string[];         // ordered
+  requestIds: string[]; // ordered
   createdAt: number;
   updatedAt: number;
 }
@@ -236,19 +256,19 @@ interface Collection {
 interface Environment {
   id: string;
   name: string;
-  variables: KeyValue[];        // {{var}} resolution source
+  variables: KeyValue[]; // {{var}} resolution source
 }
 
 interface HistoryEntry {
   id: string;
-  request: ApiRequest;          // snapshot at send time
+  request: ApiRequest; // snapshot at send time
   response: {
     status: number;
     statusText: string;
     durationMs: number;
     sizeBytes: number;
     headers: Record<string, string>;
-    bodyPreview: string;        // truncated; full body not persisted if large
+    bodyPreview: string; // truncated; full body not persisted if large
   } | null;
   error?: string;
   sentAt: number;
@@ -257,19 +277,20 @@ interface HistoryEntry {
 interface Settings {
   activeEnvironmentId: string | null;
   reduceTransparency: boolean;
-  requestTimeoutMs: number;     // default 30000
+  requestTimeoutMs: number; // default 30000
   maxResponsePreviewBytes: number; // default 2_000_000
 }
 ```
 
 ### Dexie schema
+
 ```ts
 db.version(1).stores({
-  collections:  "id, name, updatedAt",
-  requests:     "id, collectionId, updatedAt",
+  collections: "id, name, updatedAt",
+  requests: "id, collectionId, updatedAt",
   environments: "id, name",
-  history:      "id, sentAt",
-  settings:     "id",          // single row, id = "app"
+  history: "id, sentAt",
+  settings: "id", // single row, id = "app"
 });
 ```
 
@@ -278,12 +299,15 @@ db.version(1).stores({
 ## 7. Core Behaviors
 
 ### 7.1 Variable resolution
+
 - `{{var}}` syntax. Resolution order: **environment variables** → (later: collection vars). Unresolved variables highlight in the URL/headers and warn before send.
 - Resolve in: URL, query params, headers, body, auth fields.
 - Implement as a pure function `resolve(template: string, vars: Record<string,string>) => string` with `{{...}}` regex. Show a live preview of the resolved URL under the URL bar.
 
 ### 7.2 Sending a request
+
 Pipeline:
+
 1. Resolve variables across all fields.
 2. Build final URL: merge enabled query params into the URL's search string.
 3. Build headers from enabled header rows + auth injection (Bearer/Basic/API-key).
@@ -297,12 +321,14 @@ Pipeline:
 **Error handling:** a thrown `fetch` (TypeError) → show CORS/network explainer card with the target origin and a checklist. A completed response with 4xx/5xx is a **success at the transport level** — render it normally with the status color.
 
 ### 7.3 Auth injection
+
 - **Bearer:** `Authorization: Bearer <token>`.
 - **Basic:** `Authorization: Basic <base64(user:pass)>` via `btoa`.
 - **API key (header):** custom header name/value. **(query):** appended as query param.
 - Auth-injected headers should be visibly indicated (read-only preview) but not duplicate user-set headers.
 
 ### 7.4 Response viewer
+
 - Tabs: **Body**, **Headers**, **Cookies** (cookies read-only / often empty due to browser restrictions — note this).
 - Body sub-modes: **Pretty** (JSON/XML formatted + syntax highlight), **Raw**, **Preview** (render HTML in sandboxed `<iframe sandbox>`, or image if content-type is image).
 - Guard large bodies: if `> maxResponsePreviewBytes`, show "Response too large to preview (N MB) — [Download]" instead of rendering. Offer download via Blob URL.
@@ -310,24 +336,24 @@ Pipeline:
 
 ### 7.5 Import / Export — Postman-compatible (first-class)
 
-Postgirl must **fully read and write Postman's own JSON formats** so users can move between Postgirl and Postman without conversion. This is a v1 requirement, not a stretch goal.
+Sawatdee API must **fully read and write Postman's own JSON formats** so users can move between Sawatdee API and Postman without conversion. This is a v1 requirement, not a stretch goal.
 
 **Two formats, both directions:**
 
-| Format | Spec | Import | Export |
-|---|---|---|---|
-| Postman **Collection v2.1** | `schema.getpostman.com/json/collection/v2.1.0/collection.json` | ✅ | ✅ |
-| Postman **Environment** | Postman environment export shape | ✅ | ✅ |
-| Postgirl native bundle | our `postgirlVersion: 1` (collections + envs + settings) | ✅ | ✅ |
+| Format                      | Spec                                                           | Import | Export |
+| --------------------------- | -------------------------------------------------------------- | ------ | ------ |
+| Postman **Collection v2.1** | `schema.getpostman.com/json/collection/v2.1.0/collection.json` | ✅     | ✅     |
+| Postman **Environment**     | Postman environment export shape                               | ✅     | ✅     |
+| Sawatdee API native bundle  | our `Sawatdee APIVersion: 1` (collections + envs + settings)   | ✅     | ✅     |
 
-**Import UX:** single file picker accepts any of the three. Detect format by shape (presence of `info._postman_id` / `info.schema` → collection v2.1; `_postman_variable_scope: "environment"` or `{ name, values[] }` → environment; `postgirlVersion` → native). Validate with Zod per format. Show a pre-import summary ("3 collections, 41 requests, 2 environments — Import?"). Merge, don't clobber (offer rename-on-conflict).
+**Import UX:** single file picker accepts any of the three. Detect format by shape (presence of `info._postman_id` / `info.schema` → collection v2.1; `_postman_variable_scope: "environment"` or `{ name, values[] }` → environment; `Sawatdee APIVersion` → native). Validate with Zod per format. Show a pre-import summary ("3 collections, 41 requests, 2 environments — Import?"). Merge, don't clobber (offer rename-on-conflict).
 
-**Export UX:** export a collection → choose **Postman v2.1** (default, portable) or **Postgirl native**. Export an environment → Postman environment JSON. "Export all" → native bundle.
+**Export UX:** export a collection → choose **Postman v2.1** (default, portable) or **Sawatdee API native**. Export an environment → Postman environment JSON. "Export all" → native bundle.
 
-#### Postman Collection v2.1 ⇄ Postgirl mapping
+#### Postman Collection v2.1 ⇄ Sawatdee API mapping
 
 ```
-Postman item.request                      Postgirl ApiRequest
+Postman item.request                      Sawatdee API ApiRequest
 ─────────────────────────────────────────────────────────────────────
 item.name                            →    name
 request.method                       →    method
@@ -341,26 +367,30 @@ request.body.mode                    →    body.mode      (raw|formdata|urlenco
 request.auth                         →    auth           (bearer|basic|apikey → our AuthType; others → none + warn)
 ```
 
-- **Folders:** Postman collections nest folders (`item` arrays within items). v1 flattens nested folders into the parent collection, prefixing request names with the folder path (e.g. `Users / Get user`). *(Preserve original folder structure as a stretch goal once the collection tree supports nesting.)*
+- **Folders:** Postman collections nest folders (`item` arrays within items). v1 flattens nested folders into the parent collection, prefixing request names with the folder path (e.g. `Users / Get user`). _(Preserve original folder structure as a stretch goal once the collection tree supports nesting.)_
 - **Variables:** collection-level `variable[]` imported as collection variables (stored, resolved after environment vars — see §7.1). `{{var}}` syntax is already identical between the tools, so URLs/headers/bodies carry over verbatim.
 - **`pm.*` scripts** (`event[]` — prerequest/test): **not executed** in v1 (no scripting sandbox). Preserve them verbatim on the request record (`postmanEvents?: unknown`) so a round-trip export doesn't lose them, and surface a non-blocking "scripts not run" badge. Do not attempt to interpret.
 - **Unsupported auth types** (oauth2, awsv4, digest, etc.): import as `auth.type = "none"`, keep the raw block in `postmanAuthRaw?: unknown` for lossless re-export, and warn inline.
 
-#### Postman Environment ⇄ Postgirl mapping
+#### Postman Environment ⇄ Sawatdee API mapping
+
 ```
 Postman env.name              →   Environment.name
 env.values[] {key,value,enabled,type}  →  variables[] {key,value,enabled}
   (type "secret" honored as a value; we don't mask in v1 — note it)
 ```
-On export, emit `{ name, values, _postman_variable_scope: "environment", _exporter_id: "postgirl" }`.
+
+On export, emit `{ name, values, _postman_variable_scope: "environment", _exporter_id: "Sawatdee API" }`.
 
 #### Round-trip & lossless rules
-- Import → export → import must not lose data Postgirl understands. Fields we don't model (scripts, exotic auth, folder metadata) are **stashed verbatim** on the record (`postman*Raw` fields) and re-emitted on export. Document this contract in `lib/importExport.ts`.
+
+- Import → export → import must not lose data Sawatdee API understands. Fields we don't model (scripts, exotic auth, folder metadata) are **stashed verbatim** on the record (`postman*Raw` fields) and re-emitted on export. Document this contract in `lib/importExport.ts`.
 - Every importer validates with **Zod** and produces a structured report `{ imported, skipped, warnings[] }` shown to the user — never fail silently, never hard-crash on an unexpected field.
 
-**Native bundle** (`postgirlVersion: 1`): full fidelity dump of collections + environments + settings for backup/restore. Always lossless.
+**Native bundle** (`Sawatdee APIVersion: 1`): full fidelity dump of collections + environments + settings for backup/restore. Always lossless.
 
 ### 7.6 Persistence rules
+
 - Autosave request edits to IndexedDB debounced (~400 ms).
 - History capped (e.g. last 100 entries; trim oldest). Large response bodies stored truncated to `maxResponsePreviewBytes`.
 - All writes async; never block render.
@@ -421,13 +451,16 @@ src/
 ---
 
 ## 9. Future / Optional CORS Proxy (NOT v1)
+
 SWA includes managed Azure Functions on the free tier. A future opt-in setting could route requests through a tiny `/api/proxy` function to bypass CORS. **Explicitly out of scope for v1** (violates "no backend"), but the `send.ts` pipeline should keep the request-dispatch step swappable so a proxy transport can be added without rewiring the UI.
 
 ---
 
 ## 10. Azure Static Web Apps Deployment
+
 - Build: `vite build` → `dist/`.
 - `staticwebapp.config.json` with SPA fallback:
+
 ```json
 {
   "navigationFallback": { "rewrite": "/index.html" },
@@ -436,6 +469,7 @@ SWA includes managed Azure Functions on the free tier. A future opt-in setting c
   }
 }
 ```
+
 - CI: GitHub Actions workflow (SWA default) — build on push, deploy to SWA. App location `/`, output `dist`, no API location (v1).
 - Free tier sufficient. Custom domain optional.
 
@@ -444,43 +478,52 @@ SWA includes managed Azure Functions on the free tier. A future opt-in setting c
 ## 11. Build Phases (for the engineer agent)
 
 **Phase 0 — Scaffold**
+
 - Vite + React + TS project. Install deps. Set up `tokens.css` / `glass.css`. Lint/format. Vitest.
 - Deliverable: blank app shell renders the 3-pane glass layout (no logic).
 
 **Phase 1 — Design system & shell**
+
 - `GlassPanel`, `Button`, `MethodBadge`, `Modal`, `Toast`, `EmptyState`.
 - TopBar, Sidebar, RequestBar, ResponsePanel skeletons wired to Zustand. Verify the look (white-pink liquid glass) against §5.
 
 **Phase 2 — Send a request (the core loop)**
+
 - `lib/send.ts`, `variables.ts`, `auth.ts`. Method+URL+Send → real `fetch`. Render status/time/size + raw body. CORS explainer on throw. Unit tests.
 
 **Phase 3 — Request editors**
+
 - Params, Headers, Body (CodeMirror), Auth tabs. KeyValueTable. Live resolved-URL preview.
 
 **Phase 4 — Persistence: collections, history, environments**
+
 - Dexie wiring. Save/open requests, collection tree, history list, environment CRUD + selector. Autosave debounce.
 
 **Phase 5 — Response viewer polish**
+
 - Pretty/Raw/Preview, syntax highlight, large-body guard, copy/download/search.
 
 **Phase 6 — Import/Export + settings**
-- Full **Postman v2.1 collection** + **Postman environment** import AND export, plus Postgirl native bundle (§7.5). Zod validation per format, shape-based format detection, pre-import summary, merge-with-rename, structured `{imported, skipped, warnings}` report, lossless round-trip stash.
+
+- Full **Postman v2.1 collection** + **Postman environment** import AND export, plus Sawatdee API native bundle (§7.5). Zod validation per format, shape-based format detection, pre-import summary, merge-with-rename, structured `{imported, skipped, warnings}` report, lossless round-trip stash.
 - Settings panel (timeout, reduce-transparency, clear data).
 - Unit tests with real Postman export fixtures (collection + environment) covering round-trip.
 
 **Phase 7 — Polish & ship**
+
 - Responsive/mobile column, keyboard shortcuts (⌘↵ send, ⌘S save), `prefers-reduced-motion`, accessibility pass, bundle-size check, `staticwebapp.config.json`, GitHub Actions deploy.
 
 ---
 
 ## 12. Acceptance Criteria (v1 done)
+
 - [ ] Send GET/POST/PUT/PATCH/DELETE to a CORS-enabled API and see formatted response, status, time, size.
 - [ ] CORS/network failure shows the dedicated explainer, distinct from a 4xx/5xx response.
 - [ ] Create collections; save, reorder, and reopen requests; data survives reload.
 - [ ] Define environments with `{{variables}}`; switching env changes resolution; live resolved-URL preview.
 - [ ] Set query params, headers, JSON/form body, and Bearer/Basic/API-key auth.
 - [ ] History records sends and is replayable.
-- [ ] Export to Postgirl native JSON and re-import restores state losslessly.
+- [ ] Export to Sawatdee API native JSON and re-import restores state losslessly.
 - [ ] Import a real **Postman v2.1 collection** export → requests/params/headers/body/auth populate correctly; nested folders flatten with path-prefixed names; `{{vars}}` carry over; scripts preserved + flagged.
 - [ ] Import a real **Postman environment** export → variables populate and resolve.
 - [ ] Export a collection as Postman v2.1 and an environment as Postman env JSON → both re-import cleanly into actual Postman.
@@ -492,19 +535,21 @@ SWA includes managed Azure Functions on the free tier. A future opt-in setting c
 ---
 
 ## 13. Keyboard Shortcuts
-| Action | Shortcut |
-|---|---|
-| Send request | ⌘/Ctrl + Enter |
-| Save request | ⌘/Ctrl + S |
-| New request/tab | ⌘/Ctrl + T |
-| Close tab | ⌘/Ctrl + W |
-| Focus URL bar | ⌘/Ctrl + L |
-| Toggle sidebar | ⌘/Ctrl + B |
+
+| Action          | Shortcut       |
+| --------------- | -------------- |
+| Send request    | ⌘/Ctrl + Enter |
+| Save request    | ⌘/Ctrl + S     |
+| New request/tab | ⌘/Ctrl + T     |
+| Close tab       | ⌘/Ctrl + W     |
+| Focus URL bar   | ⌘/Ctrl + L     |
+| Toggle sidebar  | ⌘/Ctrl + B     |
 
 ---
 
 ## 14. Open Questions for Product
+
 1. Postman folder nesting — flatten in v1 (current plan) acceptable, or is preserving nested folders required up front?
 2. WebSocket support — wanted at all, or HTTP-only forever?
-3. Branding: keep playful "Postgirl" mascot/logo, or clean wordmark only?
+3. Branding: keep playful "Sawatdee API" mascot/logo, or clean wordmark only?
 4. Should history persist response bodies, or only metadata (privacy/storage)?

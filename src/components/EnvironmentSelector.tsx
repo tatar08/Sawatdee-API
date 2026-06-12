@@ -1,7 +1,9 @@
 import { useStore } from "../store/useStore";
+import { useTranslation } from "../lib/i18n";
 import styles from "./EnvironmentSelector.module.css";
 
 export function EnvironmentSelector() {
+  const t = useTranslation();
   const environments = useStore((s) => s.environments);
   const activeId = useStore((s) => s.settings.activeEnvironmentId);
   const setActive = useStore((s) => s.setActiveEnvironment);
@@ -11,9 +13,9 @@ export function EnvironmentSelector() {
       className={styles.select}
       value={activeId ?? ""}
       onChange={(e) => setActive(e.target.value || null)}
-      aria-label="Active environment"
+      aria-label={t("activeEnvAria")}
     >
-      <option value="">No environment</option>
+      <option value="">{t("noEnvironmentOption")}</option>
       {environments.map((env) => (
         <option key={env.id} value={env.id}>
           {env.name}

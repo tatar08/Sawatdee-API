@@ -1,3 +1,4 @@
+import { useTranslation } from "../../lib/i18n";
 import styles from "./HeadersViewer.module.css";
 
 interface HeadersViewerProps {
@@ -5,12 +6,13 @@ interface HeadersViewerProps {
 }
 
 export function HeadersViewer({ headers }: HeadersViewerProps) {
+  const t = useTranslation();
   const sorted = Object.entries(headers).sort(([a], [b]) => a.localeCompare(b));
 
   if (sorted.length === 0) {
     return (
       <div className={styles.empty}>
-        <span>No response headers</span>
+        <span>{t("headersEmpty")}</span>
       </div>
     );
   }

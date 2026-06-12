@@ -47,3 +47,820 @@
                   "Inter", system-ui, sans-serif;
   --pg-font-mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
+
+/* --- Dog (Shiba Inu) Theme --- */
+html[data-theme-pattern="dog"] {
+  --pg-bg-base:        #fcfaf7;
+  --pg-bg-gradient:    linear-gradient(135deg, #fffcf8 0%, #f7ebe0 50%, #eee0cd 100%);
+  --pg-pink-50:        #fdf8f5;
+  --pg-pink-100:       #fce8dc;
+  --pg-pink-300:       #f7c29e;
+  --pg-pink-500:       #e27d3c;
+  --pg-pink-600:       #ce6928;
+  --pg-pink-700:       #af5014;
+
+  --pg-text-strong:    #32251a;
+  --pg-text:           #615041;
+  --pg-text-muted:     #9c8979;
+
+  --pg-glass-shadow:   0 8px 32px rgba(226, 125, 60, 0.12),
+                       0 2px 8px  rgba(50, 37, 26, 0.06);
+}
+
+/* --- Cat (Maneki-Neko) Theme --- */
+html[data-theme-pattern="cat"] {
+  --pg-bg-base:        #fdf8fa;
+  --pg-bg-gradient:    linear-gradient(135deg, #fff2f5 0%, #fde4eb 50%, #f7d2e0 100%);
+  --pg-pink-50:        #fdf5f6;
+  --pg-pink-100:       #fcdbdc;
+  --pg-pink-300:       #f5b0c2;
+  --pg-pink-500:       #e76f8e;
+  --pg-pink-600:       #d45677;
+  --pg-pink-700:       #bc3b5c;
+
+  --pg-text-strong:    #2a1622;
+  --pg-text:           #5d4352;
+  --pg-text-muted:     #9a7d8e;
+
+  --pg-glass-shadow:   0 8px 32px rgba(231, 111, 142, 0.12),
+                       0 2px 8px  rgba(42, 22, 34, 0.06);
+}
+
+/* --- Rabbit (Usagi) Theme --- */
+html[data-theme-pattern="rabbit"] {
+  --pg-bg-base:        #fafaff;
+  --pg-bg-gradient:    linear-gradient(135deg, #f5f4fd 0%, #e9e6fd 50%, #dbd6fc 100%);
+  --pg-pink-50:        #f5f3ff;
+  --pg-pink-100:       #e3dffc;
+  --pg-pink-300:       #c1b9f3;
+  --pg-pink-500:       #8e7ee2;
+  --pg-pink-600:       #7462cc;
+  --pg-pink-700:       #5c4ab5;
+
+  --pg-text-strong:    #1a152d;
+  --pg-text:           #4a4269;
+  --pg-text-muted:     #847ba4;
+
+  --pg-glass-shadow:   0 8px 32px rgba(142, 126, 226, 0.12),
+                       0 2px 8px  rgba(26, 21, 45, 0.06);
+}
+
+/* --- Panda Theme --- */
+html[data-theme-pattern="panda"] {
+  --pg-bg-base:        #fafdfa;
+  --pg-bg-gradient:    linear-gradient(135deg, #f4faf4 0%, #e7f2e8 50%, #d8ebd9 100%);
+  --pg-pink-50:        #f2fbf4;
+  --pg-pink-100:       #d6ebd9;
+  --pg-pink-300:       #a2d2b6;
+  --pg-pink-500:       #5ca37b;
+  --pg-pink-600:       #468c65;
+  --pg-pink-700:       #33734f;
+
+  --pg-text-strong:    #17241c;
+  --pg-text:           #415246;
+  --pg-text-muted:     #798a7f;
+
+  --pg-glass-shadow:   0 8px 32px rgba(92, 163, 123, 0.12),
+                       0 2px 8px  rgba(23, 36, 28, 0.06);
+}
+
+/* --- Thai Elephant Theme --- */
+html[data-theme-pattern="elephant"] {
+  --pg-bg-base:        #fafdfd;
+  --pg-bg-gradient:    linear-gradient(135deg, #f1fafb 0%, #e0f2f5 50%, #d0ecf2 100%);
+  --pg-pink-50:        #f1fafc;
+  --pg-pink-100:       #d0ecf8;
+  --pg-pink-300:       #9ad2eb;
+  --pg-pink-500:       #4a9ec0;
+  --pg-pink-600:       #3586a8;
+  --pg-pink-700:       #236e8e;
+
+  --pg-text-strong:    #16242c;
+  --pg-text:           #40525d;
+  --pg-text-muted:     #798b96;
+
+  --pg-glass-shadow:   0 8px 32px rgba(74, 158, 192, 0.12),
+                       0 2px 8px  rgba(22, 36, 44, 0.06);
+}
+
+/* ========================================================================= */
+/* ==================== DARK MODE OVERRIDES (SPEC §5.4) ==================== */
+/* ========================================================================= */
+
+/* --- Base Dark Mode (Classic Pink) --- */
+html[data-theme="dark"] {
+  --pg-bg-base:        #150e12;
+  --pg-bg-gradient:    linear-gradient(135deg, #1b1016 0%, #150e12 50%, #0e0a0d 100%);
+  --pg-pink-50:        #2d1822;
+  --pg-pink-100:       #4c2436;
+  --pg-pink-300:       #8a3a5d;
+  --pg-pink-500:       #ff5fa2;
+  --pg-pink-600:       #f43f8e;
+  --pg-pink-700:       #d62e76;
+
+  --pg-text-strong:    #fdf7fa;
+  --pg-text:           #dcd1d6;
+  --pg-text-muted:     #8a7b82;
+
+  --pg-glass-bg:       rgba(21, 14, 18, 0.45);
+  --pg-glass-bg-strong:rgba(21, 14, 18, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.5),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Dog (Shiba Inu) Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="dog"] {
+  --pg-bg-base:        #1c1511;
+  --pg-bg-gradient:    linear-gradient(135deg, #251b14 0%, #1c1511 50%, #120e0b 100%);
+  --pg-pink-50:        #312117;
+  --pg-pink-100:       #523625;
+  --pg-pink-300:       #915e3f;
+  --pg-pink-500:       #e27d3c;
+  --pg-pink-600:       #ce6928;
+  --pg-pink-700:       #af5014;
+
+  --pg-text-strong:    #fdfaf7;
+  --pg-text:           #ddd0c4;
+  --pg-text-muted:     #8f8074;
+
+  --pg-glass-bg:       rgba(28, 21, 17, 0.45);
+  --pg-glass-bg-strong:rgba(28, 21, 17, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Cat (Maneki-Neko) Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="cat"] {
+  --pg-bg-base:        #171015;
+  --pg-bg-gradient:    linear-gradient(135deg, #23121d 0%, #171015 50%, #100b0f 100%);
+  --pg-pink-50:        #2f1b29;
+  --pg-pink-100:       #522a44;
+  --pg-pink-300:       #934976;
+  --pg-pink-500:       #e76f8e;
+  --pg-pink-600:       #d45677;
+  --pg-pink-700:       #bc3b5c;
+
+  --pg-text-strong:    #fdf8fa;
+  --pg-text:           #ded0d8;
+  --pg-text-muted:     #917d89;
+
+  --pg-glass-bg:       rgba(23, 16, 21, 0.45);
+  --pg-glass-bg-strong:rgba(23, 16, 21, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.5),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Rabbit (Usagi) Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="rabbit"] {
+  --pg-bg-base:        #12111b;
+  --pg-bg-gradient:    linear-gradient(135deg, #18152c 0%, #12111b 50%, #0b0a11 100%);
+  --pg-pink-50:        #221f37;
+  --pg-pink-100:       #37325d;
+  --pg-pink-300:       #645baf;
+  --pg-pink-500:       #8e7ee2;
+  --pg-pink-600:       #7462cc;
+  --pg-pink-700:       #5c4ab5;
+
+  --pg-text-strong:    #fafaff;
+  --pg-text:           #d0cee0;
+  --pg-text-muted:     #837fa2;
+
+  --pg-glass-bg:       rgba(18, 17, 27, 0.45);
+  --pg-glass-bg-strong:rgba(18, 17, 27, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.5),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Panda Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="panda"] {
+  --pg-bg-base:        #101411;
+  --pg-bg-gradient:    linear-gradient(135deg, #121c16 0%, #101411 50%, #0a0c0b 100%);
+  --pg-pink-50:        #1c2820;
+  --pg-pink-100:       #2d4638;
+  --pg-pink-300:       #4f7961;
+  --pg-pink-500:       #5ca37b;
+  --pg-pink-600:       #468c65;
+  --pg-pink-700:       #33734f;
+
+  --pg-text-strong:    #fafdfa;
+  --pg-text:           #cbd2cd;
+  --pg-text-muted:     #7c8a82;
+
+  --pg-glass-bg:       rgba(16, 20, 17, 0.45);
+  --pg-glass-bg-strong:rgba(16, 20, 17, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.5),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Thai Elephant Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="elephant"] {
+  --pg-bg-base:        #101518;
+  --pg-bg-gradient:    linear-gradient(135deg, #111e25 0%, #101518 50%, #0a0d0f 100%);
+  --pg-pink-50:        #1b282f;
+  --pg-pink-100:       #294452;
+  --pg-pink-300:       #45768e;
+  --pg-pink-500:       #4a9ec0;
+  --pg-pink-600:       #3586a8;
+  --pg-pink-700:       #236e8e;
+
+  --pg-text-strong:    #fafdfd;
+  --pg-text:           #cbd5d9;
+  --pg-text-muted:     #7c8b93;
+
+  --pg-glass-bg:       rgba(16, 21, 24, 0.45);
+  --pg-glass-bg-strong:rgba(16, 21, 24, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================================================= */
+/* ====================== NEW ANIMAL THEMES (10) =========================== */
+/* ========================================================================= */
+
+/* --- Kitsune Fox Theme (Light) --- */
+html[data-theme-pattern="kitsune"] {
+  --pg-bg-base:        #fdf8f5;
+  --pg-bg-gradient:    linear-gradient(135deg, #fef4ec 0%, #fce2cc 50%, #f7d0b3 100%);
+  --pg-pink-50:        #fef6ef;
+  --pg-pink-100:       #fce0c8;
+  --pg-pink-300:       #f2a86a;
+  --pg-pink-500:       #d4622a;
+  --pg-pink-600:       #bf4e1a;
+  --pg-pink-700:       #9e3a0e;
+
+  --pg-text-strong:    #2e1a0e;
+  --pg-text:           #5d3f2a;
+  --pg-text-muted:     #9a7a5f;
+
+  --pg-glass-shadow:   0 8px 32px rgba(212, 98, 42, 0.12),
+                       0 2px 8px  rgba(46, 26, 14, 0.06);
+}
+
+/* --- Golden Dragon Theme (Light) --- */
+html[data-theme-pattern="dragon"] {
+  --pg-bg-base:        #fdfaf3;
+  --pg-bg-gradient:    linear-gradient(135deg, #fef7e7 0%, #f8e8c0 50%, #f2d89e 100%);
+  --pg-pink-50:        #fef9ed;
+  --pg-pink-100:       #fae5b4;
+  --pg-pink-300:       #e8b84a;
+  --pg-pink-500:       #c4841e;
+  --pg-pink-600:       #a86c12;
+  --pg-pink-700:       #8b560a;
+
+  --pg-text-strong:    #2d200b;
+  --pg-text:           #5e4820;
+  --pg-text-muted:     #9a7e4f;
+
+  --pg-glass-shadow:   0 8px 32px rgba(196, 132, 30, 0.12),
+                       0 2px 8px  rgba(45, 32, 11, 0.06);
+}
+
+/* --- Sika Deer Theme (Light) --- */
+html[data-theme-pattern="deer"] {
+  --pg-bg-base:        #fafcf7;
+  --pg-bg-gradient:    linear-gradient(135deg, #f5f8ef 0%, #e8eed5 50%, #dbe5c2 100%);
+  --pg-pink-50:        #f4f7ee;
+  --pg-pink-100:       #dde7c9;
+  --pg-pink-300:       #b5c98d;
+  --pg-pink-500:       #7a9b48;
+  --pg-pink-600:       #638236;
+  --pg-pink-700:       #4d6a28;
+
+  --pg-text-strong:    #1c250f;
+  --pg-text:           #455230;
+  --pg-text-muted:     #7f8f65;
+
+  --pg-glass-shadow:   0 8px 32px rgba(122, 155, 72, 0.12),
+                       0 2px 8px  rgba(28, 37, 15, 0.06);
+}
+
+/* --- Koi Fish Theme (Light) --- */
+html[data-theme-pattern="koi"] {
+  --pg-bg-base:        #f9fbfd;
+  --pg-bg-gradient:    linear-gradient(135deg, #f0f5fc 0%, #dce8f8 50%, #c9dbf4 100%);
+  --pg-pink-50:        #f2f6fc;
+  --pg-pink-100:       #d4e2f6;
+  --pg-pink-300:       #92b5e2;
+  --pg-pink-500:       #4478b6;
+  --pg-pink-600:       #32629e;
+  --pg-pink-700:       #234d85;
+
+  --pg-text-strong:    #11202e;
+  --pg-text:           #3a5068;
+  --pg-text-muted:     #728a9f;
+
+  --pg-glass-shadow:   0 8px 32px rgba(68, 120, 182, 0.12),
+                       0 2px 8px  rgba(17, 32, 46, 0.06);
+}
+
+/* --- Night Owl Theme (Light) --- */
+html[data-theme-pattern="owl"] {
+  --pg-bg-base:        #faf8f5;
+  --pg-bg-gradient:    linear-gradient(135deg, #f5efe5 0%, #e8dac8 50%, #dccdb5 100%);
+  --pg-pink-50:        #f7f2ea;
+  --pg-pink-100:       #e8d7c0;
+  --pg-pink-300:       #c4a67a;
+  --pg-pink-500:       #8b6934;
+  --pg-pink-600:       #745526;
+  --pg-pink-700:       #5d431c;
+
+  --pg-text-strong:    #241a0f;
+  --pg-text:           #53422e;
+  --pg-text-muted:     #8e7b64;
+
+  --pg-glass-shadow:   0 8px 32px rgba(139, 105, 52, 0.12),
+                       0 2px 8px  rgba(36, 26, 15, 0.06);
+}
+
+/* --- Lucky Turtle Theme (Light) --- */
+html[data-theme-pattern="turtle"] {
+  --pg-bg-base:        #f7fcf8;
+  --pg-bg-gradient:    linear-gradient(135deg, #ebf7ee 0%, #d0ecd6 50%, #b5e2be 100%);
+  --pg-pink-50:        #edf8f0;
+  --pg-pink-100:       #c8e8d0;
+  --pg-pink-300:       #82c492;
+  --pg-pink-500:       #3a9255;
+  --pg-pink-600:       #2d7a45;
+  --pg-pink-700:       #226237;
+
+  --pg-text-strong:    #0e2415;
+  --pg-text:           #2e5038;
+  --pg-text-muted:     #6a8e73;
+
+  --pg-glass-shadow:   0 8px 32px rgba(58, 146, 85, 0.12),
+                       0 2px 8px  rgba(14, 36, 21, 0.06);
+}
+
+/* --- Butterfly Theme (Light) --- */
+html[data-theme-pattern="butterfly"] {
+  --pg-bg-base:        #fdf8fc;
+  --pg-bg-gradient:    linear-gradient(135deg, #f8eef8 0%, #eeddf2 50%, #e4cce8 100%);
+  --pg-pink-50:        #f8f0f8;
+  --pg-pink-100:       #edd6f0;
+  --pg-pink-300:       #d1a4d9;
+  --pg-pink-500:       #a260b0;
+  --pg-pink-600:       #8a4a98;
+  --pg-pink-700:       #723882;
+
+  --pg-text-strong:    #251428;
+  --pg-text:           #56415a;
+  --pg-text-muted:     #907a96;
+
+  --pg-glass-shadow:   0 8px 32px rgba(162, 96, 176, 0.12),
+                       0 2px 8px  rgba(37, 20, 40, 0.06);
+}
+
+/* --- Tsuru Crane Theme (Light) --- */
+html[data-theme-pattern="crane"] {
+  --pg-bg-base:        #fdfcfb;
+  --pg-bg-gradient:    linear-gradient(135deg, #faf5f2 0%, #f2e7e1 50%, #ead9d2 100%);
+  --pg-pink-50:        #fcf6f3;
+  --pg-pink-100:       #f2ddd3;
+  --pg-pink-300:       #dca890;
+  --pg-pink-500:       #bf6848;
+  --pg-pink-600:       #a55438;
+  --pg-pink-700:       #8b422a;
+
+  --pg-text-strong:    #261812;
+  --pg-text:           #57403a;
+  --pg-text-muted:     #907870;
+
+  --pg-glass-shadow:   0 8px 32px rgba(191, 104, 72, 0.12),
+                       0 2px 8px  rgba(38, 24, 18, 0.06);
+}
+
+/* --- Naga Serpent Theme (Light) --- */
+html[data-theme-pattern="naga"] {
+  --pg-bg-base:        #f8fdf6;
+  --pg-bg-gradient:    linear-gradient(135deg, #eef9e8 0%, #d5efca 50%, #bde6ae 100%);
+  --pg-pink-50:        #f0f9ec;
+  --pg-pink-100:       #ceeac1;
+  --pg-pink-300:       #8ec87a;
+  --pg-pink-500:       #4a9738;
+  --pg-pink-600:       #3a7e2c;
+  --pg-pink-700:       #2c6622;
+
+  --pg-text-strong:    #102510;
+  --pg-text:           #325432;
+  --pg-text-muted:     #6e8e6e;
+
+  --pg-glass-shadow:   0 8px 32px rgba(74, 151, 56, 0.12),
+                       0 2px 8px  rgba(16, 37, 16, 0.06);
+}
+
+/* --- Tiger Theme (Light) --- */
+html[data-theme-pattern="tiger"] {
+  --pg-bg-base:        #fdf9f4;
+  --pg-bg-gradient:    linear-gradient(135deg, #fef3e4 0%, #fae1c0 50%, #f5d0a0 100%);
+  --pg-pink-50:        #fef6ec;
+  --pg-pink-100:       #fae0bb;
+  --pg-pink-300:       #e8a852;
+  --pg-pink-500:       #c87820;
+  --pg-pink-600:       #ae6414;
+  --pg-pink-700:       #92500c;
+
+  --pg-text-strong:    #2a1c08;
+  --pg-text:           #5a4020;
+  --pg-text-muted:     #98784a;
+
+  --pg-glass-shadow:   0 8px 32px rgba(200, 120, 32, 0.12),
+                       0 2px 8px  rgba(42, 28, 8, 0.06);
+}
+
+/* ========================================================================= */
+/* ================ NEW ANIMAL THEMES - DARK MODE (10) ===================== */
+/* ========================================================================= */
+
+/* --- Kitsune Fox Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="kitsune"] {
+  --pg-bg-base:        #1a120e;
+  --pg-bg-gradient:    linear-gradient(135deg, #241812 0%, #1a120e 50%, #100c0a 100%);
+  --pg-pink-50:        #301e15;
+  --pg-pink-100:       #523222;
+  --pg-pink-300:       #8e5535;
+  --pg-pink-500:       #d4622a;
+  --pg-pink-600:       #bf4e1a;
+  --pg-pink-700:       #9e3a0e;
+
+  --pg-text-strong:    #fdf8f5;
+  --pg-text:           #ddd0c5;
+  --pg-text-muted:     #8e7668;
+
+  --pg-glass-bg:       rgba(26, 18, 14, 0.45);
+  --pg-glass-bg-strong:rgba(26, 18, 14, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Golden Dragon Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="dragon"] {
+  --pg-bg-base:        #181308;
+  --pg-bg-gradient:    linear-gradient(135deg, #221c0e 0%, #181308 50%, #0e0d06 100%);
+  --pg-pink-50:        #2e2510;
+  --pg-pink-100:       #504018;
+  --pg-pink-300:       #8a6a25;
+  --pg-pink-500:       #c4841e;
+  --pg-pink-600:       #a86c12;
+  --pg-pink-700:       #8b560a;
+
+  --pg-text-strong:    #fdfaf3;
+  --pg-text:           #ded5be;
+  --pg-text-muted:     #8e8260;
+
+  --pg-glass-bg:       rgba(24, 19, 8, 0.45);
+  --pg-glass-bg-strong:rgba(24, 19, 8, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Sika Deer Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="deer"] {
+  --pg-bg-base:        #121508;
+  --pg-bg-gradient:    linear-gradient(135deg, #1a1e10 0%, #121508 50%, #0a0c06 100%);
+  --pg-pink-50:        #1e2412;
+  --pg-pink-100:       #343e20;
+  --pg-pink-300:       #5e7838;
+  --pg-pink-500:       #7a9b48;
+  --pg-pink-600:       #638236;
+  --pg-pink-700:       #4d6a28;
+
+  --pg-text-strong:    #fafcf7;
+  --pg-text:           #d0d6c4;
+  --pg-text-muted:     #7e8870;
+
+  --pg-glass-bg:       rgba(18, 21, 8, 0.45);
+  --pg-glass-bg-strong:rgba(18, 21, 8, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Koi Fish Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="koi"] {
+  --pg-bg-base:        #0e1520;
+  --pg-bg-gradient:    linear-gradient(135deg, #121d2e 0%, #0e1520 50%, #0a0f16 100%);
+  --pg-pink-50:        #162236;
+  --pg-pink-100:       #223a5a;
+  --pg-pink-300:       #3a5e8e;
+  --pg-pink-500:       #4478b6;
+  --pg-pink-600:       #32629e;
+  --pg-pink-700:       #234d85;
+
+  --pg-text-strong:    #f9fbfd;
+  --pg-text:           #c4d0de;
+  --pg-text-muted:     #6e8298;
+
+  --pg-glass-bg:       rgba(14, 21, 32, 0.45);
+  --pg-glass-bg-strong:rgba(14, 21, 32, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Night Owl Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="owl"] {
+  --pg-bg-base:        #171310;
+  --pg-bg-gradient:    linear-gradient(135deg, #221c14 0%, #171310 50%, #0e0c0a 100%);
+  --pg-pink-50:        #2a221a;
+  --pg-pink-100:       #48382a;
+  --pg-pink-300:       #7a5c3a;
+  --pg-pink-500:       #8b6934;
+  --pg-pink-600:       #745526;
+  --pg-pink-700:       #5d431c;
+
+  --pg-text-strong:    #faf8f5;
+  --pg-text:           #ded4c6;
+  --pg-text-muted:     #8e7e6e;
+
+  --pg-glass-bg:       rgba(23, 19, 16, 0.45);
+  --pg-glass-bg-strong:rgba(23, 19, 16, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Lucky Turtle Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="turtle"] {
+  --pg-bg-base:        #0e150f;
+  --pg-bg-gradient:    linear-gradient(135deg, #142018 0%, #0e150f 50%, #0a0e0b 100%);
+  --pg-pink-50:        #1a2a1e;
+  --pg-pink-100:       #284530;
+  --pg-pink-300:       #406b4a;
+  --pg-pink-500:       #3a9255;
+  --pg-pink-600:       #2d7a45;
+  --pg-pink-700:       #226237;
+
+  --pg-text-strong:    #f7fcf8;
+  --pg-text:           #c6d6ca;
+  --pg-text-muted:     #6e8e75;
+
+  --pg-glass-bg:       rgba(14, 21, 15, 0.45);
+  --pg-glass-bg-strong:rgba(14, 21, 15, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Butterfly Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="butterfly"] {
+  --pg-bg-base:        #161018;
+  --pg-bg-gradient:    linear-gradient(135deg, #201622 0%, #161018 50%, #0e0a10 100%);
+  --pg-pink-50:        #281c2c;
+  --pg-pink-100:       #46304c;
+  --pg-pink-300:       #7a5082;
+  --pg-pink-500:       #a260b0;
+  --pg-pink-600:       #8a4a98;
+  --pg-pink-700:       #723882;
+
+  --pg-text-strong:    #fdf8fc;
+  --pg-text:           #ddd0e0;
+  --pg-text-muted:     #8e7a92;
+
+  --pg-glass-bg:       rgba(22, 16, 24, 0.45);
+  --pg-glass-bg-strong:rgba(22, 16, 24, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tsuru Crane Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="crane"] {
+  --pg-bg-base:        #181412;
+  --pg-bg-gradient:    linear-gradient(135deg, #221a16 0%, #181412 50%, #0f0d0b 100%);
+  --pg-pink-50:        #2c201a;
+  --pg-pink-100:       #4e3628;
+  --pg-pink-300:       #8a5540;
+  --pg-pink-500:       #bf6848;
+  --pg-pink-600:       #a55438;
+  --pg-pink-700:       #8b422a;
+
+  --pg-text-strong:    #fdfcfb;
+  --pg-text:           #ddd4d0;
+  --pg-text-muted:     #907870;
+
+  --pg-glass-bg:       rgba(24, 20, 18, 0.45);
+  --pg-glass-bg-strong:rgba(24, 20, 18, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Naga Serpent Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="naga"] {
+  --pg-bg-base:        #0e160e;
+  --pg-bg-gradient:    linear-gradient(135deg, #142214 0%, #0e160e 50%, #090e09 100%);
+  --pg-pink-50:        #1c2e1c;
+  --pg-pink-100:       #2e4c2e;
+  --pg-pink-300:       #4a7a3e;
+  --pg-pink-500:       #4a9738;
+  --pg-pink-600:       #3a7e2c;
+  --pg-pink-700:       #2c6622;
+
+  --pg-text-strong:    #f8fdf6;
+  --pg-text:           #c8d8c4;
+  --pg-text-muted:     #6e8e6e;
+
+  --pg-glass-bg:       rgba(14, 22, 14, 0.45);
+  --pg-glass-bg-strong:rgba(14, 22, 14, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tiger Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="tiger"] {
+  --pg-bg-base:        #1a1408;
+  --pg-bg-gradient:    linear-gradient(135deg, #241c0e 0%, #1a1408 50%, #100e06 100%);
+  --pg-pink-50:        #2e2210;
+  --pg-pink-100:       #50381a;
+  --pg-pink-300:       #8e5e28;
+  --pg-pink-500:       #c87820;
+  --pg-pink-600:       #ae6414;
+  --pg-pink-700:       #92500c;
+
+  --pg-text-strong:    #fdf9f4;
+  --pg-text:           #ded2be;
+  --pg-text-muted:     #8e7a56;
+
+  --pg-glass-bg:       rgba(26, 20, 8, 0.45);
+  --pg-glass-bg-strong:rgba(26, 20, 8, 0.65);
+  --pg-glass-border:   rgba(255, 255, 255, 0.08);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================================================= */
+/* ============== THAI DESIGN THEMES (from design mockups) ================= */
+/* ========================================================================= */
+
+/* --- Suvarnabhumi Gold Theme (Light) --- */
+html[data-theme-pattern="suvarnabhumi"] {
+  --pg-bg-base:        #fdfaf2;
+  --pg-bg-gradient:    linear-gradient(135deg, #fef8e8 0%, #f4ebd0 50%, #e8dbb4 100%);
+  --pg-pink-50:        #fef9ec;
+  --pg-pink-100:       #f4e4b0;
+  --pg-pink-300:       #d4af37;
+  --pg-pink-500:       #aa882c;
+  --pg-pink-600:       #8b6f20;
+  --pg-pink-700:       #6e5718;
+
+  --pg-text-strong:    #1a1408;
+  --pg-text:           #4a3e20;
+  --pg-text-muted:     #8a7a52;
+
+  --pg-glass-shadow:   0 8px 32px rgba(170, 136, 44, 0.12),
+                       0 2px 8px  rgba(26, 20, 8, 0.06);
+}
+
+/* --- Suvarnabhumi Gold Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="suvarnabhumi"] {
+  --pg-bg-base:        #0f1a30;
+  --pg-bg-gradient:    linear-gradient(135deg, #162544 0%, #0f1a30 50%, #0a1020 100%);
+  --pg-pink-50:        #1e3159;
+  --pg-pink-100:       #2a3d6a;
+  --pg-pink-300:       #d4af37;
+  --pg-pink-500:       #f4d068;
+  --pg-pink-600:       #d4af37;
+  --pg-pink-700:       #aa882c;
+
+  --pg-text-strong:    #fffdf9;
+  --pg-text:           #e2d9c2;
+  --pg-text-muted:     #8a7a5f;
+
+  --pg-glass-bg:       rgba(15, 26, 48, 0.55);
+  --pg-glass-bg-strong:rgba(15, 26, 48, 0.75);
+  --pg-glass-border:   rgba(212, 175, 55, 0.15);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.6),
+                       0 2px 8px  rgba(212, 175, 55, 0.08);
+}
+
+/* --- Ayutthaya Earth Theme (Light) --- */
+html[data-theme-pattern="ayutthaya"] {
+  --pg-bg-base:        #faf9f6;
+  --pg-bg-gradient:    linear-gradient(135deg, #faf9f4 0%, #f4f1de 50%, #ece6cc 100%);
+  --pg-pink-50:        #fcf8f0;
+  --pg-pink-100:       #f2cc8f;
+  --pg-pink-300:       #e07a5f;
+  --pg-pink-500:       #c45a3f;
+  --pg-pink-600:       #a8442e;
+  --pg-pink-700:       #8c3422;
+
+  --pg-text-strong:    #3d405b;
+  --pg-text:           #5a5c72;
+  --pg-text-muted:     #8a8c9e;
+
+  --pg-glass-shadow:   0 8px 32px rgba(224, 122, 95, 0.12),
+                       0 2px 8px  rgba(61, 64, 91, 0.06);
+}
+
+/* --- Ayutthaya Earth Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="ayutthaya"] {
+  --pg-bg-base:        #1c1a16;
+  --pg-bg-gradient:    linear-gradient(135deg, #26221a 0%, #1c1a16 50%, #12100e 100%);
+  --pg-pink-50:        #2e2820;
+  --pg-pink-100:       #4a3e2e;
+  --pg-pink-300:       #e07a5f;
+  --pg-pink-500:       #e07a5f;
+  --pg-pink-600:       #c45a3f;
+  --pg-pink-700:       #a8442e;
+
+  --pg-text-strong:    #f4f1de;
+  --pg-text:           #d6d0ba;
+  --pg-text-muted:     #8a8470;
+
+  --pg-glass-bg:       rgba(28, 26, 22, 0.5);
+  --pg-glass-bg-strong:rgba(28, 26, 22, 0.7);
+  --pg-glass-border:   rgba(224, 122, 95, 0.12);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.55),
+                       0 2px 8px  rgba(0, 0, 0, 0.3);
+}
+
+/* --- Bangkok Neon Theme (Light) --- */
+html[data-theme-pattern="bangkok"] {
+  --pg-bg-base:        #f5fcfd;
+  --pg-bg-gradient:    linear-gradient(135deg, #eaf8fc 0%, #d8f0f8 50%, #c6e8f5 100%);
+  --pg-pink-50:        #ebfafc;
+  --pg-pink-100:       #c0e8f2;
+  --pg-pink-300:       #40c8e0;
+  --pg-pink-500:       #0098b8;
+  --pg-pink-600:       #007a98;
+  --pg-pink-700:       #006078;
+
+  --pg-text-strong:    #090d16;
+  --pg-text:           #2a3a4e;
+  --pg-text-muted:     #6a7a8e;
+
+  --pg-glass-shadow:   0 8px 32px rgba(0, 152, 184, 0.12),
+                       0 2px 8px  rgba(9, 13, 22, 0.06);
+}
+
+/* --- Bangkok Neon Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="bangkok"] {
+  --pg-bg-base:        #090d16;
+  --pg-bg-gradient:    linear-gradient(135deg, #111827 0%, #090d16 50%, #050810 100%);
+  --pg-pink-50:        #1f2937;
+  --pg-pink-100:       #283848;
+  --pg-pink-300:       #3a8aa0;
+  --pg-pink-500:       #00f0ff;
+  --pg-pink-600:       #00c8d8;
+  --pg-pink-700:       #0098b0;
+
+  --pg-text-strong:    #f0f8ff;
+  --pg-text:           #c4d8e8;
+  --pg-text-muted:     #6a8098;
+
+  --pg-glass-bg:       rgba(9, 13, 22, 0.5);
+  --pg-glass-bg-strong:rgba(9, 13, 22, 0.72);
+  --pg-glass-border:   rgba(0, 240, 255, 0.1);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.6),
+                       0 2px 8px  rgba(0, 240, 255, 0.06);
+}
+
+/* --- Cyber Siam Theme (Light) --- */
+html[data-theme-pattern="cybersiam"] {
+  --pg-bg-base:        #f2fdfb;
+  --pg-bg-gradient:    linear-gradient(135deg, #e5fcf6 0%, #ccf8ee 50%, #b5f4e5 100%);
+  --pg-pink-50:        #e8fcf7;
+  --pg-pink-100:       #b0f0de;
+  --pg-pink-300:       #40d8b0;
+  --pg-pink-500:       #0aac84;
+  --pg-pink-600:       #088e6c;
+  --pg-pink-700:       #067058;
+
+  --pg-text-strong:    #020617;
+  --pg-text:           #1e3a32;
+  --pg-text-muted:     #5a8a78;
+
+  --pg-glass-shadow:   0 8px 32px rgba(10, 172, 132, 0.12),
+                       0 2px 8px  rgba(2, 6, 23, 0.06);
+}
+
+/* --- Cyber Siam Dark Mode --- */
+html[data-theme="dark"][data-theme-pattern="cybersiam"] {
+  --pg-bg-base:        #020617;
+  --pg-bg-gradient:    linear-gradient(135deg, #0c1530 0%, #020617 50%, #010410 100%);
+  --pg-pink-50:        #0f2338;
+  --pg-pink-100:       #153050;
+  --pg-pink-300:       #00997a;
+  --pg-pink-500:       #00ffcc;
+  --pg-pink-600:       #00d4aa;
+  --pg-pink-700:       #00aa88;
+
+  --pg-text-strong:    #eafffa;
+  --pg-text:           #b8e8d8;
+  --pg-text-muted:     #5a9a82;
+
+  --pg-glass-bg:       rgba(2, 6, 23, 0.45);
+  --pg-glass-bg-strong:rgba(2, 6, 23, 0.7);
+  --pg-glass-border:   rgba(0, 255, 204, 0.1);
+  --pg-glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.6),
+                       0 2px 8px  rgba(0, 255, 204, 0.06);
+}

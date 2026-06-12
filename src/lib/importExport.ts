@@ -14,7 +14,7 @@ import type {
  * Import / Export — Postman-compatible (SPEC §7.5).
  *
  * ROUND-TRIP CONTRACT
- * - Import → export → import must not lose data Postgirl understands.
+ * - Import → export → import must not lose data Sawatdee API understands.
  * - Postman fields we don't model or execute are stashed verbatim on the
  *   request record and re-emitted on export:
  *     - `postmanEvents`   — prerequest/test scripts (never executed)
@@ -206,10 +206,14 @@ const zSettings: z.ZodType<Settings> = z.object({
   reduceTransparency: z.boolean(),
   requestTimeoutMs: z.number(),
   maxResponsePreviewBytes: z.number(),
+  themePattern: z.enum(["none", "dog", "cat", "rabbit", "panda", "elephant", "kitsune", "dragon", "deer", "koi", "owl", "turtle", "butterfly", "crane", "naga", "tiger", "suvarnabhumi", "ayutthaya", "bangkok", "cybersiam"]).optional().default("none"),
+  themeMode: z.enum(["light", "dark"]).optional().default("light"),
+  language: z.enum(["en", "th"]).optional().default("en"),
 });
 
 export const zNativeBundle = z.object({
-  postgirlVersion: z.literal(1),
+  sawatdeeApiVersion: z.literal(1).optional(),
+  postgirlVersion: z.literal(1).optional(),
   collections: z.array(zCollection).default([]),
   requests: z.array(zApiRequest).default([]),
   environments: z.array(zEnvironment).default([]),
@@ -221,13 +225,15 @@ export const zNativeBundle = z.object({
 export type DetectedFormat =
   | "postman-collection"
   | "postman-environment"
-  | "postgirl-native"
+  | "sawatdee-api-native"
   | "unknown";
 
 export function detectFormat(data: unknown): DetectedFormat {
   if (!data || typeof data !== "object") return "unknown";
   const o = data as Record<string, unknown>;
-  if (typeof o.postgirlVersion === "number") return "postgirl-native";
+  if (typeof o.sawatdeeApiVersion === "number" || typeof o.postgirlVersion === "number") {
+    return "sawatdee-api-native";
+  }
   const info = o.info as Record<string, unknown> | undefined;
   if (
     info &&
@@ -265,7 +271,7 @@ const emptyReport = (): ImportReport => ({
   skipped: [],
 });
 
-// ------------------------------------------------- Postman → Postgirl
+// ------------------------------------------------- Postman → Sawatdee API
 
 function kvFromPm(kv: z.infer<typeof zPmKv>): KeyValue {
   return {
@@ -277,7 +283,7 @@ function kvFromPm(kv: z.infer<typeof zPmKv>): KeyValue {
   };
 }
 
-function pmUrlToPostgirl(u: z.infer<typeof zPmUrl> | null | undefined): {
+function pmUrlToSawatdeeApi(u: z.infer<typeof zPmUrl> | null | undefined): {
   url: string;
   params: KeyValue[];
 } {
@@ -314,7 +320,7 @@ function normalizeMethod(m: string | undefined, name: string, warnings: string[]
   return "GET";
 }
 
-function pmBodyToPostgirl(
+function pmBodyToSawatdeeApi(
   b: z.infer<typeof zPmBody> | null | undefined,
   name: string,
   warnings: string[],
@@ -349,7 +355,7 @@ function pmBodyToPostgirl(
   }
 }
 
-function pmAuthToPostgirl(
+function pmAuthToSawatdeeApi(
   a: z.infer<typeof zPmAuth> | null | undefined,
   name: string,
   warnings: string[],
@@ -419,8 +425,8 @@ export function importPostmanCollection(data: unknown, now: number): ImportRepor
         ? `${prefix} / ${item.name ?? "Request"}`
         : (item.name ?? "Request");
       const pm = typeof item.request === "string" ? { url: item.request } : item.request;
-      const { url, params } = pmUrlToPostgirl(pm.url);
-      const { auth, raw: authRaw } = pmAuthToPostgirl(pm.auth, name, report.warnings);
+      const { url, params } = pmUrlToSawatdeeApi(pm.url);
+      const { auth, raw: authRaw } = pmAuthToSawatdeeApi(pm.auth, name, report.warnings);
       const req: ApiRequest = {
         id: newId(),
         name,
@@ -428,7 +434,7 @@ export function importPostmanCollection(data: unknown, now: number): ImportRepor
         url,
         params,
         headers: (pm.header ?? []).map(kvFromPm),
-        body: pmBodyToPostgirl(pm.body, name, report.warnings),
+        body: pmBodyToSawatdeeApi(pm.body, name, report.warnings),
         auth,
         createdAt: now,
         updatedAt: now,
@@ -478,7 +484,7 @@ export function importPostmanEnvironment(data: unknown): ImportReport {
   });
   if (parsed.values.some((v) => v.type === "secret")) {
     report.warnings.push(
-      'Environment contains "secret" variables — Postgirl stores but does not mask values in v1',
+      'Environment contains "secret" variables — Sawatdee API stores but does not mask values in v1',
     );
   }
   return report;
@@ -505,11 +511,11 @@ export function importFile(data: unknown, now: number): ImportReport {
         return importPostmanCollection(data, now);
       case "postman-environment":
         return importPostmanEnvironment(data);
-      case "postgirl-native":
+      case "sawatdee-api-native":
         return importNative(data);
       default:
         throw new Error(
-          "Unrecognized file — expected a Postman collection v2.1, a Postman environment, or a Postgirl bundle.",
+          "Unrecognized file — expected a Postman collection v2.1, a Postman environment, or a Sawatdee API bundle.",
         );
     }
   } catch (err) {
@@ -525,7 +531,7 @@ export function importFile(data: unknown, now: number): ImportReport {
   }
 }
 
-// ------------------------------------------------- Postgirl → Postman
+// ------------------------------------------------- Sawatdee API → Postman
 
 function pmKv(kv: KeyValue): Record<string, unknown> {
   const out: Record<string, unknown> = { key: kv.key, value: kv.value };
@@ -625,7 +631,7 @@ export function exportPostmanCollection(col: Collection, reqs: ApiRequest[]): un
       name: col.name,
       ...(col.description ? { description: col.description } : {}),
       schema: POSTMAN_SCHEMA_URL,
-      _exporter_id: "postgirl",
+      _exporter_id: "Sawatdee API",
     },
     item: reqs.map((r) => {
       const body = pmBodyFromRequest(r);
@@ -659,7 +665,7 @@ export function exportPostmanEnvironment(env: Environment): unknown {
       type: "default",
     })),
     _postman_variable_scope: "environment",
-    _exporter_id: "postgirl",
+    _exporter_id: "Sawatdee API",
   };
 }
 
@@ -672,7 +678,7 @@ export function exportNative(
   settings?: Settings,
 ): unknown {
   return {
-    postgirlVersion: 1,
+    sawatdeeApiVersion: 1,
     collections,
     requests,
     environments,

@@ -11,7 +11,7 @@ export interface SettingsRow extends Settings {
   id: string; // single row, id = "app"
 }
 
-export const db = new Dexie("postgirl") as Dexie & {
+export const db = new Dexie("Sawatdee API") as Dexie & {
   collections: EntityTable<Collection, "id">;
   requests: EntityTable<ApiRequest, "id">;
   environments: EntityTable<Environment, "id">;
@@ -32,6 +32,9 @@ export const DEFAULT_SETTINGS: Settings = {
   reduceTransparency: false,
   requestTimeoutMs: 30_000,
   maxResponsePreviewBytes: 2_000_000,
+  themePattern: "none",
+  themeMode: "light",
+  language: "en",
 };
 
 export const HISTORY_CAP = 100;

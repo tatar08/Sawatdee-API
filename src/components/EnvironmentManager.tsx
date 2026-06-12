@@ -4,9 +4,11 @@ import { Modal } from "./common/Modal";
 import { Button } from "./common/Button";
 import { KeyValueTable } from "./Request/KeyValueTable";
 import { useStore } from "../store/useStore";
+import { useTranslation } from "../lib/i18n";
 import styles from "./EnvironmentManager.module.css";
 
 export function EnvironmentManager({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const t = useTranslation();
   const environments = useStore((s) => s.environments);
   const createEnvironment = useStore((s) => s.createEnvironment);
   const updateEnvironment = useStore((s) => s.updateEnvironment);
@@ -16,12 +18,15 @@ export function EnvironmentManager({ open, onClose }: { open: boolean; onClose: 
   const selected = environments.find((e) => e.id === selectedId) ?? environments[0] ?? null;
 
   const addEnv = async () => {
-    const env = await createEnvironment(`Environment ${environments.length + 1}`);
+    const env = await createEnvironment(`${t("defaultEnvName")} ${environments.length + 1}`);
     setSelectedId(env.id);
   };
 
+  const noEnvText = t("noEnvironmentsMsg", { vars: "___VARS___" });
+  const [beforeNoEnv, afterNoEnv] = noEnvText.split("___VARS___");
+
   return (
-    <Modal open={open} onClose={onClose} title="Environments" width={640}>
+    <Modal open={open} onClose={onClose} title={t("environmentsTitle")} width={640}>
       <div className={styles.layout}>
         <div className={styles.list}>
           {environments.map((env) => (
@@ -34,7 +39,7 @@ export function EnvironmentManager({ open, onClose }: { open: boolean; onClose: 
             </button>
           ))}
           <Button variant="ghost" size="sm" onClick={() => void addEnv()}>
-            <Plus size={13} /> New environment
+            <Plus size={13} /> {t("newEnvironment")}
           </Button>
         </div>
         <div className={styles.editor}>
@@ -47,18 +52,18 @@ export function EnvironmentManager({ open, onClose }: { open: boolean; onClose: 
                   onChange={(e) =>
                     void updateEnvironment({ ...selected, name: e.target.value })
                   }
-                  aria-label="Environment name"
+                  aria-label={t("envNameAria")}
                 />
                 <Button
                   variant="danger"
                   size="sm"
                   onClick={() => {
-                    if (window.confirm(`Delete environment "${selected.name}"?`)) {
+                    if (window.confirm(t("deleteEnvConfirm", { name: selected.name }))) {
                       void deleteEnvironment(selected.id);
                       setSelectedId(null);
                     }
                   }}
-                  aria-label="Delete environment"
+                  aria-label={t("deleteEnvAria")}
                 >
                   <Trash2 size={13} />
                 </Button>
@@ -69,14 +74,14 @@ export function EnvironmentManager({ open, onClose }: { open: boolean; onClose: 
                   onChange={(variables) =>
                     void updateEnvironment({ ...selected, variables })
                   }
-                  keyPlaceholder="variable"
-                  valuePlaceholder="value"
+                  keyPlaceholder={t("variablePlaceholder")}
+                  valuePlaceholder={t("valuePlaceholder")}
                 />
               </div>
             </>
           ) : (
             <p className={styles.empty}>
-              No environments yet. Create one to define <code>{"{{variables}}"}</code>.
+              {beforeNoEnv}<code>{"{{variables}}"}</code>{afterNoEnv}
             </p>
           )}
         </div>

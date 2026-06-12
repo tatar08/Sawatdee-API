@@ -1,4 +1,4 @@
-# Postgirl 💌
+# Sawatdee API 💌
 
 A lightweight, **frontend-only** API client — a parody/homage to Postman. Runs entirely in the browser: no backend, no accounts, no telemetry. All data lives in your browser's IndexedDB.
 
@@ -7,6 +7,7 @@ Full product/engineering spec: [SPEC.md](./SPEC.md).
 ## Features
 
 ### Request Builder
+
 - HTTP methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
 - Query params, headers, and auth editors with enable/disable toggles
 - Body modes: JSON, raw (text/XML/HTML), form-data, x-www-form-urlencoded
@@ -14,28 +15,33 @@ Full product/engineering spec: [SPEC.md](./SPEC.md).
 - Live resolved-URL preview with `{{variable}}` substitution
 
 ### Collections & Tabs
+
 - Multi-tab interface — open multiple requests side by side
 - Save requests to named collections; drag-to-reorder within collections
 - Autosave edits to saved requests (400 ms debounce)
 - Draft tabs for unsaved one-off requests
 
 ### Environments
+
 - Named environments with key-value variable stores
 - `{{variable}}` resolution — environment vars first, then collection-level vars
 - Quick-switch environment selector in the top bar
 
 ### History
+
 - Last 100 sent requests stored automatically
 - Replay any history entry by opening it into a new tab
 - Clear history in one click
 
 ### Import / Export
+
 - **Postman Collection v2.1** import and export (lossless round-trip)
 - **Postman Environment** JSON import and export
 - Native backup bundle (all collections + environments + settings)
 - Conflict resolution: rename-on-conflict, never clobbers existing data
 
 ### Response Viewer
+
 - Status, duration, and size displayed in a status bar
 - Body viewer with syntax highlighting (JSON pretty-print)
 - Response headers viewer
@@ -43,16 +49,17 @@ Full product/engineering spec: [SPEC.md](./SPEC.md).
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action |
-|---|---|
-| `Ctrl/⌘ + Enter` | Send request |
-| `Ctrl/⌘ + S` | Save request to collection |
-| `Ctrl/⌘ + T` | New tab |
-| `Ctrl/⌘ + W` | Close tab |
-| `Ctrl/⌘ + L` | Focus URL bar |
-| `Ctrl/⌘ + B` | Toggle sidebar |
+| Shortcut         | Action                     |
+| ---------------- | -------------------------- |
+| `Ctrl/⌘ + Enter` | Send request               |
+| `Ctrl/⌘ + S`     | Save request to collection |
+| `Ctrl/⌘ + T`     | New tab                    |
+| `Ctrl/⌘ + W`     | Close tab                  |
+| `Ctrl/⌘ + L`     | Focus URL bar              |
+| `Ctrl/⌘ + B`     | Toggle sidebar             |
 
 ### Settings
+
 - Request timeout (default 30s)
 - Max response preview size (default 2 MB)
 - Reduce transparency toggle (accessibility)
@@ -91,14 +98,14 @@ src/
 
 **Key dependencies:**
 
-| Package | Role |
-|---|---|
-| React 18 | UI |
-| Zustand 5 | Global state |
-| Dexie 4 | IndexedDB ORM |
+| Package      | Role                        |
+| ------------ | --------------------------- |
+| React 18     | UI                          |
+| Zustand 5    | Global state                |
+| Dexie 4      | IndexedDB ORM               |
 | CodeMirror 6 | JSON body / response editor |
-| Vite 6 | Build tooling |
-| Vitest | Unit tests |
+| Vite 6       | Build tooling               |
+| Vitest       | Unit tests                  |
 
 ## Develop
 

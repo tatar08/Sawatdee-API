@@ -85,9 +85,17 @@ export interface HistoryEntry {
   sentAt: number;
 }
 
+export type ThemePattern = "none" | "dog" | "cat" | "rabbit" | "panda" | "elephant" | "kitsune" | "dragon" | "deer" | "koi" | "owl" | "turtle" | "butterfly" | "crane" | "naga" | "tiger" | "suvarnabhumi" | "ayutthaya" | "bangkok" | "cybersiam";
+export type ThemeMode = "light" | "dark";
+export type AppLanguage = "en" | "th";
+
 export interface Settings {
   activeEnvironmentId: string | null;
   reduceTransparency: boolean;
   requestTimeoutMs: number; // default 30000
   maxResponsePreviewBytes: number; // default 2_000_000
+  themePattern?: ThemePattern;
+  themeMode?: ThemeMode;
+  language?: AppLanguage;
 }
+

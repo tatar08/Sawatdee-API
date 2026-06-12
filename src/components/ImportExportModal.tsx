@@ -4,6 +4,7 @@ import { Modal } from "./common/Modal";
 import { Button } from "./common/Button";
 import { toast } from "./common/Toast";
 import { useStore } from "../store/useStore";
+import { useTranslation } from "../lib/i18n";
 import {
   importFile,
   exportPostmanCollection,
@@ -15,6 +16,7 @@ import { downloadJson, safeFilename } from "../lib/download";
 import styles from "./ImportExportModal.module.css";
 
 export function ImportExportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const t = useTranslation();
   const collections = useStore((s) => s.collections);
   const requests = useStore((s) => s.requests);
   const environments = useStore((s) => s.environments);
@@ -33,7 +35,7 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
       const report = importFile(data, Date.now());
       setPending({ report, filename: file.name });
     } catch (err) {
-      toast(err instanceof Error ? err.message : "Could not read file", "error");
+      toast(err instanceof Error ? err.message : t("importFileError"), "error");
     }
   };
 
@@ -42,7 +44,7 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
     await applyImport(pending.report);
     const { collections: c, requests: r, environments: e } = pending.report;
     toast(
-      `Imported ${c.length} collection(s), ${r.length} request(s), ${e.length} environment(s)`,
+      t("importSuccessMsg", { collections: c.length, requests: r.length, environments: e.length }),
       "success",
     );
     setPending(null);
@@ -55,15 +57,17 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
       .filter((r): r is NonNullable<typeof r> => r != null && r.collectionId === colId);
 
   return (
-    <Modal open={open} onClose={onClose} title="Import / Export" width={620}>
+    <Modal open={open} onClose={onClose} title={t("importExportTitle")} width={620}>
       {pending ? (
         <div className={styles.summary}>
-          <h3 className={styles.summaryTitle}>Import “{pending.filename}”?</h3>
+          <h3 className={styles.summaryTitle}>{t("importSummaryTitle", { name: pending.filename })}</h3>
           <p className={styles.summaryCounts}>
-            {pending.report.collections.length} collection(s) ·{" "}
-            {pending.report.requests.length} request(s) ·{" "}
-            {pending.report.environments.length} environment(s)
-            {pending.report.settings ? " · settings" : ""}
+            {t("importSummaryCounts", {
+              collections: pending.report.collections.length,
+              requests: pending.report.requests.length,
+              environments: pending.report.environments.length,
+              settings: pending.report.settings ? ` · ${t("settings").toLowerCase()}` : "",
+            })}
           </p>
           {pending.report.warnings.length > 0 && (
             <ul className={styles.warnings}>
@@ -75,20 +79,19 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
           {pending.report.skipped.length > 0 && (
             <ul className={styles.warnings}>
               {pending.report.skipped.map((w, i) => (
-                <li key={i}>Skipped: {w}</li>
+                <li key={i}>{t("importSkipped", { text: w })}</li>
               ))}
             </ul>
           )}
           <p className={styles.note}>
-            Existing data is never overwritten — conflicting names are imported with a
-            “(imported)” suffix.
+            {t("importNote")}
           </p>
           <div className={styles.summaryActions}>
             <Button variant="ghost" onClick={() => setPending(null)}>
-              Cancel
+              {t("cancelBtn")}
             </Button>
             <Button variant="primary" onClick={() => void confirmImport()}>
-              Import
+              {t("importBtn")}
             </Button>
           </div>
         </div>
@@ -96,11 +99,10 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
         <div className={styles.layout}>
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>
-              <FileUp size={14} /> Import
+              <FileUp size={14} /> {t("importSectionTitle")}
             </h3>
             <p className={styles.note}>
-              Postman collection v2.1, Postman environment, or Postgirl bundle — format is
-              detected automatically.
+              {t("importSectionNote")}
             </p>
             <input
               ref={fileRef}
@@ -114,21 +116,21 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
               }}
             />
             <Button variant="primary" onClick={() => fileRef.current?.click()}>
-              <FileUp size={14} /> Choose JSON file…
+              <FileUp size={14} /> {t("chooseJsonFile")}
             </Button>
           </section>
 
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>
-              <Download size={14} /> Export
+              <Download size={14} /> {t("exportSectionTitle")}
             </h3>
             {collections.length === 0 && environments.length === 0 && (
-              <p className={styles.note}>Nothing to export yet.</p>
+              <p className={styles.note}>{t("nothingToExport")}</p>
             )}
             {collections.map((col) => (
               <div key={col.id} className={styles.row}>
                 <span className={styles.rowName}>{col.name}</span>
-                <span className={styles.rowMeta}>{col.requestIds.length} req</span>
+                <span className={styles.rowMeta}>{t("reqMetaText", { count: col.requestIds.length })}</span>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -139,7 +141,7 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
                     )
                   }
                 >
-                  Postman v2.1
+                  {t("postmanCollectionBtn")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -147,18 +149,18 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
                   onClick={() =>
                     downloadJson(
                       exportNative([col], reqsOf(col.id, col.requestIds), []),
-                      `${safeFilename(col.name)}.postgirl.json`,
+                      `${safeFilename(col.name)}.Sawatdee API.json`,
                     )
                   }
                 >
-                  Native
+                  {t("nativeCollectionBtn")}
                 </Button>
               </div>
             ))}
             {environments.map((env) => (
               <div key={env.id} className={styles.row}>
                 <span className={styles.rowName}>{env.name}</span>
-                <span className={styles.rowMeta}>env</span>
+                <span className={styles.rowMeta}>{t("defaultEnvName").toLowerCase()}</span>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -169,7 +171,7 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
                     )
                   }
                 >
-                  Postman env
+                  {t("postmanEnvBtn")}
                 </Button>
               </div>
             ))}
@@ -179,11 +181,11 @@ export function ImportExportModal({ open, onClose }: { open: boolean; onClose: (
                 onClick={() =>
                   downloadJson(
                     exportNative(collections, requests, environments, settings),
-                    "postgirl-backup.json",
+                    "Sawatdee API-backup.json",
                   )
                 }
               >
-                <Package size={14} /> Export all (Postgirl bundle)
+                <Package size={14} /> {t("exportAllBtn")}
               </Button>
             )}
           </section>

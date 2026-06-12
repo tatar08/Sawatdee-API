@@ -11,6 +11,7 @@ import { Search, Download, X } from "lucide-react";
 import type { SendSuccess } from "../../lib/send";
 import { formatBytes, tryPrettyJson } from "../../lib/format";
 import { Button } from "../common/Button";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./BodyViewer.module.css";
 
 const CodeEditor = lazy(() => import("../Request/CodeEditor"));
@@ -85,6 +86,7 @@ function countMatches(text: string, query: string): number {
 }
 
 export function BodyViewer({ result }: BodyViewerProps) {
+  const t = useTranslation();
   const { sizeBytes, bodyTruncated, bodyText, contentType, bodyBlob } = result;
 
   // --- All hooks must be unconditional ---
@@ -150,11 +152,11 @@ export function BodyViewer({ result }: BodyViewerProps) {
     return (
       <div className={styles.truncatedCard}>
         <p className={styles.truncatedMsg}>
-          Response too large to preview ({formatBytes(sizeBytes)})
+          {t("bodyLargeResponse", { size: formatBytes(sizeBytes) })}
         </p>
         <Button size="sm" variant="ghost" onClick={handleDownload}>
           <Download size={14} />
-          Download
+          {t("bodyDownloadBtn")}
         </Button>
       </div>
     );
@@ -174,19 +176,19 @@ export function BodyViewer({ result }: BodyViewerProps) {
             className={`${styles.pill} ${subMode === "pretty" ? styles.pillActive : ""}`}
             onClick={() => setSubMode("pretty")}
           >
-            Pretty
+            {t("bodyPillPretty")}
           </button>
           <button
             className={`${styles.pill} ${subMode === "raw" ? styles.pillActive : ""}`}
             onClick={() => setSubMode("raw")}
           >
-            Raw
+            {t("bodyPillRaw")}
           </button>
           <button
             className={`${styles.pill} ${subMode === "preview" ? styles.pillActive : ""}`}
             onClick={() => setSubMode("preview")}
           >
-            Preview
+            {t("bodyPillPreview")}
           </button>
         </div>
 
@@ -199,13 +201,13 @@ export function BodyViewer({ result }: BodyViewerProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleSearchKeyDown}
-              placeholder="Search…"
+              placeholder={t("bodySearchPlaceholder")}
               aria-label="Search in body"
             />
             {search && (
               <>
                 <span className={styles.matchCount}>
-                  {matchCount} {matchCount === 1 ? "match" : "matches"}
+                  {matchCount === 1 ? t("bodyMatchCount", { count: matchCount }) : t("bodyMatchCountPlural", { count: matchCount })}
                 </span>
                 <button
                   className={styles.clearBtn}
@@ -249,7 +251,9 @@ export function BodyViewer({ result }: BodyViewerProps) {
             )}
             {search && (
               <div className={styles.prettyMatchBanner}>
-                {matchCount} {matchCount === 1 ? "match" : "matches"} for &quot;{search}&quot;
+                {matchCount === 1
+                  ? t("bodyMatchBanner", { count: matchCount, search })
+                  : t("bodyMatchBannerPlural", { count: matchCount, search })}
               </div>
             )}
           </>
@@ -259,18 +263,18 @@ export function BodyViewer({ result }: BodyViewerProps) {
           <>
             {isImage && imgUrl ? (
               <div className={styles.imgWrap}>
-                <img src={imgUrl} alt="Response preview" className={styles.img} />
+                <img src={imgUrl} alt={t("bodyImageAlt")} className={styles.img} />
               </div>
             ) : isHtml ? (
               <iframe
                 sandbox=""
                 srcDoc={bodyText}
                 className={styles.iframe}
-                title="Response HTML preview"
+                title={t("bodyIframeTitle")}
               />
             ) : (
               <div className={styles.noPreview}>
-                No preview for this content type
+                {t("bodyNoPreviewMsg")}
                 {contentType && (
                   <code className={styles.ct}>{contentType}</code>
                 )}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Trash2 } from "lucide-react";
 import type { KeyValue } from "../../lib/types";
+import { useTranslation } from "../../lib/i18n";
 import styles from "./KeyValueTable.module.css";
 
 interface Props {
@@ -23,6 +24,7 @@ export function KeyValueTable({
   valuePlaceholder = "Value",
   warnKey,
 }: Props) {
+  const t = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   // After the phantom row materializes, move focus into the real row.
   const [pendingFocus, setPendingFocus] = useState<{ id: string; field: "key" | "value" } | null>(
@@ -64,7 +66,7 @@ export function KeyValueTable({
                 className={styles.check}
                 checked={row.enabled}
                 onChange={(e) => patch(row.id, { enabled: e.target.checked })}
-                aria-label="Row enabled"
+                aria-label={t("kvTableRowEnabledAria")}
               />
               <input
                 className={`${styles.input} ${warning ? styles.inputWarn : ""}`}
@@ -89,7 +91,7 @@ export function KeyValueTable({
               <button
                 className={styles.delete}
                 onClick={() => remove(row.id)}
-                aria-label="Delete row"
+                aria-label={t("kvTableDeleteRowAria")}
               >
                 <Trash2 size={13} />
               </button>
@@ -108,7 +110,7 @@ export function KeyValueTable({
           onChange={(e) => addFrom("key", e.target.value)}
           spellCheck={false}
           autoComplete="off"
-          aria-label="New row key"
+          aria-label={t("kvTableNewKeyAria")}
         />
         <input
           className={styles.input}
@@ -117,7 +119,7 @@ export function KeyValueTable({
           onChange={(e) => addFrom("value", e.target.value)}
           spellCheck={false}
           autoComplete="off"
-          aria-label="New row value"
+          aria-label={t("kvTableNewValueAria")}
         />
         <span className={styles.deleteSpacer} />
       </div>

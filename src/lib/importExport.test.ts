@@ -120,7 +120,7 @@ describe("detectFormat", () => {
   it("detects all three formats and unknown", () => {
     expect(detectFormat(pmCollection)).toBe("postman-collection");
     expect(detectFormat(pmEnvironment)).toBe("postman-environment");
-    expect(detectFormat({ postgirlVersion: 1 })).toBe("postgirl-native");
+    expect(detectFormat({ sawatdeeApiVersion: 1 })).toBe("sawatdee-api-native");
     expect(detectFormat({ random: true })).toBe("unknown");
     expect(detectFormat(null)).toBe("unknown");
     expect(detectFormat("str")).toBe("unknown");
@@ -205,7 +205,7 @@ describe("importPostmanEnvironment", () => {
 });
 
 describe("Postman round-trip (import → export → import)", () => {
-  it("loses nothing Postgirl understands, including stashed fields", () => {
+  it("loses nothing Sawatdee API understands, including stashed fields", () => {
     const first = importPostmanCollection(pmCollection, NOW);
     const exported = exportPostmanCollection(first.collections[0], first.requests);
     expect(detectFormat(exported)).toBe("postman-collection");
@@ -278,11 +278,14 @@ describe("native bundle", () => {
     reduceTransparency: false,
     requestTimeoutMs: 30000,
     maxResponsePreviewBytes: 2_000_000,
+    themePattern: "none",
+    themeMode: "light",
+    language: "en",
   };
 
   it("export → import is fully lossless", () => {
     const bundle = exportNative([col], [req], [env], settings);
-    expect(detectFormat(bundle)).toBe("postgirl-native");
+    expect(detectFormat(bundle)).toBe("sawatdee-api-native");
     // simulate file round-trip through JSON
     const back = importNative(JSON.parse(JSON.stringify(bundle)));
     expect(back.collections).toEqual([col]);

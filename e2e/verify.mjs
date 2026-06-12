@@ -1,5 +1,5 @@
 /**
- * Postgirl E2E Verification Script
+ * Sawatdee API E2E Verification Script
  * Runs against the production build served at http://localhost:4173
  * Usage: node e2e/verify.mjs
  */
@@ -70,7 +70,7 @@ async function getStatusPillText(page) {
 }
 
 async function main() {
-  console.log('Starting Postgirl E2E Verification\n');
+  console.log('Starting Sawatdee API E2E Verification\n');
 
   const browser = await chromium.launch({
     headless: true,
@@ -103,7 +103,7 @@ async function main() {
     await page.goto(BASE_URL, { waitUntil: 'networkidle' });
 
     const title = await page.title();
-    const wordmark = await page.locator('text=Postgirl').first().isVisible();
+    const wordmark = await page.locator('text=Sawatdee API').first().isVisible();
     const urlInput = await page.locator('#pg-url-input').isVisible();
     const sendBtn = await page.locator('button', { hasText: 'Send' }).first().isVisible();
     const collectionsTab = await page.locator('[role="tab"]', { hasText: 'Collections' }).isVisible();
@@ -113,7 +113,7 @@ async function main() {
 
     const sc_a = await shot(page, 'A-app-loads');
 
-    if (title === 'Postgirl' && wordmark && urlInput && sendBtn && collectionsTab && historyTab) {
+    if (title === 'Sawatdee API' && wordmark && urlInput && sendBtn && collectionsTab && historyTab) {
       pass('A', `Title="${title}", wordmark visible, URL input present, Send button present, Collections+History sidebar tabs, glass panels visible`, sc_a);
     } else {
       fail('A', `title="${title}" wordmark=${wordmark} urlInput=${urlInput} sendBtn=${sendBtn} collections=${collectionsTab} history=${historyTab}`, sc_a);
