@@ -2,7 +2,7 @@ import { useStore } from "../store/useStore";
 
 export const translations = {
   en: {
-    logoTagline: "100% browser · no backend · no data stored · built by Claude Fable 5, improved by Sonnet · hosted free on Azure SWA",
+    logoTagline: "100% browser · no backend · no data stored · built by Claude Fable 5, improved by Sonnet · hosted free on Vercel",
     collections: "Collections",
     history: "History",
     importExport: "Import / Export",
@@ -252,7 +252,7 @@ export const translations = {
     corsFooter: "This is a browser security feature, not a bug — Postman's desktop app bypasses it with a native HTTP client.",
   },
   th: {
-    logoTagline: "ใช้งานในเบราว์เซอร์ 100% · ไม่มีระบบหลังบ้าน · ไม่เก็บข้อมูลใดๆ · สร้างโดย Claude Fable 5, ปรับปรุงโดย Sonnet · โฮสต์ฟรีบน Azure SWA",
+    logoTagline: "ใช้งานในเบราว์เซอร์ 100% · ไม่มีระบบหลังบ้าน · ไม่เก็บข้อมูลใดๆ · สร้างโดย Claude Fable 5, ปรับปรุงโดย Sonnet · โฮสต์ฟรีบน Vercel",
     collections: "คอลเลกชัน",
     history: "ประวัติการใช้งาน",
     importExport: "นำเข้า / ส่งออก",
