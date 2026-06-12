@@ -17,6 +17,7 @@
 8. [Import & Export (Migration)](#8-import--export-migration)
 9. [Advanced: Collection Runner with CSV/JSON Data](#9-advanced-collection-runner-with-csvjson-data)
 10. [Aesthetics, Themes, & Mascots](#10-aesthetics-themes--mascots)
+11. [Security & Enterprise Features](#11-security--enterprise-features)
 
 ---
 
@@ -311,6 +312,27 @@ Sawatdee API includes customizable visual skins with Japan-inspired animal masco
 - **Dark / Night Mode**: Supports all themes. Transitions glass layers into dark translucent overlays (`rgba(21, 14, 18, 0.45)`) to maintain contrast in low-light environments. Toggle using the 🌓 button on the Top Bar.
 - **Reduce Transparency**: Swaps frosted-glass layers for solid surfaces. Ideal for high-contrast accessibility or low-performance devices.
 - **Masot Opacity**: Mascot backdrops automatically decrease in opacity during dark mode to keep text highly readable.
+
+---
+
+## 11. Security & Enterprise Features
+
+To support secure deployments of Sawatdee API within internal organizational networks, the system includes advanced client-side constraints and secure server-side proxy capabilities:
+
+### 11.1 Client-Side Username & PIN Lock
+To prevent unauthorized users from viewing sensitive collection requests, history entries, custom keys, or credentials stored inside IndexedDB in the same browser:
+- **Setup Mode**: On the first launch, if no credentials have been configured, the user is required to set a Username (at least 3 characters), set a 6-8 digit PIN code, and confirm the PIN.
+- **Lock Screen Overlay**: Upon refreshing or opening the app, a fullscreen lock screen blocks the workspace. Keyboard shortcuts and sidebar layouts are inaccessible. The user must enter both their correct Username and PIN to unlock.
+- **Local Storage**: The Username is saved in settings as plain text (`username`), and the PIN code is hashed locally using SHA-256 via the Web Crypto API (`window.crypto.subtle.digest`) and stored as a hash value (`pinHash`) in IndexedDB. No credentials are ever sent or exposed to external servers.
+- **Automatic Wipe (Auto-Wipe)**: To prevent brute-force attacks on physical devices, the application will automatically call `clearAllAppData()` to delete all IndexedDB data (including collections, requests, history, environments, and settings) after **5 incorrect attempts** of entering credentials, resetting the app to its clean Setup Mode.
+- **Manual Reset**: If the details are forgotten, a manual "Forgot details?" option is available to wipe all database entries and reset the application to Setup Mode.
+
+### 11.2 Secure CORS Proxy (`api/proxy.ts`)
+The serverless CORS proxy endpoint contains strict checks to enforce enterprise network policies:
+- **SSRF Prevention**: The proxy actively checks the target hostnames. Requests to loopback/localhost (`localhost`, `127.0.0.1`, `::1`), private ranges (`10.x.x.x`, `192.168.x.x`, `172.16.x.x` - `172.31.x.x`), and cloud instance metadata services (`169.254.169.254`) are blocked with HTTP 403 Forbidden.
+- **Domain Whitelisting (`ALLOWED_DOMAINS`)**: If configured via environment variables, the proxy will reject requests targeting domains not present on the whitelist.
+- **Shared Secret Verification (`PROXY_SECRET`)**: If configured, the proxy verifies that the incoming request includes a matching token in the `x-proxy-secret` header, returning HTTP 401 Unauthorized otherwise.
+- **JWT Verification (`PROXY_JWT_SECRET`)**: Supports central Identity Providers (IdPs) by verifying signatures (HMAC SHA-256) of JWT Bearer tokens passed within the standard `Authorization` header.
 
 ---
 

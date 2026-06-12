@@ -450,9 +450,28 @@ src/
 
 ---
 
-## 9. Future / Optional CORS Proxy (NOT v1)
+## 9. Secure CORS Proxy & Client PIN Lock
 
-SWA includes managed Azure Functions on the free tier. A future opt-in setting could route requests through a tiny `/api/proxy` function to bypass CORS. **Explicitly out of scope for v1** (violates "no backend"), but the `send.ts` pipeline should keep the request-dispatch step swappable so a proxy transport can be added without rewiring the UI.
+To allow Sawatdee API to be used securely within organizational environments, we have implemented an opt-in CORS Proxy along with a client-side PIN Lock screen.
+
+### 9.1 Secure CORS Proxy (`api/proxy.ts`)
+
+A server-side proxy endpoint is deployed at `/api/proxy` (supported in development via Vite dev server middleware in `vite.config.ts`). It includes the following security checks:
+
+1. **SSRF Protection**: Automatically parses and verifies target hostnames. Requests to loopback (`localhost`, `127.0.0.1`, `::1`), private networks (`10.x.x.x`, `192.168.x.x`, `172.16.x.x` - `172.31.x.x`), or cloud metadata endpoints (`169.254.169.254`) are blocked (returns HTTP 403).
+2. **Access Whitelist**: If the `ALLOWED_DOMAINS` environment variable is defined, requests to target URLs whose hostnames do not match or end with the allowed domains list are blocked (returns HTTP 403).
+3. **Shared Secret Authentication**: If the `PROXY_SECRET` environment variable is defined, requests must contain a matching header value in `x-proxy-secret`, otherwise they are blocked (returns HTTP 401).
+4. **JWT Verification**: If the `PROXY_JWT_SECRET` environment variable is defined, requests must contain a valid HMAC SHA-256 signed JWT Bearer token in the `Authorization` header, otherwise they are blocked (returns HTTP 401).
+
+### 9.2 Client-side PIN & Username Lock Screen
+
+To protect local user data (IndexedDB containing collection request histories, credentials, environment variables) on shared devices, a credentials lock is implemented:
+
+1. **Setup Mode**: On first-run (when no credentials exist in settings), the user is prompted to set a Username (at least 3 characters), configure a 6-8 digit PIN code, and confirm the PIN code.
+2. **Local Storage**: The Username is saved in settings as plain text (`username`), and the PIN is hashed using SHA-256 (`window.crypto.subtle.digest`) and saved inside settings as `pinHash` in IndexedDB.
+3. **Lock Screen Overlay**: Upon page load or refresh, if a PIN hash is set, the UI renders only the fullscreen `PinLockScreen` overlay. The user must enter both their Username and PIN. No workspace components are loaded, and keyboard shortcuts are disabled.
+4. **Auto-Wipe**: Entering incorrect credentials (incorrect Username or incorrect PIN) increments the counter. After 5 incorrect attempts, the app automatically runs `clearAllAppData()` to wipe all IndexedDB databases (collections, requests, history, environments, and settings) and resets the application to setup mode.
+5. **Reset & Forgot Details**: A manual "Forgot details?" button triggers a prompt confirming the wipe of all workspace data and resets the state.
 
 ---
 

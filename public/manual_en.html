@@ -302,6 +302,7 @@
         <li><a href="#8-import--export-migration">8. Import &amp; Export</a></li>
         <li><a href="#9-advanced-collection-runner-with-csvjson-data">9. Collection Runner</a></li>
         <li><a href="#10-aesthetics-themes--mascots">10. Themes &amp; Mascots</a></li>
+        <li><a href="#11-security--enterprise-features">11. Security &amp; Enterprise</a></li>
       </ul>
     </aside>
 
@@ -456,6 +457,30 @@ pnpm build</code></pre>
         <ul>
           <li><strong>Dark Mode</strong>: Transition glass colors to dark overlays for late-night workflows.</li>
           <li><strong>Reduce Transparency</strong>: Swaps frosted glass for solid surfaces, improving contrast and legibility.</li>
+        </ul>
+      </section>
+
+      <section id="11-security--enterprise-features">
+        <h2>11. Security &amp; Enterprise Features</h2>
+        <p>To support secure deployments of Sawatdee API within internal organizational networks, the system includes advanced client-side constraints and secure server-side proxy capabilities:</p>
+
+        <h3>11.1 Client-Side Username &amp; PIN Lock</h3>
+        <p>To prevent unauthorized users from viewing sensitive collection requests, history entries, custom keys, or credentials stored inside IndexedDB in the same browser:</p>
+        <ul>
+          <li><strong>Setup Mode</strong>: On the first launch, if no credentials have been configured, the user is required to set a Username (at least 3 characters), set a 6-8 digit PIN code, and confirm the PIN.</li>
+          <li><strong>Lock Screen Overlay</strong>: Upon refreshing or opening the app, a fullscreen lock screen blocks the workspace. Keyboard shortcuts and sidebar layouts are inaccessible. The user must enter both their correct Username and PIN to unlock.</li>
+          <li><strong>Local Storage</strong>: The Username is saved in settings as plain text (<code>username</code>), and the PIN code is hashed locally using SHA-256 via the Web Crypto API (<code>window.crypto.subtle.digest</code>) and stored as a hash value (<code>pinHash</code>) in IndexedDB. No credentials are ever sent or exposed to external servers.</li>
+          <li><strong>Automatic Wipe (Auto-Wipe)</strong>: To prevent brute-force attacks on physical devices, the application will automatically call <code>clearAllAppData()</code> to delete all IndexedDB data after <strong>5 incorrect attempts</strong> of entering credentials, resetting the app to its clean Setup Mode.</li>
+          <li><strong>Manual Reset</strong>: If the details are forgotten, a manual "Forgot details?" option is available to wipe all database entries and reset the application to Setup Mode.</li>
+        </ul>
+
+        <h3>11.2 Secure CORS Proxy (<code>api/proxy.ts</code>)</h3>
+        <p>The serverless CORS proxy endpoint contains strict checks to enforce enterprise network policies:</p>
+        <ul>
+          <li><strong>SSRF Prevention</strong>: The proxy actively checks the target hostnames. Requests to loopback/localhost (<code>localhost</code>, <code>127.0.0.1</code>, <code>::1</code>), private ranges (<code>10.x.x.x</code>, <code>192.168.x.x</code>, <code>172.16.x.x</code> - <code>172.31.x.x</code>), and cloud instance metadata services (<code>169.254.169.254</code>) are blocked with HTTP 403 Forbidden.</li>
+          <li><strong>Domain Whitelisting (<code>ALLOWED_DOMAINS</code>)</strong>: If configured via environment variables, the proxy will reject requests targeting domains not present on the whitelist.</li>
+          <li><strong>Shared Secret Verification (<code>PROXY_SECRET</code>)</strong>: If configured, the proxy verifies that the incoming request includes a matching token in the <code>x-proxy-secret</code> header, returning HTTP 401 Unauthorized otherwise.</li>
+          <li><strong>JWT Verification (<code>PROXY_JWT_SECRET</code>)</strong>: Supports central Identity Providers (IdPs) by verifying signatures (HMAC SHA-256) of JWT Bearer tokens passed within the standard <code>Authorization</code> header.</li>
         </ul>
       </section>
     </main>

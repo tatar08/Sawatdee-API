@@ -36,6 +36,8 @@ export const DEFAULT_SETTINGS: Settings = {
   themeMode: "light",
   language: "en",
   useProxy: false,
+  pinHash: null,
+  username: null,
 };
 
 

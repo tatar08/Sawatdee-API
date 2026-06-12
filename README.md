@@ -63,6 +63,23 @@ Full product/engineering spec: [SPEC.md](./SPEC.md).
 - Request timeout (default 30s)
 - Max response preview size (default 2 MB)
 - Reduce transparency toggle (accessibility)
+- **Credentials Lock**: Secure local databases using a Username and 6-8 digit PIN code (SHA-256 hashed locally). Automatically locks on application load and wipes all databases after 5 incorrect attempts.
+
+### Security & CORS Proxy
+
+- **SSRF Protection**: CORS proxy blocks requests to localhost, loopback, private networks, and cloud provider metadata endpoints.
+- **Access Whitelist**: Restrict proxy requests to specific target domains using `ALLOWED_DOMAINS`.
+- **Token Verification**: Verify requests through a shared proxy secret (`PROXY_SECRET`) or signature validation of JWT tokens (`PROXY_JWT_SECRET`).
+
+## Environment Variables (Proxy Server)
+
+When hosting the CORS Proxy (`api/proxy.ts`), the following environment variables are supported:
+
+| Variable | Description | Example |
+| --- | --- | --- |
+| `PROXY_SECRET` | Shared secret key required in the `x-proxy-secret` request header. | `my-secure-shared-key` |
+| `PROXY_JWT_SECRET` | HMAC SHA-256 JWT secret to verify the Bearer token in the `Authorization` header. | `my-jwt-signing-secret` |
+| `ALLOWED_DOMAINS` | Comma-separated list of hostnames/domains the proxy is allowed to request. | `api.mycompany.com,service.internal` |
 
 ## Architecture
 

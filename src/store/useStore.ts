@@ -49,6 +49,14 @@ function scheduleAutosave(req: ApiRequest) {
   );
 }
 
+async function hashPin(pin: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(pin);
+  const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 interface Store {
   initialized: boolean;
   collections: Collection[];
@@ -64,6 +72,9 @@ interface Store {
   setSettingsOpen: (open: boolean) => void;
   saveModalOpen: boolean;
   setSaveModalOpen: (open: boolean) => void;
+
+  isLocked: boolean;
+  incorrectAttempts: number;
 
   init: () => Promise<void>;
 
@@ -98,6 +109,12 @@ interface Store {
   clearHistory: () => Promise<void>;
   /** Merge an import into the workspace — rename-on-conflict, never clobber (SPEC §7.5). */
   applyImport: (report: ImportReport) => Promise<void>;
+
+  // PIN actions
+  setCredentials: (username: string, pin: string) => Promise<void>;
+  unlock: (username: string, pin: string) => Promise<boolean>;
+  lock: () => void;
+  clearAllAppData: () => Promise<void>;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -116,6 +133,9 @@ export const useStore = create<Store>((set, get) => ({
   saveModalOpen: false,
   setSaveModalOpen: (open) => set({ saveModalOpen: open }),
 
+  isLocked: false,
+  incorrectAttempts: 0,
+
   init: async () => {
     const [collections, requests, environments, history, settings] = await Promise.all([
       db.collections.orderBy("updatedAt").reverse().toArray(),
@@ -130,6 +150,7 @@ export const useStore = create<Store>((set, get) => ({
       environments,
       history,
       settings,
+      isLocked: true,
       initialized: true,
       activeTabId: s.activeTabId ?? s.tabs[0]?.request.id ?? null,
     }));
@@ -431,6 +452,61 @@ export const useStore = create<Store>((set, get) => ({
       environments: [...st.environments, ...environments],
     }));
     if (report.settings) get().updateSettings(report.settings);
+  },
+
+  setCredentials: async (username, pin) => {
+    const pinHash = await hashPin(pin);
+    const settings = { ...get().settings, username: username.trim(), pinHash };
+    set({ settings, isLocked: false, incorrectAttempts: 0 });
+    await saveSettings(settings);
+  },
+
+  unlock: async (username, pin) => {
+    const s = get();
+    if (!s.settings.pinHash) return true;
+    const inputHash = await hashPin(pin);
+    const storedUsername = s.settings.username || "";
+    if (
+      username.trim().toLowerCase() === storedUsername.trim().toLowerCase() &&
+      inputHash === s.settings.pinHash
+    ) {
+      set({ isLocked: false, incorrectAttempts: 0 });
+      return true;
+    } else {
+      const attempts = s.incorrectAttempts + 1;
+      set({ incorrectAttempts: attempts });
+      if (attempts >= 5) {
+        await s.clearAllAppData();
+      }
+      return false;
+    }
+  },
+
+  lock: () => {
+    if (get().settings.pinHash) {
+      set({ isLocked: true });
+    }
+  },
+
+  clearAllAppData: async () => {
+    await db.transaction("rw", [db.collections, db.requests, db.environments, db.history, db.settings], async () => {
+      await db.collections.clear();
+      await db.requests.clear();
+      await db.environments.clear();
+      await db.history.clear();
+      await db.settings.clear();
+    });
+    set({
+      collections: [],
+      requests: [],
+      environments: [],
+      history: [],
+      settings: DEFAULT_SETTINGS,
+      tabs: [{ request: blankRequest(), draft: true, result: null, sending: false }],
+      activeTabId: null,
+      isLocked: false,
+      incorrectAttempts: 0,
+    });
   },
 }));
 

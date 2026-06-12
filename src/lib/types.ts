@@ -98,6 +98,8 @@ export interface Settings {
   themeMode?: ThemeMode;
   language?: AppLanguage;
   useProxy?: boolean;
+  pinHash?: string | null;
+  username?: string | null;
 }
 
 export const APP_VERSION = "1.1.0";
